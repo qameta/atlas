@@ -7,7 +7,9 @@ import io.qameta.atlas.internal.TargetMethodInvoker;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.qameta.atlas.util.ReflectionUtils.getMethods;
@@ -16,6 +18,17 @@ import static io.qameta.atlas.util.ReflectionUtils.getMethods;
  * @author Artem Eroshenko.
  */
 public class Atlas {
+
+    private List<Listener> listeners;
+
+    public Atlas() {
+        this.listeners = new ArrayList<>();
+    }
+
+    public Atlas listener(Listener listener) {
+        this.listeners.add(listener);
+        return this;
+    }
 
     @SuppressWarnings("unchecked")
     public <T> T create(final Object target, final Class<T> type) {
@@ -29,7 +42,7 @@ public class Atlas {
         return (T) Proxy.newProxyInstance(
                 type.getClassLoader(),
                 new Class[]{type},
-                new AtlasMethodHandler(invokers)
+                new AtlasMethodHandler(listeners, invokers)
         );
     }
 

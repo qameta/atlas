@@ -1,7 +1,10 @@
 package io.qameta.atlas.internal;
 
+import io.qameta.atlas.Listener;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,9 +16,11 @@ public class AtlasMethodHandler implements InvocationHandler {
 
     private final ListenerNotifier notifier;
 
-    public AtlasMethodHandler(final Map<Method, InvocationHandler> handlers) {
+    public AtlasMethodHandler(final List<Listener> listeners, final Map<Method, InvocationHandler> handlers) {
         this.notifier = new ListenerNotifier();
         this.handlers = handlers;
+
+        listeners.forEach(notifier::addListeners);
     }
 
     @Override
