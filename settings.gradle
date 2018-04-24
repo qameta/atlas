@@ -1,0 +1,4 @@
+rootProject.name = 'atlas'
+include 'atlas-core'
+include 'atlas-webdriver'
+

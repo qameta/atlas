@@ -1,0 +1,12 @@
+description = 'Atlas Core'
+
+dependencies {
+    compile project(':atlas-core')
+
+    compile 'org.seleniumhq.selenium:selenium-java'
+
+    testCompile 'org.mockito:mockito-all'
+    testCompile 'org.assertj:assertj-core'
+    testCompile 'junit:junit'
+
+}
