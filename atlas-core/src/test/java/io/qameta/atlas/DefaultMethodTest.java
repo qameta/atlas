@@ -1,20 +1,32 @@
 package io.qameta.atlas;
 
+import io.qameta.atlas.internal.DefaultMethodInvoker;
 import io.qameta.atlas.testdata.CustomException;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.lang.reflect.Method;
 
 public class DefaultMethodTest {
 
+    private Atlas atlas;
+
+    @Before
+    public void initAtlas() {
+        atlas = new Atlas()
+                .extension(Method::isDefault, new DefaultMethodInvoker());
+    }
+
     @Test
     public void shouldExecuteDefaultMethod() {
-        InterfaceWithDefaultMethod instance = new Atlas()
+        InterfaceWithDefaultMethod instance = atlas
                 .create(new Object(), InterfaceWithDefaultMethod.class);
         instance.doSomething();
     }
 
     @Test(expected = CustomException.class)
     public void shouldPropagateExceptionInDefaultMethod() {
-        InterfaceWithDefaultMethodThrowable instance = new Atlas()
+        InterfaceWithDefaultMethodThrowable instance = atlas
                 .create(new Object(), InterfaceWithDefaultMethodThrowable.class);
         instance.doSomething();
     }
