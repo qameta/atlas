@@ -1,5 +1,6 @@
 package io.qameta.atlas;
 
+import io.qameta.atlas.api.Listener;
 import io.qameta.atlas.internal.AtlasMethodHandler;
 import io.qameta.atlas.internal.TargetMethodInvoker;
 

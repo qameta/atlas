@@ -1,5 +1,6 @@
 package io.qameta.atlas;
 
+import io.qameta.atlas.api.Listener;
 import org.junit.Test;
 
 import static org.mockito.Matchers.any;

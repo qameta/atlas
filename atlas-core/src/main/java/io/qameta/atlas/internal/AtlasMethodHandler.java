@@ -1,6 +1,6 @@
 package io.qameta.atlas.internal;
 
-import io.qameta.atlas.Listener;
+import io.qameta.atlas.api.Listener;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

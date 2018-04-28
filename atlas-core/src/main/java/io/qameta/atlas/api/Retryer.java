@@ -1,4 +1,4 @@
-package io.qameta.atlas;
+package io.qameta.atlas.api;
 
 /**
  * Retryer.
