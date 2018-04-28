@@ -41,7 +41,7 @@ public class Atlas {
     @SuppressWarnings("unchecked")
     public <T> T create(final Object target, final Class<T> type) {
         final Map<Method, InvocationHandler> invokers = new HashMap<>();
-        getMethods(type).forEach(method -> invokers.put(method, new TargetMethodInvoker(() -> target)));
+        getMethods(type, Object.class).forEach(method -> invokers.put(method, new TargetMethodInvoker(() -> target)));
         extensions.forEach((predicate, handler) ->
                 getMethods(type).stream().filter(predicate).forEach(method -> invokers.put(method, handler)));
 

@@ -8,10 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Locatable;
 
 import static io.qameta.atlas.testdata.ObjectFactory.mockWebElement;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class AtlasWebElementTest {
+public class AtlasWebElementMethodsTest {
 
     private AtlasWebElement atlasWebElement;
 
@@ -132,18 +133,12 @@ public class AtlasWebElementTest {
     }
 
     @Test
-    @Ignore
     public void toStringMethodTest() {
+        assertThat(atlasWebElement.toString()).isEqualTo(originWebElement.toString());
     }
 
     @Test
-    @Ignore
     public void hashCodeMethodTest() {
+        assertThat(atlasWebElement.hashCode()).isEqualTo(originWebElement.hashCode());
     }
-
-    @Test
-    @Ignore
-    public void equalsMethodTest() {
-    }
-
 }
