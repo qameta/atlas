@@ -24,7 +24,7 @@ public class NestedElementMethodTest {
         when(parent.findElement(By.xpath(SELECTOR))).thenReturn(child);
 
         ParentElement parentElement = new Atlas()
-                .extension(method -> method.isAnnotationPresent(FindBy.class), new FindByExtension())
+                .extension(new FindByExtension())
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.child()).isNotNull();

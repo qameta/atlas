@@ -1,6 +1,6 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.internal.DefaultMethodInvoker;
+import io.qameta.atlas.internal.DefaultMethodExtension;
 import io.qameta.atlas.testdata.CustomException;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class DefaultMethodTest {
     @Before
     public void initAtlas() {
         atlas = new Atlas()
-                .extension(Method::isDefault, new DefaultMethodInvoker());
+                .extension(new DefaultMethodExtension());
     }
 
     @Test

@@ -1,14 +1,20 @@
 package io.qameta.atlas.internal;
 
+import io.qameta.atlas.api.Extension;
+
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
  * Default method invoker.
  */
-public class DefaultMethodInvoker implements InvocationHandler {
+public class DefaultMethodExtension implements Extension {
+
+    @Override
+    public boolean test(final Method method) {
+        return method.isDefault();
+    }
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {

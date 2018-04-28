@@ -1,5 +1,6 @@
 package io.qameta.atlas;
 
+import io.qameta.atlas.api.Extension;
 import io.qameta.atlas.api.Listener;
 import io.qameta.atlas.internal.AtlasMethodHandler;
 import io.qameta.atlas.internal.TargetMethodInvoker;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import static io.qameta.atlas.util.ReflectionUtils.getMethods;
 
@@ -20,13 +20,13 @@ import static io.qameta.atlas.util.ReflectionUtils.getMethods;
  */
 public class Atlas {
 
-    private final Map<Predicate<Method>, InvocationHandler> extensions;
+    private final List<Extension> extensions;
 
     private final List<Listener> listeners;
 
     public Atlas() {
         this.listeners = new ArrayList<>();
-        this.extensions = new HashMap<>();
+        this.extensions = new ArrayList<>();
     }
 
     public Atlas listener(final Listener listener) {
@@ -34,8 +34,8 @@ public class Atlas {
         return this;
     }
 
-    public Atlas extension(final Predicate<Method> predicate, final InvocationHandler handler) {
-        this.extensions.put(predicate, handler);
+    public Atlas extension(final Extension extension) {
+        this.extensions.add(extension);
         return this;
     }
 
@@ -43,8 +43,9 @@ public class Atlas {
     public <T> T create(final Object target, final Class<T> type) {
         final Map<Method, InvocationHandler> invokers = new HashMap<>();
         getMethods(type, Object.class).forEach(method -> invokers.put(method, new TargetMethodInvoker(() -> target)));
-        extensions.forEach((predicate, handler) ->
-                getMethods(type).stream().filter(predicate).forEach(method -> invokers.put(method, handler)));
+        extensions.forEach(extension -> {
+            getMethods(type).stream().filter(extension).forEach(method -> invokers.put(method, extension));
+        });
 
         return (T) Proxy.newProxyInstance(
                 type.getClassLoader(),
