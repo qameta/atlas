@@ -33,7 +33,7 @@ public class Atlas {
         return this;
     }
 
-    public Atlas extension(final Predicate<Method> predicate, final gInvocationHandler handler) {
+    public Atlas extension(final Predicate<Method> predicate, final InvocationHandler handler) {
         this.extensions.put(predicate, handler);
         return this;
     }
