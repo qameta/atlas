@@ -1,5 +1,6 @@
 package io.qameta.atlas;
 
+import org.hamcrest.Matcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -12,8 +13,9 @@ import java.util.List;
 
 /**
  * Atlas Web Element.
+ * @param <T> the type of the value being boxed
  */
-public interface AtlasWebElement extends WebElement, Locatable {
+public interface AtlasWebElement<T extends WebElement> extends WebElement, Locatable {
 
     /**
      * The same as {@link WebElement#click()}.
@@ -99,5 +101,25 @@ public interface AtlasWebElement extends WebElement, Locatable {
      * The same as {@link Locatable#getCoordinates()}.
      */
     Coordinates getCoordinates();
+
+    /**
+     * This method handled by the {@link io.qameta.atlas.extensions.ShouldExtension}.
+     */
+    T should(Matcher matcher);
+
+    /**
+     * This method handled by the {@link io.qameta.atlas.extensions.ShouldExtension}.
+     */
+    T should(String message, Matcher matcher);
+
+    /**
+     * This method handled by the {@link io.qameta.atlas.extensions.WaitUntilExtension}.
+     */
+    T waitUntil(Matcher matcher);
+
+    /**
+     * This method handled by the {@link io.qameta.atlas.extensions.WaitUntilExtension}.
+     */
+    T waitUntil(String message, Matcher matcher);
 
 }
