@@ -10,13 +10,15 @@ import static io.qameta.atlas.util.MethodInfoUtils.getMatcher;
 import static io.qameta.atlas.util.MethodInfoUtils.getMessage;
 
 /**
- * @author kurau (Yuri Kalinin)
+ * Should extension for {@link io.qameta.atlas.AtlasWebElement}.
  */
 public class ShouldExtension implements Extension {
 
+    private static final String SHOULD = "should";
+
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals("should");
+        return method.getName().equals(SHOULD);
     }
 
     @Override

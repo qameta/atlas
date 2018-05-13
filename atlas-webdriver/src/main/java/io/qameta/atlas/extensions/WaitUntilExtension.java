@@ -11,13 +11,15 @@ import static io.qameta.atlas.util.MethodInfoUtils.getMatcher;
 import static io.qameta.atlas.util.MethodInfoUtils.getMessage;
 
 /**
- * @author kurau (Yuri Kalinin)
+ * WaitUntil extension for {@link io.qameta.atlas.AtlasWebElement}.
  */
 public class WaitUntilExtension implements Extension {
 
+    private static final String WAIT_UNTIL = "waitUntil";
+
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals("waitUntil");
+        return method.getName().equals(WAIT_UNTIL);
     }
 
     @Override

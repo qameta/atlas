@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 
-import static io.qameta.atlas.matcher.DisplayedMatcher.displayed;
 import static io.qameta.atlas.testdata.ObjectFactory.mockWebElement;
 import static org.mockito.Mockito.when;
+import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
 
 /**
  * @author kurau (Yuri Kalinin)

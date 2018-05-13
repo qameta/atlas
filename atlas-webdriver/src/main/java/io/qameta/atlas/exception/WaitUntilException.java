@@ -3,7 +3,7 @@ package io.qameta.atlas.exception;
 import org.openqa.selenium.WebDriverException;
 
 /**
- * @author kurau (Yuri Kalinin)
+ * Exception for custom behavior of the {@link io.qameta.atlas.extensions.WaitUntilExtension}.
  */
 public class WaitUntilException extends WebDriverException {
 
