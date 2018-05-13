@@ -2,7 +2,6 @@ package io.qameta.atlas;
 
 import io.qameta.atlas.extensions.FindBy;
 import io.qameta.atlas.extensions.FindByExtension;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -16,7 +15,6 @@ public class NestedElementMethodTest {
     private static final String SELECTOR = "//div";
 
     @Test
-    @Ignore("not implemented")
     public void nestedElementTest() {
         WebElement parent = mockWebElement();
 
