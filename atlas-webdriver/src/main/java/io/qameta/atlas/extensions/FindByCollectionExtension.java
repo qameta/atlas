@@ -4,19 +4,19 @@ import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.Extension;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
- * FindBy Extension.
+ * FindBy Extension for collection.
  */
-public class FindByExtension implements Extension {
+public class FindByCollectionExtension implements Extension {
 
     @Override
     public boolean test(final Method method) {
         return method.isAnnotationPresent(FindBy.class)
-                && WebElement.class.isAssignableFrom(method.getReturnType());
+                && List.class.isAssignableFrom(method.getReturnType());
     }
 
     @Override
@@ -28,6 +28,6 @@ public class FindByExtension implements Extension {
         final SearchContext context = (SearchContext) proxy;
 
         return new Atlas()
-                .create(context.findElement(By.xpath(xpath)), method.getReturnType());
+                .create(context.findElements(By.xpath(xpath)), method.getReturnType());
     }
 }
