@@ -1,5 +1,6 @@
 package io.qameta.atlas.testdata;
 
+import io.qameta.atlas.AtlasWebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.HasInputDevices;
@@ -19,5 +20,9 @@ public class ObjectFactory {
 
     public static WebElement mockWebElement() {
         return mock(WebElement.class, withSettings().extraInterfaces(Locatable.class));
+    }
+
+    public static AtlasWebElement mockAtlasWebElement() {
+        return mock(AtlasWebElement.class, withSettings());
     }
 }

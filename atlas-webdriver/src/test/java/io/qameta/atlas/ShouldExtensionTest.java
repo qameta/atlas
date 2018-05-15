@@ -7,7 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.qameta.atlas.testdata.ObjectFactory.mockWebElement;
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
 
@@ -23,6 +29,7 @@ public class ShouldExtensionTest {
 
     private WebElement baseElement = mockWebElement();
     private AtlasWebElement atlasWebElement;
+    private ElementsCollection<AtlasWebElement> collection;
 
 
     @Before
@@ -56,5 +63,27 @@ public class ShouldExtensionTest {
     public void shouldThrowAssertionErrorInTwoArgumentShouldMethod() {
         when(baseElement.isDisplayed()).thenReturn(NOT_DISPLAYED);
         atlasWebElement.should(DISPLAYED_MATCHER);
+    }
+
+    @Test
+    public void shouldUseMethodForCollection() {
+        collection = createElementsCollection(atlasWebElement);
+        collection.should(hasSize(1));
+    }
+
+    @Test
+    public void shouldUseMethodForCollectionElements() {
+        when(atlasWebElement.isDisplayed()).thenReturn(IS_DISPLAYED);
+        collection = createElementsCollection(atlasWebElement);
+        collection.should(hasItem(DISPLAYED_MATCHER));
+    }
+
+    @SuppressWarnings("unchecked")
+    private static ElementsCollection<AtlasWebElement> createElementsCollection(AtlasWebElement... elements) {
+        List target = new ArrayList();
+        target.addAll(asList(elements));
+        return new Atlas()
+                .extension(new ShouldExtension())
+                .create(target, ElementsCollection.class);
     }
 }
