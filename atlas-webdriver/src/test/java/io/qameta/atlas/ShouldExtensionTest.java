@@ -71,9 +71,22 @@ public class ShouldExtensionTest {
         collection.should(hasSize(1));
     }
 
+    @Test(expected = AssertionError.class)
+    public void shouldThrowAssertionErrorForCollection() {
+        collection = createElementsCollection(atlasWebElement);
+        collection.should(hasSize(0));
+    }
+
     @Test
     public void shouldUseMethodForCollectionElements() {
         when(atlasWebElement.isDisplayed()).thenReturn(IS_DISPLAYED);
+        collection = createElementsCollection(atlasWebElement);
+        collection.should(hasItem(DISPLAYED_MATCHER));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void shouldThrowAssertionErrorForCollectionElements() {
+        when(atlasWebElement.isDisplayed()).thenReturn(NOT_DISPLAYED);
         collection = createElementsCollection(atlasWebElement);
         collection.should(hasItem(DISPLAYED_MATCHER));
     }

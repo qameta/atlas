@@ -9,6 +9,10 @@ buildscript {
     }
 }
 
+ext {
+    gradleScriptDir = "${rootProject.projectDir}/gradle"
+}
+
 configure(rootProject) {
     description = "Atlas"
 
@@ -27,6 +31,7 @@ subprojects { project ->
     apply plugin: 'java'
     apply plugin: 'ru.vyarus.quality'
     apply plugin: 'io.spring.dependency-management'
+    apply from: "${gradleScriptDir}/maven-publish.gradle"
 
     compileJava {
         sourceCompatibility = 1.8
