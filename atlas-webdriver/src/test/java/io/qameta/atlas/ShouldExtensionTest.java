@@ -61,8 +61,10 @@ public class ShouldExtensionTest {
 
     @Test(expected = AssertionError.class)
     public void shouldThrowAssertionErrorInTwoArgumentShouldMethod() {
+        String message = RandomStringUtils.randomAlphanumeric(10);
+
         when(baseElement.isDisplayed()).thenReturn(NOT_DISPLAYED);
-        atlasWebElement.should(DISPLAYED_MATCHER);
+        atlasWebElement.should(message, DISPLAYED_MATCHER);
     }
 
     @Test
