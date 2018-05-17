@@ -13,19 +13,21 @@ import static org.mockito.Mockito.when;
 public class NestedElementMethodTest {
 
     private static final String SELECTOR = "//div";
+    private static final boolean IS_DISPLAYED = true;
 
     @Test
-    public void nestedElementTest() {
+    public void shouldFindNestedElement() {
         WebElement parent = mockWebElement();
 
         WebElement child = mockWebElement();
         when(parent.findElement(By.xpath(SELECTOR))).thenReturn(child);
+        when(child.isDisplayed()).thenReturn(IS_DISPLAYED);
 
         ParentElement parentElement = new Atlas()
                 .extension(new FindByExtension())
                 .create(parent, ParentElement.class);
 
-        assertThat(parentElement.child()).isNotNull();
+        assertThat(parentElement.child().isDisplayed()).isEqualTo(IS_DISPLAYED);
     }
 
     interface ParentElement extends AtlasWebElement {

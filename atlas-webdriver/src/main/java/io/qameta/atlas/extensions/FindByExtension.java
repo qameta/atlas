@@ -4,6 +4,7 @@ import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.Extension;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Method;
 
@@ -14,7 +15,8 @@ public class FindByExtension implements Extension {
 
     @Override
     public boolean test(final Method method) {
-        return method.isAnnotationPresent(FindBy.class);
+        return method.isAnnotationPresent(FindBy.class)
+                && WebElement.class.isAssignableFrom(method.getReturnType());
     }
 
     @Override
