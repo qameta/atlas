@@ -42,9 +42,12 @@ public class Atlas {
     @SuppressWarnings("unchecked")
     public <T> T create(final Object target, final Class<T> type) {
         final Map<Method, InvocationHandler> invokers = new HashMap<>();
-        getMethods(type, Object.class).forEach(method -> invokers.put(method, new TargetMethodInvoker(() -> target)));
+        final List<Method> methods = getMethods(type, Object.class);
+
+        methods.forEach(method -> invokers.put(method, new TargetMethodInvoker(() -> target)));
+
         extensions.forEach(extension -> {
-            getMethods(type).stream().filter(extension).forEach(method -> invokers.put(method, extension));
+            methods.stream().filter(extension).forEach(method -> invokers.put(method, extension));
         });
 
         return (T) Proxy.newProxyInstance(

@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -31,15 +32,23 @@ public class FindByCollectionExtension implements Extension {
         assert method.isAnnotationPresent(FindBy.class);
 
         final String xpath = method.getAnnotation(FindBy.class).value();
+        final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)
+                .orElse(method.getName());
         final SearchContext context = (SearchContext) proxy;
 
         final List<WebElement> originalElements = context.findElements(By.xpath(xpath));
         final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
 
         final List newElements = IntStream.range(0, originalElements.size())
-                .mapToObj(i -> new Atlas().create(originalElements.get(i), (Class<?>) methodReturnType))
+                .mapToObj(i -> new Atlas().extension(new ToStringExtension(listElementName(name, i)))
+                        .create(originalElements.get(i), (Class<?>) methodReturnType))
                 .collect(toList());
 
-        return new Atlas().create(newElements, method.getReturnType());
+        return new Atlas().extension(new ToStringExtension(name))
+                .create(newElements, method.getReturnType());
+    }
+
+    private String listElementName(final String name, final int position) {
+        return String.format("%s [%s]", name, position);
     }
 }
