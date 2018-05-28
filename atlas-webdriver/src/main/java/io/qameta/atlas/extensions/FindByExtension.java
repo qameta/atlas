@@ -7,6 +7,7 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * FindBy Extension.
@@ -25,9 +26,12 @@ public class FindByExtension implements Extension {
         assert method.isAnnotationPresent(FindBy.class);
 
         final String xpath = method.getAnnotation(FindBy.class).value();
+        final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)
+                .orElse(method.getName());
         final SearchContext context = (SearchContext) proxy;
 
         return new Atlas()
+                .extension(new ToStringExtension(name))
                 .create(context.findElement(By.xpath(xpath)), method.getReturnType());
     }
 }
