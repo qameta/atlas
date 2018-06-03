@@ -12,7 +12,7 @@ import static io.qameta.atlas.util.MethodInfoUtils.getMessage;
 /**
  * Should method extension for {@link io.qameta.atlas.AtlasWebElement}.
  */
-public class ShouldExtension implements MethodExtension {
+public class ShouldMethodExtension implements MethodExtension {
 
     private static final String SHOULD = "should";
 

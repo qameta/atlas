@@ -31,7 +31,7 @@ public class FindByExtension implements MethodExtension {
         final SearchContext context = (SearchContext) proxy;
 
         return new Atlas()
-                .extension(new ToStringExtension(name))
+                .extension(new ToStringMethodExtension(name))
                 .create(context.findElement(By.xpath(xpath)), method.getReturnType());
     }
 }

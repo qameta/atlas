@@ -6,14 +6,14 @@ import java.lang.reflect.Method;
 /**
  * ToString method extension.
  */
-public class ToStringExtension implements MethodExtension {
+public class ToStringMethodExtension implements MethodExtension {
 
     private static final String TO_STRING = "toString";
 
     private final String name;
 
 
-    public ToStringExtension(final String name) {
+    public ToStringMethodExtension(final String name) {
         this.name = name;
     }
 

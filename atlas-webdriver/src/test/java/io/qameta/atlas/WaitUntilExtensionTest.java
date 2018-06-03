@@ -1,7 +1,7 @@
 package io.qameta.atlas;
 
 import io.qameta.atlas.exception.WaitUntilException;
-import io.qameta.atlas.extensions.WaitUntilExtension;
+import io.qameta.atlas.extensions.WaitUntilMethodExtension;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.Matcher;
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class WaitUntilExtensionTest {
     @Before
     public void createAtlasElementWithExtension() {
         atlasWebElement = new Atlas()
-                .extension(new WaitUntilExtension())
+                .extension(new WaitUntilMethodExtension())
                 .create(baseElement, AtlasWebElement.class);
     }
 
@@ -98,7 +98,7 @@ public class WaitUntilExtensionTest {
         List target = new ArrayList();
         target.addAll(asList(elements));
         return new Atlas()
-                .extension(new WaitUntilExtension())
+                .extension(new WaitUntilMethodExtension())
                 .create(target, ElementsCollection.class);
     }
 

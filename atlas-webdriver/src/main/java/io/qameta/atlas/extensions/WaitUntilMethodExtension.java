@@ -13,7 +13,7 @@ import static io.qameta.atlas.util.MethodInfoUtils.getMessage;
 /**
  * WaitUntil method extension for {@link io.qameta.atlas.AtlasWebElement}.
  */
-public class WaitUntilExtension implements MethodExtension {
+public class WaitUntilMethodExtension implements MethodExtension {
 
     private static final String WAIT_UNTIL = "waitUntil";
 
