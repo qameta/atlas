@@ -1,6 +1,6 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.ShouldExtension;
+import io.qameta.atlas.extensions.ShouldMethodExtension;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.Matcher;
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class ShouldExtensionTest {
     @Before
     public void createAtlasElementWithExtension() {
         atlasWebElement = new Atlas()
-                .extension(new ShouldExtension())
+                .extension(new ShouldMethodExtension())
                 .create(baseElement, AtlasWebElement.class);
     }
 
@@ -98,7 +98,7 @@ public class ShouldExtensionTest {
         List target = new ArrayList();
         target.addAll(asList(elements));
         return new Atlas()
-                .extension(new ShouldExtension())
+                .extension(new ShouldMethodExtension())
                 .create(target, ElementsCollection.class);
     }
 }

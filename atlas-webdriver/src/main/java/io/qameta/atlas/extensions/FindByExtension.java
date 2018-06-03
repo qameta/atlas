@@ -1,7 +1,7 @@
 package io.qameta.atlas.extensions;
 
 import io.qameta.atlas.Atlas;
-import io.qameta.atlas.api.Extension;
+import io.qameta.atlas.api.MethodExtension;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -10,9 +10,9 @@ import java.lang.reflect.Method;
 import java.util.Optional;
 
 /**
- * FindBy Extension.
+ * Extension for methods with {@link io.qameta.atlas.extensions.FindBy} annotation.
  */
-public class FindByExtension implements Extension {
+public class FindByExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
@@ -31,7 +31,7 @@ public class FindByExtension implements Extension {
         final SearchContext context = (SearchContext) proxy;
 
         return new Atlas()
-                .extension(new ToStringExtension(name))
+                .extension(new ToStringMethodExtension(name))
                 .create(context.findElement(By.xpath(xpath)), method.getReturnType());
     }
 }

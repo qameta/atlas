@@ -1,5 +1,7 @@
 package io.qameta.atlas;
 
+import io.qameta.atlas.extensions.ShouldMethodExtension;
+import io.qameta.atlas.extensions.WaitUntilMethodExtension;
 import org.hamcrest.Matcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -103,22 +105,22 @@ public interface AtlasWebElement<T extends WebElement> extends WebElement, Locat
     Coordinates getCoordinates();
 
     /**
-     * This method handled by the {@link io.qameta.atlas.extensions.ShouldExtension}.
+     * This method handled by the {@link ShouldMethodExtension}.
      */
     T should(Matcher matcher);
 
     /**
-     * This method handled by the {@link io.qameta.atlas.extensions.ShouldExtension}.
+     * This method handled by the {@link ShouldMethodExtension}.
      */
     T should(String message, Matcher matcher);
 
     /**
-     * This method handled by the {@link io.qameta.atlas.extensions.WaitUntilExtension}.
+     * This method handled by the {@link WaitUntilMethodExtension}.
      */
     T waitUntil(Matcher matcher);
 
     /**
-     * This method handled by the {@link io.qameta.atlas.extensions.WaitUntilExtension}.
+     * This method handled by the {@link WaitUntilMethodExtension}.
      */
     T waitUntil(String message, Matcher matcher);
 

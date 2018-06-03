@@ -1,6 +1,6 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.api.Extension;
+import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.api.Listener;
 import io.qameta.atlas.internal.AtlasMethodHandler;
 import io.qameta.atlas.internal.TargetMethodInvoker;
@@ -20,7 +20,7 @@ import static io.qameta.atlas.util.ReflectionUtils.getMethods;
  */
 public class Atlas {
 
-    private final List<Extension> extensions;
+    private final List<MethodExtension> extensions;
 
     private final List<Listener> listeners;
 
@@ -34,8 +34,8 @@ public class Atlas {
         return this;
     }
 
-    public Atlas extension(final Extension extension) {
-        this.extensions.add(extension);
+    public Atlas extension(final MethodExtension methodExtension) {
+        this.extensions.add(methodExtension);
         return this;
     }
 

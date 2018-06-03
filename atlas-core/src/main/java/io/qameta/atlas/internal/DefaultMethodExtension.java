@@ -1,15 +1,15 @@
 package io.qameta.atlas.internal;
 
-import io.qameta.atlas.api.Extension;
+import io.qameta.atlas.api.MethodExtension;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 /**
- * Default method invoker.
+ * Default method extension.
  */
-public class DefaultMethodExtension implements Extension {
+public class DefaultMethodExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {

@@ -5,8 +5,6 @@ import io.qameta.atlas.testdata.CustomException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Method;
-
 public class DefaultMethodTest {
 
     private Atlas atlas;

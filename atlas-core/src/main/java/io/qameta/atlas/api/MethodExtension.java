@@ -7,5 +7,5 @@ import java.util.function.Predicate;
 /**
  * Basic extension point.
  */
-public interface Extension extends Predicate<Method>, InvocationHandler {
+public interface MethodExtension extends Predicate<Method>, InvocationHandler {
 }

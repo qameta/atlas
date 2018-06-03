@@ -1,6 +1,6 @@
 package io.qameta.atlas.extensions;
 
-import io.qameta.atlas.api.Extension;
+import io.qameta.atlas.api.MethodExtension;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
@@ -10,9 +10,9 @@ import static io.qameta.atlas.util.MethodInfoUtils.getMatcher;
 import static io.qameta.atlas.util.MethodInfoUtils.getMessage;
 
 /**
- * Should extension for {@link io.qameta.atlas.AtlasWebElement}.
+ * Should method extension for {@link io.qameta.atlas.AtlasWebElement}.
  */
-public class ShouldExtension implements Extension {
+public class ShouldMethodExtension implements MethodExtension {
 
     private static final String SHOULD = "should";
 
