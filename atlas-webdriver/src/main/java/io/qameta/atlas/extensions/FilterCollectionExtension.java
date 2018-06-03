@@ -2,7 +2,7 @@ package io.qameta.atlas.extensions;
 
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.ElementsCollection;
-import io.qameta.atlas.api.Extension;
+import io.qameta.atlas.api.MethodExtension;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.function.Predicate;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Filter extension for {@link io.qameta.atlas.ElementsCollection}.
+ * Filter method extension for {@link io.qameta.atlas.ElementsCollection}.
  */
-public class FilterCollectionExtension implements Extension {
+public class FilterCollectionExtension implements MethodExtension {
 
     private static final String FILTER = "filter";
 

@@ -1,6 +1,6 @@
 package io.qameta.atlas.extensions;
 
-import io.qameta.atlas.api.Extension;
+import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.exception.WaitUntilException;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
@@ -11,9 +11,9 @@ import static io.qameta.atlas.util.MethodInfoUtils.getMatcher;
 import static io.qameta.atlas.util.MethodInfoUtils.getMessage;
 
 /**
- * WaitUntil extension for {@link io.qameta.atlas.AtlasWebElement}.
+ * WaitUntil method extension for {@link io.qameta.atlas.AtlasWebElement}.
  */
-public class WaitUntilExtension implements Extension {
+public class WaitUntilExtension implements MethodExtension {
 
     private static final String WAIT_UNTIL = "waitUntil";
 
