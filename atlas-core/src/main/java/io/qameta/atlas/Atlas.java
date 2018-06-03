@@ -20,13 +20,13 @@ import static io.qameta.atlas.util.ReflectionUtils.getMethods;
  */
 public class Atlas {
 
-    private final List<MethodExtension> methodExtensions;
+    private final List<MethodExtension> extensions;
 
     private final List<Listener> listeners;
 
     public Atlas() {
         this.listeners = new ArrayList<>();
-        this.methodExtensions = new ArrayList<>();
+        this.extensions = new ArrayList<>();
     }
 
     public Atlas listener(final Listener listener) {
@@ -35,7 +35,7 @@ public class Atlas {
     }
 
     public Atlas extension(final MethodExtension methodExtension) {
-        this.methodExtensions.add(methodExtension);
+        this.extensions.add(methodExtension);
         return this;
     }
 
@@ -46,7 +46,7 @@ public class Atlas {
 
         methods.forEach(method -> invokers.put(method, new TargetMethodInvoker(() -> target)));
 
-        methodExtensions.forEach(extension -> {
+        extensions.forEach(extension -> {
             methods.stream().filter(extension).forEach(method -> invokers.put(method, extension));
         });
 
