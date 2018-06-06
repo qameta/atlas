@@ -2,6 +2,7 @@ package io.qameta.atlas.extensions;
 
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.util.MethodInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -28,7 +29,9 @@ public class FindByCollectionExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final Method method, final Object[] args) {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo) {
+        final Method method = methodInfo.getMethod();
+
         assert proxy instanceof SearchContext;
         assert method.isAnnotationPresent(FindBy.class);
 

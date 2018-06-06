@@ -2,6 +2,7 @@ package io.qameta.atlas.extensions;
 
 import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.exception.WaitUntilException;
+import io.qameta.atlas.util.MethodInfo;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
@@ -23,7 +24,9 @@ public class WaitUntilMethodExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo) throws Throwable {
+        final Object[] args = methodInfo.getArgs();
+
         final String message = getMessage(args);
         final Matcher matcher = getMatcher(args);
 

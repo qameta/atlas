@@ -1,6 +1,8 @@
 package io.qameta.atlas.extensions;
 
 import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.util.MethodInfo;
+
 import java.lang.reflect.Method;
 
 /**
@@ -23,7 +25,7 @@ public class ToStringMethodExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final Method method, final Object[] args) {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo) {
         return name;
     }
 

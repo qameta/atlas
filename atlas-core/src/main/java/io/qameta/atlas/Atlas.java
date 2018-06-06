@@ -1,11 +1,11 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.api.Listener;
+import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.api.MethodInvoker;
 import io.qameta.atlas.internal.AtlasMethodHandler;
 import io.qameta.atlas.internal.TargetMethodInvoker;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
@@ -41,10 +41,12 @@ public class Atlas {
 
     @SuppressWarnings("unchecked")
     public <T> T create(final Object target, final Class<T> type) {
-        final Map<Method, InvocationHandler> invokers = new HashMap<>();
+        final Map<Method, MethodInvoker> invokers = new HashMap<>();
         final List<Method> methods = getMethods(type, Object.class);
 
-        methods.forEach(method -> invokers.put(method, new TargetMethodInvoker(() -> target)));
+        methods.forEach(method -> {
+            invokers.put(method, new TargetMethodInvoker(() -> target));
+        });
 
         extensions.forEach(extension -> {
             methods.stream().filter(extension).forEach(method -> invokers.put(method, extension));

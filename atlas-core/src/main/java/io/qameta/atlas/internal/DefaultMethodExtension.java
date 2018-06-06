@@ -1,6 +1,7 @@
 package io.qameta.atlas.internal;
 
 import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.util.MethodInfo;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
@@ -17,14 +18,14 @@ public class DefaultMethodExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-        final Class<?> declaringClass = method.getDeclaringClass();
+    public Object invoke(final Object proxy, final MethodInfo methodInfo) throws Throwable {
+        final Class<?> declaringClass = methodInfo.getMethod().getDeclaringClass();
         final Constructor<MethodHandles.Lookup> constructor = MethodHandles.Lookup.class
                 .getDeclaredConstructor(Class.class, int.class);
         constructor.setAccessible(true);
         return constructor.newInstance(declaringClass, MethodHandles.Lookup.PRIVATE)
-                .unreflectSpecial(method, declaringClass)
+                .unreflectSpecial(methodInfo.getMethod(), declaringClass)
                 .bindTo(proxy)
-                .invokeWithArguments(args);
+                .invokeWithArguments(methodInfo.getArgs());
     }
 }
