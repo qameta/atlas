@@ -1,18 +1,18 @@
 package io.qameta.atlas.api;
 
-import java.lang.reflect.Method;
+import io.qameta.atlas.util.MethodInfo;
 
 /**
  * Listener.
  */
 public interface Listener {
 
-    void beforeMethodCall(Method method, Object... args);
+    void beforeMethodCall(MethodInfo methodInfo);
 
-    void afterMethodCall(Method method, Object... args);
+    void afterMethodCall(MethodInfo methodInfo);
 
-    void onMethodReturn(Method method, Object[] args, Object returned);
+    void onMethodReturn(MethodInfo methodInfo, Object returned);
 
-    void onMethodFailure(Method method, Object[] args, Throwable throwable);
+    void onMethodFailure(MethodInfo methodInfo, Throwable throwable);
 
 }
