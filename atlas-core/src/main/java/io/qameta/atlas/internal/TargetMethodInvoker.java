@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
- * Listener notifier.
+ * Target method invoker.
  */
 public class TargetMethodInvoker implements MethodInvoker {
 
