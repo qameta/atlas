@@ -1,10 +1,10 @@
 package io.qameta.atlas.internal;
 
 import io.qameta.atlas.api.Listener;
+import io.qameta.atlas.util.MethodInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,10 +23,10 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void beforeMethodCall(final Method method, final Object[] args) {
-        for (Listener listener: listeners) {
+    public void beforeMethodCall(final MethodInfo methodInfo) {
+        for (Listener listener : listeners) {
             try {
-                listener.beforeMethodCall(method, args);
+                listener.beforeMethodCall(methodInfo);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} beforeMethodCall", listener, e);
             }
@@ -34,10 +34,10 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void afterMethodCall(final Method method, final Object[] args) {
-        for (Listener listener: listeners) {
+    public void afterMethodCall(final MethodInfo methodInfo) {
+        for (Listener listener : listeners) {
             try {
-                listener.afterMethodCall(method, args);
+                listener.afterMethodCall(methodInfo);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} afterMethodCall", listener, e);
             }
@@ -45,10 +45,10 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void onMethodReturn(final Method method, final Object[] args, final Object returned) {
-        for (Listener listener: listeners) {
+    public void onMethodReturn(final MethodInfo methodInfo, final Object returned) {
+        for (Listener listener : listeners) {
             try {
-                listener.onMethodReturn(method, args, returned);
+                listener.onMethodReturn(methodInfo, returned);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} onMethodReturn", listener, e);
             }
@@ -56,10 +56,10 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void onMethodFailure(final Method method, final Object[] args, final Throwable throwable) {
-        for (Listener listener: listeners) {
+    public void onMethodFailure(final MethodInfo methodInfo, final Throwable throwable) {
+        for (Listener listener : listeners) {
             try {
-                listener.onMethodFailure(method, args, throwable);
+                listener.onMethodFailure(methodInfo, throwable);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} onMethodFailure", listener, e);
             }

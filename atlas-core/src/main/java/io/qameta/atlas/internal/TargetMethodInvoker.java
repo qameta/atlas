@@ -1,8 +1,9 @@
 package io.qameta.atlas.internal;
 
+import io.qameta.atlas.api.MethodInvoker;
+import io.qameta.atlas.util.MethodInfo;
 import org.apache.commons.lang3.reflect.MethodUtils;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -10,9 +11,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
- * Listener notifier.
+ * Target method invoker.
  */
-public class TargetMethodInvoker implements InvocationHandler {
+public class TargetMethodInvoker implements MethodInvoker {
 
     private final Supplier<?> targetSupplier;
 
@@ -21,13 +22,13 @@ public class TargetMethodInvoker implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo) throws Throwable {
         final Object target = targetSupplier.get();
 
         final Method targetMethod = MethodUtils.getMatchingAccessibleMethod(
-                target.getClass(), method.getName(), getParametersTypes(args));
+                target.getClass(), methodInfo.getMethod().getName(), getParametersTypes(methodInfo.getArgs()));
         try {
-            return targetMethod.invoke(target, args);
+            return targetMethod.invoke(target, methodInfo.getArgs());
         } catch (InvocationTargetException e) {
             throw e.getTargetException();
         }

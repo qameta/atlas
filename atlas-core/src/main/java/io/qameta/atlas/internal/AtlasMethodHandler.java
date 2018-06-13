@@ -1,6 +1,8 @@
 package io.qameta.atlas.internal;
 
 import io.qameta.atlas.api.Listener;
+import io.qameta.atlas.api.MethodInvoker;
+import io.qameta.atlas.util.MethodInfo;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -12,11 +14,11 @@ import java.util.Map;
  */
 public class AtlasMethodHandler implements InvocationHandler {
 
-    private final Map<Method, InvocationHandler> handlers;
+    private final Map<Method, MethodInvoker> handlers;
 
     private final ListenerNotifier notifier;
 
-    public AtlasMethodHandler(final List<Listener> listeners, final Map<Method, InvocationHandler> handlers) {
+    public AtlasMethodHandler(final List<Listener> listeners, final Map<Method, MethodInvoker> handlers) {
         this.notifier = new ListenerNotifier();
         this.handlers = handlers;
 
@@ -25,17 +27,19 @@ public class AtlasMethodHandler implements InvocationHandler {
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-        notifier.beforeMethodCall(method, args);
+        final MethodInfo methodInfo = new MethodInfo(method, args);
+
+        notifier.beforeMethodCall(methodInfo);
         try {
-            final InvocationHandler handler = handlers.get(method);
-            final Object result = handler.invoke(proxy, method, args);
-            notifier.onMethodReturn(method, args, result);
+            final MethodInvoker handler = handlers.get(method);
+            final Object result = handler.invoke(proxy, methodInfo);
+            notifier.onMethodReturn(methodInfo, result);
             return result;
         } catch (Throwable e) {
-            notifier.onMethodFailure(method, args, e);
+            notifier.onMethodFailure(methodInfo, e);
             throw e;
         } finally {
-            notifier.afterMethodCall(method, args);
+            notifier.afterMethodCall(methodInfo);
         }
     }
 
