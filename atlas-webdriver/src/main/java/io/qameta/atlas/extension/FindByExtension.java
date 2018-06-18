@@ -35,6 +35,7 @@ public class FindByExtension implements MethodExtension {
 
         return new Atlas()
                 .extension(new ToStringMethodExtension(name))
+                .extension(new FindByExtension())
                 .create(context.findElement(By.xpath(xpath)), method.getReturnType());
     }
 }
