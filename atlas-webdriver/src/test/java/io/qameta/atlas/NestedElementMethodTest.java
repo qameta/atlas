@@ -1,7 +1,7 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.FindBy;
-import io.qameta.atlas.extensions.FindByExtension;
+import io.qameta.atlas.extension.FindBy;
+import io.qameta.atlas.extension.FindByExtension;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

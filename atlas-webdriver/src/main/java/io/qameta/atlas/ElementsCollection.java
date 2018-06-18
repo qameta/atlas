@@ -1,7 +1,7 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.ShouldMethodExtension;
-import io.qameta.atlas.extensions.WaitUntilMethodExtension;
+import io.qameta.atlas.extension.ShouldMethodExtension;
+import io.qameta.atlas.extension.WaitUntilMethodExtension;
 import org.hamcrest.Matcher;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 public interface ElementsCollection<E> extends List<E> {
 
     /**
-     * This method handled by the {@link io.qameta.atlas.extensions.FilterCollectionExtension}.
+     * This method handled by the {@link io.qameta.atlas.extension.FilterCollectionExtension}.
      */
     ElementsCollection<E> filter(Predicate<E> predicate);
 

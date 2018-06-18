@@ -1,6 +1,6 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.ShouldMethodExtension;
+import io.qameta.atlas.extension.ShouldMethodExtension;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.Matcher;
 import org.junit.Before;

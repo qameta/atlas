@@ -1,7 +1,7 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.FindBy;
-import io.qameta.atlas.extensions.FindByCollectionExtension;
+import io.qameta.atlas.extension.FindBy;
+import io.qameta.atlas.extension.FindByCollectionExtension;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -53,7 +53,7 @@ public class ElementsCollectionTest {
     }
 
     @Test
-    @Ignore("new elements creates without extensions in collection findby extension")
+    @Ignore("new elements creates without extension in collection findby extension")
     public void shouldFindNestedElementFromCollection() {
         AtlasWebElement listElement = mockAtlasWebElement();
         AtlasWebElement block = mockAtlasWebElement();

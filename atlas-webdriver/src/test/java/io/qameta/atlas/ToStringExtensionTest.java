@@ -1,6 +1,6 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.ToStringMethodExtension;
+import io.qameta.atlas.extension.ToStringMethodExtension;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;

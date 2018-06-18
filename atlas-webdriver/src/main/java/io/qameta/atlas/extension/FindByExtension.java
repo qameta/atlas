@@ -1,4 +1,4 @@
-package io.qameta.atlas.extensions;
+package io.qameta.atlas.extension;
 
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.MethodExtension;
@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 import java.util.Optional;
 
 /**
- * Extension for methods with {@link io.qameta.atlas.extensions.FindBy} annotation.
+ * Extension for methods with {@link io.qameta.atlas.extension.FindBy} annotation.
  */
 public class FindByExtension implements MethodExtension {
 

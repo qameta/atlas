@@ -1,9 +1,9 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.FindBy;
-import io.qameta.atlas.extensions.FindByCollectionExtension;
-import io.qameta.atlas.extensions.FindByExtension;
-import io.qameta.atlas.extensions.Name;
+import io.qameta.atlas.extension.FindBy;
+import io.qameta.atlas.extension.FindByCollectionExtension;
+import io.qameta.atlas.extension.FindByExtension;
+import io.qameta.atlas.extension.Name;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;

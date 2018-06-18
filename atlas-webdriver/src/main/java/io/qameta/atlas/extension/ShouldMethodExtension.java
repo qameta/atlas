@@ -1,7 +1,6 @@
-package io.qameta.atlas.extensions;
+package io.qameta.atlas.extension;
 
 import io.qameta.atlas.api.MethodExtension;
-import io.qameta.atlas.exception.WaitUntilException;
 import io.qameta.atlas.util.MethodInfo;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
@@ -12,15 +11,15 @@ import static io.qameta.atlas.util.MethodInfoUtils.getMatcher;
 import static io.qameta.atlas.util.MethodInfoUtils.getMessage;
 
 /**
- * WaitUntil method extension for {@link io.qameta.atlas.AtlasWebElement}.
+ * Should method extension for {@link io.qameta.atlas.AtlasWebElement}.
  */
-public class WaitUntilMethodExtension implements MethodExtension {
+public class ShouldMethodExtension implements MethodExtension {
 
-    private static final String WAIT_UNTIL = "waitUntil";
+    private static final String SHOULD = "should";
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(WAIT_UNTIL);
+        return method.getName().equals(SHOULD);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class WaitUntilMethodExtension implements MethodExtension {
                     .appendDescriptionOf(matcher)
                     .appendText("\n     but: ");
             matcher.describeMismatch(proxy, description);
-            throw new WaitUntilException(description.toString());
+            throw new AssertionError(description.toString());
         }
         return proxy;
     }

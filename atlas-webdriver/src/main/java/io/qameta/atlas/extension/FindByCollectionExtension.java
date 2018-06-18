@@ -1,4 +1,4 @@
-package io.qameta.atlas.extensions;
+package io.qameta.atlas.extension;
 
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.MethodExtension;
@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Extension for methods with {@link io.qameta.atlas.extensions.FindBy} annotation
+ * Extension for methods with {@link io.qameta.atlas.extension.FindBy} annotation
  * and {@link io.qameta.atlas.ElementsCollection} return type.
  */
 public class FindByCollectionExtension implements MethodExtension {

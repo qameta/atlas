@@ -1,4 +1,4 @@
-package io.qameta.atlas.extensions;
+package io.qameta.atlas.extension;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

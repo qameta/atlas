@@ -1,4 +1,4 @@
-package io.qameta.atlas.extensions;
+package io.qameta.atlas.extension;
 
 import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.util.MethodInfo;
