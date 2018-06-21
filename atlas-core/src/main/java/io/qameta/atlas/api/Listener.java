@@ -5,7 +5,7 @@ import io.qameta.atlas.util.MethodInfo;
 /**
  * Listener.
  */
-public interface Listener {
+public interface Listener extends Extension {
 
     void beforeMethodCall(MethodInfo methodInfo);
 

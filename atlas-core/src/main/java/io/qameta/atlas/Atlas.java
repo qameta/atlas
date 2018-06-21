@@ -7,11 +7,11 @@ import io.qameta.atlas.api.MethodInvoker;
 import io.qameta.atlas.context.TargetContext;
 import io.qameta.atlas.internal.AtlasMethodHandler;
 import io.qameta.atlas.internal.Configuration;
+import io.qameta.atlas.internal.ListenerNotifier;
 import io.qameta.atlas.internal.TargetMethodInvoker;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,15 +25,12 @@ public class Atlas {
 
     private final Configuration configuration;
 
-    private final List<Listener> listeners;
-
     public Atlas() {
-        this.listeners = new ArrayList<>();
         this.configuration = new Configuration();
     }
 
     public Atlas listener(final Listener listener) {
-        this.listeners.add(listener);
+        this.configuration.registerExtension(listener);
         return this;
     }
 
@@ -60,10 +57,13 @@ public class Atlas {
             invokers.put(method, invoker);
         });
 
+        final ListenerNotifier notifier = new ListenerNotifier();
+        configuration.getExtensions(Listener.class).forEach(notifier::addListeners);
+
         return (T) Proxy.newProxyInstance(
                 type.getClassLoader(),
                 new Class[]{type},
-                new AtlasMethodHandler(configuration, listeners, invokers)
+                new AtlasMethodHandler(configuration, notifier, invokers)
         );
     }
 

@@ -1,12 +1,10 @@
 package io.qameta.atlas.internal;
 
-import io.qameta.atlas.api.Listener;
 import io.qameta.atlas.api.MethodInvoker;
 import io.qameta.atlas.util.MethodInfo;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,20 +12,18 @@ import java.util.Map;
  */
 public class AtlasMethodHandler implements InvocationHandler {
 
-    private final Configuration config;
+    private final Configuration configuration;
 
     private final ListenerNotifier notifier;
 
     private final Map<Method, MethodInvoker> handlers;
 
-    public AtlasMethodHandler(final Configuration config,
-                              final List<Listener> listeners,
+    public AtlasMethodHandler(final Configuration configuration,
+                              final ListenerNotifier listenerNotifier,
                               final Map<Method, MethodInvoker> handlers) {
-        this.notifier = new ListenerNotifier();
+        this.configuration = configuration;
+        this.notifier = listenerNotifier;
         this.handlers = handlers;
-        this.config = config;
-
-        listeners.forEach(notifier::addListeners);
     }
 
     @Override
@@ -37,7 +33,7 @@ public class AtlasMethodHandler implements InvocationHandler {
         notifier.beforeMethodCall(methodInfo);
         try {
             final MethodInvoker handler = handlers.get(method);
-            final Object result = handler.invoke(proxy, methodInfo, config);
+            final Object result = handler.invoke(proxy, methodInfo, configuration);
             notifier.onMethodReturn(methodInfo, result);
             return result;
         } catch (Throwable e) {
