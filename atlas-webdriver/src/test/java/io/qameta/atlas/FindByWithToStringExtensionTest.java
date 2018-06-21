@@ -5,6 +5,7 @@ import io.qameta.atlas.extension.FindByCollectionExtension;
 import io.qameta.atlas.extension.FindByExtension;
 import io.qameta.atlas.extension.Name;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.when;
 /**
  * @author kurau (Yuri Kalinin)
  */
+@Ignore("Name is not implemented yet")
 public class FindByWithToStringExtensionTest {
 
     private static final String SELECTOR = "//div";

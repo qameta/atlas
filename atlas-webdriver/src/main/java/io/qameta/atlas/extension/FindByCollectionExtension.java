@@ -51,7 +51,7 @@ public class FindByCollectionExtension implements MethodExtension {
                         .create(originalElements.get(i), (Class<?>) methodReturnType))
                 .collect(toList());
 
-        return new Atlas().extension(new ToStringMethodExtension(name))
+        return new Atlas(configuration)
                 .create(newElements, method.getReturnType());
     }
 

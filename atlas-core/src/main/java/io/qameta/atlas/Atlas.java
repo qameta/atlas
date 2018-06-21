@@ -26,7 +26,11 @@ public class Atlas {
     private final Configuration configuration;
 
     public Atlas() {
-        this.configuration = new Configuration();
+        this(new Configuration());
+    }
+
+    public Atlas(final Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public Atlas listener(final Listener listener) {

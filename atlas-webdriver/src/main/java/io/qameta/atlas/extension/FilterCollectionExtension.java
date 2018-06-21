@@ -30,7 +30,7 @@ public class FilterCollectionExtension implements MethodExtension {
                                      final MethodInfo methodInfo,
                                      final Configuration configuration) {
         final Predicate condition = (Predicate) methodInfo.getArgs()[0];
-        return new Atlas()
+        return new Atlas(configuration)
                 .create(((List) proxy).stream().filter(condition).collect(toList()), ElementsCollection.class);
     }
 }
