@@ -14,13 +14,18 @@ import java.util.Map;
  */
 public class AtlasMethodHandler implements InvocationHandler {
 
-    private final Map<Method, MethodInvoker> handlers;
+    private final Configuration config;
 
     private final ListenerNotifier notifier;
 
-    public AtlasMethodHandler(final List<Listener> listeners, final Map<Method, MethodInvoker> handlers) {
+    private final Map<Method, MethodInvoker> handlers;
+
+    public AtlasMethodHandler(final Configuration config,
+                              final List<Listener> listeners,
+                              final Map<Method, MethodInvoker> handlers) {
         this.notifier = new ListenerNotifier();
         this.handlers = handlers;
+        this.config = config;
 
         listeners.forEach(notifier::addListeners);
     }
@@ -32,7 +37,7 @@ public class AtlasMethodHandler implements InvocationHandler {
         notifier.beforeMethodCall(methodInfo);
         try {
             final MethodInvoker handler = handlers.get(method);
-            final Object result = handler.invoke(proxy, methodInfo);
+            final Object result = handler.invoke(proxy, methodInfo, config);
             notifier.onMethodReturn(methodInfo, result);
             return result;
         } catch (Throwable e) {
