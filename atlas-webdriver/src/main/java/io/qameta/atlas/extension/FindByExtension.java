@@ -2,6 +2,7 @@ package io.qameta.atlas.extension;
 
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.internal.Configuration;
 import io.qameta.atlas.util.MethodInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -22,7 +23,9 @@ public class FindByExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final MethodInfo methodInfo) {
+    public Object invoke(final Object proxy,
+                         final MethodInfo methodInfo,
+                         final Configuration configuration) {
         final Method method = methodInfo.getMethod();
 
         assert proxy instanceof SearchContext;

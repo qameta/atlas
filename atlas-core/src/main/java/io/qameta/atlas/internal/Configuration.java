@@ -35,14 +35,14 @@ public class Configuration {
                 .collect(Collectors.toList());
     }
 
-    public <T> Optional<T> getContext(Class<T> contextType) {
+    public <T> Optional<T> getContext(final Class<T> contextType) {
         return extensions.stream()
                 .filter(contextType::isInstance)
                 .map(contextType::cast)
                 .findFirst();
     }
 
-    public <T> T requireContext(Class<T> contextType) {
+    public <T> T requireContext(final Class<T> contextType) {
         return getContext(contextType)
                 .orElseThrow(() -> new ArithmeticException("Context not found by type " + contextType));
     }

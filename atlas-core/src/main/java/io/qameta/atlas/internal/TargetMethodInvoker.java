@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class TargetMethodInvoker implements MethodInvoker {
 
     @Override
-    public Object invoke(final Object proxy, final MethodInfo methodInfo, Configuration config) throws Throwable {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration config) throws Throwable {
         final Object target = config.requireContext(TargetContext.class).get();
 
         final Method targetMethod = MethodUtils.getMatchingAccessibleMethod(

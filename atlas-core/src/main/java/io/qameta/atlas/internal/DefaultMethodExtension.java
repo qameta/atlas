@@ -18,7 +18,7 @@ public class DefaultMethodExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final MethodInfo methodInfo, Configuration config) throws Throwable {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration config) throws Throwable {
         final Class<?> declaringClass = methodInfo.getMethod().getDeclaringClass();
         final Constructor<MethodHandles.Lookup> constructor = MethodHandles.Lookup.class
                 .getDeclaredConstructor(Class.class, int.class);

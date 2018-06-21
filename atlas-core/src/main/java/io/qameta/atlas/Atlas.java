@@ -54,7 +54,7 @@ public class Atlas {
         this.context(new TargetContext(target));
 
         methods.forEach(method -> {
-            MethodInvoker invoker = configuration.getExtensions(MethodExtension.class).stream()
+            final MethodInvoker invoker = configuration.getExtensions(MethodExtension.class).stream()
                     .filter(extension -> extension.test(method)).map(MethodInvoker.class::cast).findFirst()
                     .orElse(new TargetMethodInvoker());
             invokers.put(method, invoker);

@@ -2,11 +2,14 @@ package io.qameta.atlas.context;
 
 import io.qameta.atlas.api.Context;
 
+/**
+ * Target context.
+ */
 public class TargetContext implements Context<Object> {
 
     private final Object target;
 
-    public TargetContext(Object target) {
+    public TargetContext(final Object target) {
         this.target = target;
     }
 
@@ -14,4 +17,5 @@ public class TargetContext implements Context<Object> {
     public Object get() {
         return target;
     }
+
 }
