@@ -2,7 +2,6 @@ package io.qameta.atlas.internal;
 
 import io.qameta.atlas.api.Context;
 import io.qameta.atlas.api.Extension;
-import io.qameta.atlas.util.ReflectionUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,33 +14,29 @@ import java.util.stream.Collectors;
  */
 public class Configuration {
 
-    private final Set<Class<? extends Extension>> extensions;
-
-    private final Set<Context> contexts;
+    private final Set<Extension> extensions;
 
     public Configuration() {
         this.extensions = new HashSet<>();
-        this.contexts = new HashSet<>();
     }
 
-    public void registerExtension(final Class<? extends Extension> extension) {
+    public void registerExtension(final Extension extension) {
         this.extensions.add(extension);
     }
 
-    public void addContext(final Context context) {
-        this.contexts.add(context);
+    public void registerContext(final Context context) {
+        this.extensions.add(context);
     }
 
-    public <T extends Extension> List<T> getExtensions(final Class<T> type) {
+    public <T extends Extension> List<T> getExtensions(final Class<T> extensionType) {
         return extensions.stream()
-                .filter(type::isAssignableFrom)
-                .map(ReflectionUtils::newInstance)
-                .map(type::cast)
+                .filter(extensionType::isInstance)
+                .map(extensionType::cast)
                 .collect(Collectors.toList());
     }
 
     public <T> Optional<T> getContext(Class<T> contextType) {
-        return contexts.stream()
+        return extensions.stream()
                 .filter(contextType::isInstance)
                 .map(contextType::cast)
                 .findFirst();

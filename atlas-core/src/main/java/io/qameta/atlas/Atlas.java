@@ -23,15 +23,12 @@ import static io.qameta.atlas.util.ReflectionUtils.getMethods;
  */
 public class Atlas {
 
-    private final List<MethodExtension> extensions;
-
     private final Configuration configuration;
 
     private final List<Listener> listeners;
 
     public Atlas() {
         this.listeners = new ArrayList<>();
-        this.extensions = new ArrayList<>();
         this.configuration = new Configuration();
     }
 
@@ -41,12 +38,12 @@ public class Atlas {
     }
 
     public Atlas extension(final MethodExtension methodExtension) {
-        this.extensions.add(methodExtension);
+        this.configuration.registerExtension(methodExtension);
         return this;
     }
 
     public Atlas context(final Context context) {
-        this.configuration.addContext(context);
+        this.configuration.registerContext(context);
         return this;
     }
 
@@ -57,7 +54,8 @@ public class Atlas {
         this.context(new TargetContext(target));
 
         methods.forEach(method -> {
-            MethodInvoker invoker = extensions.stream().filter(extension -> extension.test(method)).map(MethodInvoker.class::cast).findFirst()
+            MethodInvoker invoker = configuration.getExtensions(MethodExtension.class).stream()
+                    .filter(extension -> extension.test(method)).map(MethodInvoker.class::cast).findFirst()
                     .orElse(new TargetMethodInvoker());
             invokers.put(method, invoker);
         });
