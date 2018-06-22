@@ -23,10 +23,10 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void beforeMethodCall(final MethodInfo methodInfo) {
+    public void beforeMethodCall(final MethodInfo methodInfo, final Configuration configuration) {
         for (Listener listener : listeners) {
             try {
-                listener.beforeMethodCall(methodInfo);
+                listener.beforeMethodCall(methodInfo, configuration);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} beforeMethodCall", listener, e);
             }
@@ -34,10 +34,10 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void afterMethodCall(final MethodInfo methodInfo) {
+    public void afterMethodCall(final MethodInfo methodInfo, final Configuration configuration) {
         for (Listener listener : listeners) {
             try {
-                listener.afterMethodCall(methodInfo);
+                listener.afterMethodCall(methodInfo, configuration);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} afterMethodCall", listener, e);
             }
@@ -45,10 +45,10 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void onMethodReturn(final MethodInfo methodInfo, final Object returned) {
+    public void onMethodReturn(final MethodInfo methodInfo, final Configuration configuration, final Object returned) {
         for (Listener listener : listeners) {
             try {
-                listener.onMethodReturn(methodInfo, returned);
+                listener.onMethodReturn(methodInfo, configuration, returned);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} onMethodReturn", listener, e);
             }
@@ -56,10 +56,11 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void onMethodFailure(final MethodInfo methodInfo, final Throwable throwable) {
+    public void onMethodFailure(final MethodInfo methodInfo, final Configuration configuration,
+                                final Throwable throwable) {
         for (Listener listener : listeners) {
             try {
-                listener.onMethodFailure(methodInfo, throwable);
+                listener.onMethodFailure(methodInfo, configuration, throwable);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} onMethodFailure", listener, e);
             }

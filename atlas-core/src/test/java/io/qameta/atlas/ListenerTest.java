@@ -20,10 +20,10 @@ public class ListenerTest {
 
         proxyHello.hello();
 
-        verify(listener, times(1)).beforeMethodCall(any());
-        verify(listener, times(1)).afterMethodCall(any());
-        verify(listener, times(1)).onMethodReturn(any(), any());
-        verify(listener, times(0)).onMethodFailure(any(), any());
+        verify(listener, times(1)).beforeMethodCall(any(), any());
+        verify(listener, times(1)).afterMethodCall(any(), any());
+        verify(listener, times(1)).onMethodReturn(any(), any(), any());
+        verify(listener, times(0)).onMethodFailure(any(), any(), any());
 
     }
 

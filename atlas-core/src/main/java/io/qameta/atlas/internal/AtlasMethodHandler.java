@@ -30,17 +30,17 @@ public class AtlasMethodHandler implements InvocationHandler {
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
         final MethodInfo methodInfo = new MethodInfo(method, args);
 
-        notifier.beforeMethodCall(methodInfo);
+        notifier.beforeMethodCall(methodInfo, configuration);
         try {
             final MethodInvoker handler = handlers.get(method);
             final Object result = handler.invoke(proxy, methodInfo, configuration);
-            notifier.onMethodReturn(methodInfo, result);
+            notifier.onMethodReturn(methodInfo, configuration, result);
             return result;
         } catch (Throwable e) {
-            notifier.onMethodFailure(methodInfo, e);
+            notifier.onMethodFailure(methodInfo, configuration, e);
             throw e;
         } finally {
-            notifier.afterMethodCall(methodInfo);
+            notifier.afterMethodCall(methodInfo, configuration);
         }
     }
 
