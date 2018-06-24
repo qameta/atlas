@@ -47,11 +47,11 @@ public class FindByCollectionExtension implements MethodExtension {
         final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
 
         final List newElements = IntStream.range(0, originalElements.size())
-                .mapToObj(i -> new Atlas().extension(new ToStringMethodExtension(listElementName(name, i)))
-                        .create(originalElements.get(i), (Class<?>) methodReturnType))
+                .mapToObj(i -> new Atlas()
+                        .create(listElementName(name, i), originalElements.get(i), (Class<?>) methodReturnType))
                 .collect(toList());
 
-        return new Atlas(configuration)
+        return new Atlas(configuration.child())
                 .create(newElements, method.getReturnType());
     }
 

@@ -26,7 +26,8 @@ public class ToStringExtensionTest {
 
     @Test
     public void shouldUseDefaultToStringMethodWithoutExtension() {
-        AtlasWebElement atlasWebElement = new Atlas().create(parent, AtlasWebElement.class);
+        AtlasWebElement atlasWebElement = new Atlas()
+                .create(parent, AtlasWebElement.class);
         when(parent.toString()).thenReturn(message);
 
         assertThat(atlasWebElement.toString()).isEqualTo(message);
@@ -35,8 +36,8 @@ public class ToStringExtensionTest {
     @Test
     public void shouldUseToStringExtensionMethodName() {
         AtlasWebElement atlasWebElement = new Atlas()
-                .extension(new ToStringMethodExtension(message))
-                .create(parent, AtlasWebElement.class);
+                .extension(new ToStringMethodExtension())
+                .create(message, parent, AtlasWebElement.class);
 
         assertThat(atlasWebElement.toString()).isEqualTo(message);
     }

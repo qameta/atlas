@@ -36,7 +36,6 @@ public class FilterCollectionExtensionTest {
     }
 
     @Test
-    @Ignore("new collection creates without extension in filter extension")
     public void shouldFilterElementsTwice() {
         when(element.isDisplayed()).thenReturn(IS_DISPLAYED);
         when(element.getText()).thenReturn(TEXT);

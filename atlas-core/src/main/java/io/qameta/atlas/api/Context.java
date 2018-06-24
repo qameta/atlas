@@ -12,6 +12,6 @@ public interface Context<T> extends Extension {
      *
      * @return the context value.
      */
-    T get();
+    T getValue();
 
 }

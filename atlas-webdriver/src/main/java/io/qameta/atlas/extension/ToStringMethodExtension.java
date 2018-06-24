@@ -1,6 +1,7 @@
 package io.qameta.atlas.extension;
 
 import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.context.TargetContext;
 import io.qameta.atlas.internal.Configuration;
 import io.qameta.atlas.util.MethodInfo;
 
@@ -13,13 +14,6 @@ public class ToStringMethodExtension implements MethodExtension {
 
     private static final String TO_STRING = "toString";
 
-    private final String name;
-
-
-    public ToStringMethodExtension(final String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean test(final Method method) {
         return method.getName().equals(TO_STRING);
@@ -29,7 +23,7 @@ public class ToStringMethodExtension implements MethodExtension {
     public Object invoke(final Object proxy,
                          final MethodInfo methodInfo,
                          final Configuration configuration) {
-        return name;
+        return configuration.requireContext(TargetContext.class).getValue().name();
     }
 
 }

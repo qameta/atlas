@@ -4,11 +4,13 @@ import io.qameta.atlas.api.Context;
 import io.qameta.atlas.api.Listener;
 import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.api.MethodInvoker;
+import io.qameta.atlas.api.Target;
 import io.qameta.atlas.context.TargetContext;
 import io.qameta.atlas.internal.AtlasMethodHandler;
 import io.qameta.atlas.internal.Configuration;
 import io.qameta.atlas.internal.ListenerNotifier;
 import io.qameta.atlas.internal.TargetMethodInvoker;
+import io.qameta.atlas.target.HardcodedTarget;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -49,7 +51,7 @@ public class Atlas {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T create(final Object target, final Class<T> type) {
+    public <T> T create(final Target target, final Class<T> type) {
         final Map<Method, MethodInvoker> invokers = new HashMap<>();
         final List<Method> methods = getMethods(type, Object.class);
         this.context(new TargetContext(target));
@@ -69,6 +71,14 @@ public class Atlas {
                 new Class[]{type},
                 new AtlasMethodHandler(configuration, notifier, invokers)
         );
+    }
+
+    public <T> T create(final String name, final Object target, final Class<T> type) {
+        return create(new HardcodedTarget(name, target), type);
+    }
+
+    public <T> T create(final Object target, final Class<T> type) {
+        return create(type.getSimpleName(), target, type);
     }
 
 }

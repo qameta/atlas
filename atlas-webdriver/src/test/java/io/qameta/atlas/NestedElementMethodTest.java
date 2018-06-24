@@ -2,7 +2,7 @@ package io.qameta.atlas;
 
 import io.qameta.atlas.extension.FindBy;
 import io.qameta.atlas.extension.FindByExtension;
-import org.junit.Ignore;
+import io.qameta.atlas.extension.ToStringMethodExtension;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,7 +18,6 @@ public class NestedElementMethodTest {
     private static final String LEAF_SELECTOR = "//div";
 
     @Test
-    @Ignore("Await implementing lazy search")
     public void shouldFindNestedElement() {
         WebElement parent = mockWebElement();
 
@@ -30,6 +29,7 @@ public class NestedElementMethodTest {
 
         ParentElement parentElement = new Atlas()
                 .extension(new FindByExtension())
+                .extension(new ToStringMethodExtension())
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.child()).isNotNull();
