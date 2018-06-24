@@ -1,7 +1,7 @@
 package io.qameta.atlas;
 
 import io.qameta.atlas.exception.WaitUntilException;
-import io.qameta.atlas.extensions.WaitUntilMethodExtension;
+import io.qameta.atlas.extension.WaitUntilMethodExtension;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.Matcher;
 import org.junit.Before;

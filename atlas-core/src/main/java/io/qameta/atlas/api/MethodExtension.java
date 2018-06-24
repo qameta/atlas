@@ -6,5 +6,5 @@ import java.util.function.Predicate;
 /**
  * Basic extension point.
  */
-public interface MethodExtension extends Predicate<Method>, MethodInvoker {
+public interface MethodExtension extends Predicate<Method>, MethodInvoker, Extension {
 }

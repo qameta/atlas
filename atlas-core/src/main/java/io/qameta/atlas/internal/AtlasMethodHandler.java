@@ -1,12 +1,10 @@
 package io.qameta.atlas.internal;
 
-import io.qameta.atlas.api.Listener;
 import io.qameta.atlas.api.MethodInvoker;
 import io.qameta.atlas.util.MethodInfo;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,32 +12,35 @@ import java.util.Map;
  */
 public class AtlasMethodHandler implements InvocationHandler {
 
-    private final Map<Method, MethodInvoker> handlers;
+    private final Configuration configuration;
 
     private final ListenerNotifier notifier;
 
-    public AtlasMethodHandler(final List<Listener> listeners, final Map<Method, MethodInvoker> handlers) {
-        this.notifier = new ListenerNotifier();
-        this.handlers = handlers;
+    private final Map<Method, MethodInvoker> handlers;
 
-        listeners.forEach(notifier::addListeners);
+    public AtlasMethodHandler(final Configuration configuration,
+                              final ListenerNotifier listenerNotifier,
+                              final Map<Method, MethodInvoker> handlers) {
+        this.configuration = configuration;
+        this.notifier = listenerNotifier;
+        this.handlers = handlers;
     }
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
         final MethodInfo methodInfo = new MethodInfo(method, args);
 
-        notifier.beforeMethodCall(methodInfo);
+        notifier.beforeMethodCall(methodInfo, configuration);
         try {
             final MethodInvoker handler = handlers.get(method);
-            final Object result = handler.invoke(proxy, methodInfo);
-            notifier.onMethodReturn(methodInfo, result);
+            final Object result = handler.invoke(proxy, methodInfo, configuration);
+            notifier.onMethodReturn(methodInfo, configuration, result);
             return result;
         } catch (Throwable e) {
-            notifier.onMethodFailure(methodInfo, e);
+            notifier.onMethodFailure(methodInfo, configuration, e);
             throw e;
         } finally {
-            notifier.afterMethodCall(methodInfo);
+            notifier.afterMethodCall(methodInfo, configuration);
         }
     }
 

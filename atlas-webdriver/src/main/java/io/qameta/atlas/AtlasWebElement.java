@@ -1,7 +1,7 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.ShouldMethodExtension;
-import io.qameta.atlas.extensions.WaitUntilMethodExtension;
+import io.qameta.atlas.extension.ShouldMethodExtension;
+import io.qameta.atlas.extension.WaitUntilMethodExtension;
 import org.hamcrest.Matcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;

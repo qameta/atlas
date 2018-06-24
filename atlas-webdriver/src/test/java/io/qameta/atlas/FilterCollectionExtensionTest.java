@@ -1,6 +1,6 @@
 package io.qameta.atlas;
 
-import io.qameta.atlas.extensions.FilterCollectionExtension;
+import io.qameta.atlas.extension.FilterCollectionExtension;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -36,7 +36,6 @@ public class FilterCollectionExtensionTest {
     }
 
     @Test
-    @Ignore("new collection creates without extensions in filter extension")
     public void shouldFilterElementsTwice() {
         when(element.isDisplayed()).thenReturn(IS_DISPLAYED);
         when(element.getText()).thenReturn(TEXT);

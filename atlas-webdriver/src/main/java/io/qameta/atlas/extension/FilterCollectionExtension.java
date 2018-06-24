@@ -1,8 +1,9 @@
-package io.qameta.atlas.extensions;
+package io.qameta.atlas.extension;
 
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.ElementsCollection;
 import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.internal.Configuration;
 import io.qameta.atlas.util.MethodInfo;
 
 import java.lang.reflect.Method;
@@ -25,9 +26,11 @@ public class FilterCollectionExtension implements MethodExtension {
 
     @Override
     @SuppressWarnings("unchecked")
-    public ElementsCollection invoke(final Object proxy, final MethodInfo methodInfo) throws Throwable {
+    public ElementsCollection invoke(final Object proxy,
+                                     final MethodInfo methodInfo,
+                                     final Configuration configuration) {
         final Predicate condition = (Predicate) methodInfo.getArgs()[0];
-        return new Atlas()
+        return new Atlas(configuration)
                 .create(((List) proxy).stream().filter(condition).collect(toList()), ElementsCollection.class);
     }
 }

@@ -1,7 +1,8 @@
-package io.qameta.atlas.extensions;
+package io.qameta.atlas.extension;
 
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.internal.Configuration;
 import io.qameta.atlas.util.MethodInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -17,7 +18,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Extension for methods with {@link io.qameta.atlas.extensions.FindBy} annotation
+ * Extension for methods with {@link io.qameta.atlas.extension.FindBy} annotation
  * and {@link io.qameta.atlas.ElementsCollection} return type.
  */
 public class FindByCollectionExtension implements MethodExtension {
@@ -29,7 +30,9 @@ public class FindByCollectionExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final MethodInfo methodInfo) {
+    public Object invoke(final Object proxy,
+                         final MethodInfo methodInfo,
+                         final Configuration configuration) {
         final Method method = methodInfo.getMethod();
 
         assert proxy instanceof SearchContext;
@@ -44,11 +47,11 @@ public class FindByCollectionExtension implements MethodExtension {
         final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
 
         final List newElements = IntStream.range(0, originalElements.size())
-                .mapToObj(i -> new Atlas().extension(new ToStringMethodExtension(listElementName(name, i)))
-                        .create(originalElements.get(i), (Class<?>) methodReturnType))
+                .mapToObj(i -> new Atlas()
+                        .create(listElementName(name, i), originalElements.get(i), (Class<?>) methodReturnType))
                 .collect(toList());
 
-        return new Atlas().extension(new ToStringMethodExtension(name))
+        return new Atlas(configuration.child())
                 .create(newElements, method.getReturnType());
     }
 

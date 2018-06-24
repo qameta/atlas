@@ -1,6 +1,8 @@
 package io.qameta.atlas.util;
 
+import io.qameta.atlas.AtlasException;
 import org.apache.commons.lang3.ClassUtils;
+import org.apache.commons.lang3.reflect.ConstructorUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -30,6 +32,14 @@ public final class ReflectionUtils {
         return getAllInterfaces(clazz).stream()
                 .flatMap(m -> Arrays.stream(m.getDeclaredMethods()))
                 .collect(Collectors.toList());
+    }
+
+    public static <T> T newInstance(final Class<T> clazz) {
+        try {
+            return ConstructorUtils.invokeConstructor(clazz);
+        } catch (Exception e) {
+            throw new AtlasException("Can't instantiate class " + clazz, e);
+        }
     }
 
 }

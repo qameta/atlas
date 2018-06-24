@@ -1,6 +1,6 @@
 package io.qameta.atlas.exception;
 
-import io.qameta.atlas.extensions.WaitUntilMethodExtension;
+import io.qameta.atlas.extension.WaitUntilMethodExtension;
 import org.openqa.selenium.WebDriverException;
 
 /**
