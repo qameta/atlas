@@ -10,6 +10,7 @@ import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.interactions.internal.Locatable;
+import org.openqa.selenium.internal.WrapsElement;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * Atlas Web Element.
  * @param <T> the type of the value being boxed
  */
-public interface AtlasWebElement<T extends WebElement> extends WebElement, Locatable {
+public interface AtlasWebElement<T extends WebElement> extends WrapsElement, WebElement, Locatable {
 
     /**
      * The same as {@link WebElement#click()}.
@@ -123,5 +124,10 @@ public interface AtlasWebElement<T extends WebElement> extends WebElement, Locat
      * This method handled by the {@link WaitUntilMethodExtension}.
      */
     T waitUntil(String message, Matcher matcher);
+
+    /**
+     * The same as {@link WrapsElement#getWrappedElement()}.
+     */
+    WebElement getWrappedElement();
 
 }
