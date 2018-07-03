@@ -1,0 +1,8 @@
+description = 'Atlas Github Sample'
+
+dependencies {
+    compileOnly project(':atlas-webdriver')
+
+    testCompile 'junit:junit:4.12'
+}
+
