@@ -12,9 +12,9 @@ import java.util.Map;
  */
 public class AtlasMethodHandler implements InvocationHandler {
 
-    private final Configuration configuration;
-
     private final ListenerNotifier notifier;
+
+    private final Configuration configuration;
 
     private final Map<Method, MethodInvoker> handlers;
 
@@ -33,7 +33,7 @@ public class AtlasMethodHandler implements InvocationHandler {
         notifier.beforeMethodCall(methodInfo, configuration);
         try {
             final MethodInvoker handler = handlers.get(method);
-            final Object result = handler.invoke(proxy, methodInfo, configuration);
+            final Object result = invokeWithRetry(handler, proxy, methodInfo);
             notifier.onMethodReturn(methodInfo, configuration, result);
             return result;
         } catch (Throwable e) {
@@ -42,6 +42,23 @@ public class AtlasMethodHandler implements InvocationHandler {
         } finally {
             notifier.afterMethodCall(methodInfo, configuration);
         }
+    }
+
+    public Object invokeWithRetry(final MethodInvoker invoker,
+                                  final Object proxy,
+                                  final MethodInfo methodInfo) throws Throwable {
+        final DefaultRetryer retryer = new DefaultRetryer();
+        retryer.ignore(Throwable.class);
+
+        Throwable lastException;
+        do {
+            try {
+                return invoker.invoke(proxy, methodInfo, configuration);
+            } catch (Throwable e) {
+                lastException = e;
+            }
+        } while (retryer.shouldRetry(lastException));
+        throw lastException;
     }
 
 }
