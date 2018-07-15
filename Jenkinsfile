@@ -28,6 +28,7 @@ pipeline {
     }
     post {
         always {
+            allure results: [[path: 'build/test-results/test'], [path: 'samples/**/build/test-results/test']]
             deleteDir()
         }
         failure {
