@@ -1,8 +1,19 @@
 description = 'Atlas Github Sample'
 
-dependencies {
-    compileOnly project(':atlas-webdriver')
+quality {
+    enabled = false
+}
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile project(':atlas-core')
+    compile project(':atlas-webdriver')
+
+    testCompile 'io.github.bonigarcia:webdrivermanager:2.2.4'
+    testCompile 'com.github.detro:ghostdriver:2.1.0'
     testCompile 'junit:junit:4.12'
 }
 

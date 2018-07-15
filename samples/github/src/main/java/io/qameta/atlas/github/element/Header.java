@@ -1,10 +1,11 @@
 package io.qameta.atlas.github.element;
 
 import io.qameta.atlas.AtlasWebElement;
+import io.qameta.atlas.extension.FindBy;
 
-/**
- * @author Artem Eroshenko.
- */
 public interface Header extends AtlasWebElement {
+
+    @FindBy(".//input[contains(@class,'header-search-input')]")
+    AtlasWebElement searchInput();
 
 }
