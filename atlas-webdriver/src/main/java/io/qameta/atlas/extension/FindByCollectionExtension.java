@@ -12,9 +12,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static io.qameta.atlas.util.MethodInfoUtils.getParameters;
+import static io.qameta.atlas.util.MethodInfoUtils.processTemplate;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -38,7 +41,9 @@ public class FindByCollectionExtension implements MethodExtension {
         assert proxy instanceof SearchContext;
         assert method.isAnnotationPresent(FindBy.class);
 
-        final String xpath = method.getAnnotation(FindBy.class).value();
+        final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
+        final String xpath = processTemplate(method.getAnnotation(FindBy.class).value(), parameters);
+
         final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)
                 .orElse(method.getName());
         final SearchContext context = (SearchContext) proxy;
