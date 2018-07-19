@@ -55,7 +55,7 @@ public final class MethodInfoUtils {
                 .filter(index -> hasParameterAnnotation(method.getParameters()[index]))
                 .boxed()
                 .collect(toMap(index -> getParameterName(method.getParameters()[index]),
-                        index -> Objects.toString(args[index])));
+                    index -> Objects.toString(args[index])));
     }
 
     public static String getParameterName(final AnnotatedElement element) {
