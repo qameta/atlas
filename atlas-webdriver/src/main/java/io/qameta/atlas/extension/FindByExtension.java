@@ -11,7 +11,11 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.Optional;
+
+import static io.qameta.atlas.util.MethodInfoUtils.getParameters;
+import static io.qameta.atlas.util.MethodInfoUtils.processTemplate;
 
 /**
  * Extension for methods with {@link io.qameta.atlas.extension.FindBy} annotation.
@@ -33,7 +37,9 @@ public class FindByExtension implements MethodExtension {
         assert proxy instanceof SearchContext;
         assert method.isAnnotationPresent(FindBy.class);
 
-        final String xpath = method.getAnnotation(FindBy.class).value();
+        final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
+        final String xpath = processTemplate(method.getAnnotation(FindBy.class).value(), parameters);
+
         final SearchContext searchContext = (SearchContext) proxy;
         final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)
                 .orElse(method.getName());

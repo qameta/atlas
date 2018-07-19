@@ -1,6 +1,15 @@
 package io.qameta.atlas.util;
 
+import io.qameta.atlas.extension.Param;
 import org.hamcrest.Matcher;
+
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toMap;
 
 /**
  * @author kurau (Yuri Kalinin)
@@ -33,5 +42,27 @@ public final class MethodInfoUtils {
         } else {
             throw new IllegalStateException(UNEXPECTED_METHOD_SIGNATURE);
         }
+    }
+
+    public static String processTemplate(final String template, final Map<String, String> parameters) {
+        return parameters.entrySet().stream()
+                .reduce(template, (a, b) -> a.replace("{{ " + b.getKey() + " }}", b.getValue()), (s, s2) -> s);
+    }
+
+    @SuppressWarnings("PMD.UseVarargs")
+    public static Map<String, String> getParameters(final Method method, final Object[] args) {
+        return IntStream.range(0, method.getParameterCount())
+                .filter(index -> hasParameterAnnotation(method.getParameters()[index]))
+                .boxed()
+                .collect(toMap(index -> getParameterName(method.getParameters()[index]),
+                    index -> Objects.toString(args[index])));
+    }
+
+    public static String getParameterName(final AnnotatedElement element) {
+        return element.getAnnotation(Param.class).value();
+    }
+
+    public static boolean hasParameterAnnotation(final AnnotatedElement element) {
+        return element.isAnnotationPresent(Param.class);
     }
 }
