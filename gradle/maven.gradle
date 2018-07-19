@@ -1,5 +1,5 @@
 apply plugin: 'maven'
-apply plugin: 'maven-publish'
+apply plugin: 'maven'
 
 install {
     repositories.mavenInstaller {

@@ -1,0 +1,31 @@
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+
+    configurations = ['archives']
+
+    publish = true
+    pkg {
+        userOrg = 'qameta'
+        repo = 'maven'
+        name = 'atlas'
+        desc = 'Atlas Framework'
+        websiteUrl = 'https://github.com/qameta/atlas'
+        issueTrackerUrl = 'https://github.com/qameta/atlas'
+        vcsUrl = 'https://github.com/qameta/atlas.git'
+        licenses = ['Apache-2.0']
+
+        githubRepo = 'qameta/atlas'
+        githubReleaseNotesFile = 'README.md'
+
+        version {
+            name = project.version
+            released = new Date()
+            gpg {
+                sign = true
+            }
+        }
+    }
+}

@@ -5,6 +5,8 @@ buildscript {
 
     dependencies {
         classpath 'ru.vyarus:gradle-quality-plugin:2.3.0'
+        classpath 'net.researchgate:gradle-release:2.7.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath "io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE"
     }
 }
@@ -13,8 +15,14 @@ ext {
     gradleScriptDir = "${rootProject.projectDir}/gradle"
 }
 
+apply from: "${gradleScriptDir}/bintray.gradle"
+apply from: "${gradleScriptDir}/release.gradle"
+
 configure(rootProject) {
     description = "Atlas"
+
+    task build() {
+    }
 
     task wrapper(type: Wrapper) {
         gradleVersion = '4.6'
@@ -31,7 +39,7 @@ subprojects { project ->
     apply plugin: 'java'
     apply plugin: 'ru.vyarus.quality'
     apply plugin: 'io.spring.dependency-management'
-    apply from: "${gradleScriptDir}/maven-publish.gradle"
+    apply from: "${gradleScriptDir}/maven.gradle"
 
     compileJava {
         sourceCompatibility = 1.8
