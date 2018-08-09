@@ -18,11 +18,11 @@ public class DefaultRetryer implements Retryer {
 
     private Long polling;
 
-    public DefaultRetryer() {
-        this.ignoring = new ArrayList<>();
-        this.timeout = TimeUnit.SECONDS.toMillis(5);
-        this.polling = TimeUnit.MILLISECONDS.toMillis(250);
+    public DefaultRetryer(Long timeout, Long polling, List<Class<? extends Throwable>> ignoring) {
+        this.ignoring = new ArrayList<>(ignoring);
         this.start = System.currentTimeMillis();
+        this.timeout = timeout;
+        this.polling = polling;
     }
 
     public void ignore(final Class<? extends Throwable> throwable) {
