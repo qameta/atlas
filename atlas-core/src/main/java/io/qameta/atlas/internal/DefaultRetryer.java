@@ -1,6 +1,8 @@
 package io.qameta.atlas.internal;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -38,16 +40,18 @@ public class DefaultRetryer implements Retryer {
     }
 
     public boolean shouldRetry(final Throwable e) {
-        if (ignoring.stream().anyMatch(clazz -> clazz.isInstance(e))
-                && start + timeout < System.currentTimeMillis()) {
+        System.out.println("Start: " + new Date(start));
+        System.out.println("Current: " + new Date(System.currentTimeMillis()));
+        System.out.println("Delta: " + (System.currentTimeMillis() - start));
+        if (!(ignoring.stream().anyMatch(clazz -> clazz.isInstance(e)) && start + timeout < System.currentTimeMillis())) {
             try {
                 Thread.sleep(polling);
-                return false;
+                return true;
             } catch (InterruptedException i) {
                 Thread.currentThread().interrupt();
             }
         }
-        return true;
+        return false;
     }
 
 }

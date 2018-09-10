@@ -54,9 +54,10 @@ public class AtlasMethodHandler implements InvocationHandler {
                                   final MethodInfo methodInfo) throws Throwable {
         final DefaultRetryer retryer = Optional.ofNullable(methodInfo.getMethod().getAnnotation(Retry.class))
                 .map(retry -> new DefaultRetryer(retry.timeout(), retry.polling(), Arrays.asList(retry.ignoring())))
-                .orElse(new DefaultRetryer(5000L, 250L, new ArrayList<>()));
+                .orElse(new DefaultRetryer(5000L, 1000L, new ArrayList<>()));
         retryer.ignore(Throwable.class);
 
+        System.out.println(methodInfo.getMethod().getName());
         Throwable lastException;
         do {
             try {

@@ -8,8 +8,8 @@ public @interface Retry {
 
     long timeout() default 5000L;
 
-    long polling() default 250L;
+    long polling() default 1000L;
 
-    Class<? extends Throwable>[] ignoring() default {};
+    Class<? extends Throwable>[] ignoring() default {Throwable.class};
 
 }
