@@ -8,20 +8,12 @@ import io.qameta.atlas.util.MethodInfo;
  */
 public interface Listener extends Extension {
 
-    default void beforeMethodCall(MethodInfo methodInfo, Configuration configuration) {
+    void beforeMethodCall(MethodInfo methodInfo, Configuration configuration);
 
-    }
+    void afterMethodCall(MethodInfo methodInfo, Configuration configuration);
 
-    default void afterMethodCall(MethodInfo methodInfo, Configuration configuration) {
+    void onMethodReturn(MethodInfo methodInfo, Configuration configuration, Object returned);
 
-    }
-
-    default void onMethodReturn(MethodInfo methodInfo, Configuration configuration, Object returned) {
-
-    }
-
-    default void onMethodFailure(MethodInfo methodInfo, Configuration configuration, Throwable throwable) {
-
-    }
+    void onMethodFailure(MethodInfo methodInfo, Configuration configuration, Throwable throwable);
 
 }
