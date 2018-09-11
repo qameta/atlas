@@ -1,11 +1,15 @@
 package io.qameta.atlas;
 
+import io.qameta.atlas.api.Listener;
 import io.qameta.atlas.extension.FindBy;
 import io.qameta.atlas.extension.FindByCollectionExtension;
+import io.qameta.atlas.internal.Configuration;
+import io.qameta.atlas.util.MethodInfo;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static io.qameta.atlas.testdata.ObjectFactory.mockAtlasWebElement;
@@ -53,7 +57,6 @@ public class ElementsCollectionTest {
     }
 
     @Test
-    @Ignore("new elements creates without extension in collection findby extension")
     public void shouldFindNestedElementFromCollection() {
         AtlasWebElement listElement = mockAtlasWebElement();
         AtlasWebElement block = mockAtlasWebElement();
@@ -65,11 +68,18 @@ public class ElementsCollectionTest {
         when(listElement.findElement(By.xpath(SELECTOR))).thenReturn(block);
         when(block.isDisplayed()).thenReturn(true);
 
-        ParentElement parentElement = new Atlas()
-                .extension(new FindByCollectionExtension())
+        Listener listener = new Listener() {
+            @Override
+            public void beforeMethodCall(MethodInfo methodInfo, Configuration configuration) {
+                System.out.println(methodInfo.getMethod().getDeclaringClass().getName() + "." + methodInfo.getMethod().getName());
+            }
+        };
+        ParentElement parentElement = new Atlas(new WebDriverConfiguration(mock(WebDriver.class)))
+                .listener(listener)
                 .create(parent, ParentElement.class);
 
-        assertThat(parentElement.collection().get(0).block().isDisplayed()).isEqualTo(true);
+        ListElement element = parentElement.collection().get(0);
+        assertThat(element.block().isDisplayed()).isEqualTo(true);
     }
 
     interface ParentElement extends AtlasWebElement {

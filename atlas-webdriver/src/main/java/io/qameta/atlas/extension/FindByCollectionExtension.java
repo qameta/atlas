@@ -2,7 +2,9 @@ package io.qameta.atlas.extension;
 
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.MethodExtension;
+import io.qameta.atlas.api.Target;
 import io.qameta.atlas.internal.Configuration;
+import io.qameta.atlas.target.LazyTarget;
 import io.qameta.atlas.util.MethodInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -52,8 +54,13 @@ public class FindByCollectionExtension implements MethodExtension {
         final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
 
         final List newElements = IntStream.range(0, originalElements.size())
-                .mapToObj(i -> new Atlas()
-                        .create(listElementName(name, i), originalElements.get(i), (Class<?>) methodReturnType))
+                .mapToObj(i -> {
+                    final WebElement originalElement = originalElements.get(i);
+                    final Configuration childConfiguration = configuration.child();
+                    final Target target = new LazyTarget(listElementName(name, i), () -> originalElement);
+                    return new Atlas(childConfiguration)
+                            .create(target, (Class<?>) methodReturnType);
+                })
                 .collect(toList());
 
         return new Atlas(configuration.child())
