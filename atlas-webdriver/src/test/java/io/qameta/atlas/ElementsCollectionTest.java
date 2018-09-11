@@ -68,14 +68,7 @@ public class ElementsCollectionTest {
         when(listElement.findElement(By.xpath(SELECTOR))).thenReturn(block);
         when(block.isDisplayed()).thenReturn(true);
 
-        Listener listener = new Listener() {
-            @Override
-            public void beforeMethodCall(MethodInfo methodInfo, Configuration configuration) {
-                System.out.println(methodInfo.getMethod().getDeclaringClass().getName() + "." + methodInfo.getMethod().getName());
-            }
-        };
         ParentElement parentElement = new Atlas(new WebDriverConfiguration(mock(WebDriver.class)))
-                .listener(listener)
                 .create(parent, ParentElement.class);
 
         ListElement element = parentElement.collection().get(0);
