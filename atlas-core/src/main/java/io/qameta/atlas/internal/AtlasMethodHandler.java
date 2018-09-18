@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Atlas method handler.
@@ -49,15 +48,13 @@ public class AtlasMethodHandler implements InvocationHandler {
         }
     }
 
-    public Object invokeWithRetry(final MethodInvoker invoker,
-                                  final Object proxy,
-                                  final MethodInfo methodInfo) throws Throwable {
+    private Object invokeWithRetry(final MethodInvoker invoker,
+                                   final Object proxy,
+                                   final MethodInfo methodInfo) throws Throwable {
         final DefaultRetryer retryer = Optional.ofNullable(methodInfo.getMethod().getAnnotation(Retry.class))
                 .map(retry -> new DefaultRetryer(retry.timeout(), retry.polling(), Arrays.asList(retry.ignoring())))
                 .orElse(new DefaultRetryer(5000L, 1000L, new ArrayList<>()));
         retryer.ignore(Throwable.class);
-
-        System.out.println(methodInfo.getMethod().getName());
         Throwable lastException;
         do {
             try {
