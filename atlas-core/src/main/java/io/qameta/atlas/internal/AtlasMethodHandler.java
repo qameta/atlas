@@ -1,11 +1,15 @@
 package io.qameta.atlas.internal;
 
 import io.qameta.atlas.api.MethodInvoker;
+import io.qameta.atlas.api.Retry;
 import io.qameta.atlas.util.MethodInfo;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Atlas method handler.
@@ -44,12 +48,13 @@ public class AtlasMethodHandler implements InvocationHandler {
         }
     }
 
-    public Object invokeWithRetry(final MethodInvoker invoker,
-                                  final Object proxy,
-                                  final MethodInfo methodInfo) throws Throwable {
-        final DefaultRetryer retryer = new DefaultRetryer();
+    private Object invokeWithRetry(final MethodInvoker invoker,
+                                   final Object proxy,
+                                   final MethodInfo methodInfo) throws Throwable {
+        final DefaultRetryer retryer = Optional.ofNullable(methodInfo.getMethod().getAnnotation(Retry.class))
+                .map(retry -> new DefaultRetryer(retry.timeout(), retry.polling(), Arrays.asList(retry.ignoring())))
+                .orElse(new DefaultRetryer(5000L, 1000L, new ArrayList<>()));
         retryer.ignore(Throwable.class);
-
         Throwable lastException;
         do {
             try {

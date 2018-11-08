@@ -2,7 +2,6 @@ package io.qameta.atlas.internal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Retryer.
@@ -18,11 +17,11 @@ public class DefaultRetryer implements Retryer {
 
     private Long polling;
 
-    public DefaultRetryer() {
-        this.ignoring = new ArrayList<>();
-        this.timeout = TimeUnit.SECONDS.toMillis(5);
-        this.polling = TimeUnit.MILLISECONDS.toMillis(250);
+    public DefaultRetryer(final Long timeout, final Long polling, final List<Class<? extends Throwable>> ignoring) {
+        this.ignoring = new ArrayList<>(ignoring);
         this.start = System.currentTimeMillis();
+        this.timeout = timeout;
+        this.polling = polling;
     }
 
     public void ignore(final Class<? extends Throwable> throwable) {
@@ -38,16 +37,16 @@ public class DefaultRetryer implements Retryer {
     }
 
     public boolean shouldRetry(final Throwable e) {
-        if (ignoring.stream().anyMatch(clazz -> clazz.isInstance(e))
-                && start + timeout < System.currentTimeMillis()) {
+        final long current = System.currentTimeMillis();
+        if (!(ignoring.stream().anyMatch(clazz -> clazz.isInstance(e)) && start + timeout < current)) {
             try {
                 Thread.sleep(polling);
-                return false;
+                return true;
             } catch (InterruptedException i) {
                 Thread.currentThread().interrupt();
             }
         }
-        return true;
+        return false;
     }
 
 }

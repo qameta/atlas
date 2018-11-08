@@ -4,7 +4,7 @@ import io.qameta.atlas.Atlas;
 import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.api.Target;
 import io.qameta.atlas.internal.Configuration;
-import io.qameta.atlas.target.LazyTarget;
+import io.qameta.atlas.target.HardcodedTarget;
 import io.qameta.atlas.util.MethodInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -57,7 +57,7 @@ public class FindByCollectionExtension implements MethodExtension {
                 .mapToObj(i -> {
                     final WebElement originalElement = originalElements.get(i);
                     final Configuration childConfiguration = configuration.child();
-                    final Target target = new LazyTarget(listElementName(name, i), () -> originalElement);
+                    final Target target = new HardcodedTarget(listElementName(name, i), originalElement);
                     return new Atlas(childConfiguration)
                             .create(target, (Class<?>) methodReturnType);
                 })
