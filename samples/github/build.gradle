@@ -1,0 +1,22 @@
+description = 'Atlas Github Sample'
+
+quality {
+    enabled = false
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile project(':atlas-core')
+    compile project(':atlas-webdriver')
+    compile project(':atlas-appium')
+
+    testCompile 'io.github.bonigarcia:webdrivermanager:2.2.4'
+    testCompile 'com.github.detro:ghostdriver:2.1.0'
+    testCompile 'junit:junit:4.12'
+    compile 'io.appium:java-client:6.1.0'
+    compile 'org.aeonbits.owner:owner-java8:1.0.6'
+}
+

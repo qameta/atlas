@@ -5,7 +5,7 @@ import io.qameta.atlas.internal.Configuration;
 import org.openqa.selenium.WebDriver;
 
 /**
- * WebDriver context.
+ * WebDriver io.qameta.atlas.context.
  * Used to save WebDriver instance to {@link Configuration}.
  */
 public class WebDriverContext implements Context<WebDriver> {

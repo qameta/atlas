@@ -1,4 +1,4 @@
-package io.qameta.atlas.extension;
+package io.qameta.atlas.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,12 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Params marker.
+ * Name of element for FindBy extension.
  */
-@Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Param {
-
+@Target(ElementType.METHOD)
+public @interface Name {
     String value();
-
 }

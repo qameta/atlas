@@ -1,16 +1,16 @@
 package io.qameta.atlas.api;
 
 /**
- * Main context.
+ * Main context
  * @param <T> returned value.
  */
 @FunctionalInterface
 public interface Context<T> extends Extension {
 
     /**
-     * Returns the context value.
+     * Returns the io.qameta.atlas.context value.
      *
-     * @return the context value.
+     * @return the io.qameta.atlas.context value.
      */
     T getValue();
 
