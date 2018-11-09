@@ -5,9 +5,9 @@ buildscript {
 
     dependencies {
         classpath 'ru.vyarus:gradle-quality-plugin:2.3.0'
-        classpath 'net.researchgate:gradle-release:2.7.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath "io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE"
+        classpath 'net.researchgate:gradle-release:2.7.0'
     }
 }
 
@@ -40,6 +40,7 @@ subprojects { project ->
     apply plugin: 'ru.vyarus.quality'
     apply plugin: 'io.spring.dependency-management'
     apply from: "${gradleScriptDir}/maven.gradle"
+    //apply from: "${gradleScriptDir}/maven-publish.gradle"
 
     compileJava {
         sourceCompatibility = 1.8
@@ -63,6 +64,7 @@ subprojects { project ->
             dependency 'org.apache.commons:commons-lang3:3.7'
 
             dependency 'org.seleniumhq.selenium:selenium-java:3.8.1'
+            dependency 'io.appium:java-client:6.1.0'
             dependency 'io.github.bonigarcia:webdrivermanager:2.1.0'
             dependency 'ru.yandex.qatools.matchers:webdriver-matchers:1.4.1'
 
@@ -73,7 +75,6 @@ subprojects { project ->
             dependency 'org.assertj:assertj-core:3.6.2'
             dependency 'org.mockito:mockito-all:1.10.19'
             dependency 'junit:junit:4.12'
-
         }
     }
 

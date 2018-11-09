@@ -7,7 +7,6 @@ import io.qameta.atlas.Atlas;
 import io.qameta.atlas.AtlasException;
 import io.qameta.atlas.annotations.AndroidFindBy;
 import io.qameta.atlas.annotations.IOSFindBy;
-import io.qameta.atlas.annotations.Name;
 import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.api.Target;
 import io.qameta.atlas.context.AppiumDriverContext;
@@ -20,14 +19,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
 
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static io.qameta.atlas.extension.AppiumFindByExtension.TypeLocator.ID;
+import static io.qameta.atlas.extension.AppiumFindByExtension.TypeLocator.XPATH;
 import static io.qameta.atlas.util.MethodInfoUtils.getParameters;
-import static java.util.Arrays.asList;
+import static io.qameta.atlas.util.MethodInfoUtils.processTemplate;
 
 /**
  * FindBy for both platfrom (Android&IOS)
@@ -51,8 +50,7 @@ public class AppiumFindByExtension implements MethodExtension {
         assert proxy instanceof WrapsDriver;
         assert annotationsPresent;
 
-        //final Map<String, String> parameters = getParameters(method, methodInfo.getArgs()); //TODO: use this
-
+        final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
         final WrapsDriver searchContext = (WrapsDriver) proxy;
         final Configuration childConfiguration = configuration.child();
         final String name = Optional.ofNullable(method.getAnnotation(Name.class))
@@ -62,19 +60,14 @@ public class AppiumFindByExtension implements MethodExtension {
 
         final By locator;
         if (driver instanceof AndroidDriver) {
-            final LocatorWrapper xpath = new LocatorWrapper(TypeLocator.XPATH,
-                    method.getAnnotation(AndroidFindBy.class).xpath());
-            final LocatorWrapper id = new LocatorWrapper(TypeLocator.ID,
-                    method.getAnnotation(AndroidFindBy.class).id());
-            locator = getLocator(Collections.synchronizedList(asList(xpath, id)), methodInfo, method);
+            final String xpath = processTemplate(method.getAnnotation(AndroidFindBy.class).xpath(), parameters);
+            final String id = processTemplate(method.getAnnotation(AndroidFindBy.class).id(), parameters);
+            locator = getByLocator(new LocatorWrapper(XPATH, xpath), new LocatorWrapper(ID, id));
 
         } else if (driver instanceof IOSDriver) {
-            final LocatorWrapper xpath = new LocatorWrapper(TypeLocator.XPATH,
-                    method.getAnnotation(IOSFindBy.class).xpath());
-            final LocatorWrapper id = new LocatorWrapper(TypeLocator.ID,
-                    method.getAnnotation(IOSFindBy.class).id());
-            locator = getLocator(Collections.synchronizedList(asList(xpath, id)), methodInfo, method);
-
+            final String xpath = processTemplate(method.getAnnotation(IOSFindBy.class).xpath(), parameters);
+            final String id = processTemplate(method.getAnnotation(IOSFindBy.class).id(), parameters);
+            locator = getByLocator(new LocatorWrapper(XPATH, xpath), new LocatorWrapper(ID, id));
         } else {
             throw new AtlasException("Сan not identified driver");
         }
@@ -84,31 +77,17 @@ public class AppiumFindByExtension implements MethodExtension {
         return new Atlas(childConfiguration).create(target, method.getReturnType());
     }
 
-
-    private By getLocator(final List<LocatorWrapper> locators, final MethodInfo methodInfo, final Method method) {
-        final boolean isEmptyLocators = locators.stream()
-                .map(LocatorWrapper::getLocator)
-                .allMatch(String::isEmpty);
-        if (isEmptyLocators) {
-            throw new AtlasException("Locators are empty");
-        }
-
-        final boolean haveParamAnnotation = Stream.of(method.getParameterAnnotations())
-                .flatMap(Stream::of)
-                .anyMatch(it -> it instanceof Param);
-        if (haveParamAnnotation) {
-            final String arg = (String) methodInfo.getArgs()[0];
-            locators.forEach(it ->
-                    it.locator = it.locator.replaceAll("\\{\\{.+?}\\}", arg));
-        }
-
-        return locators.stream()
-                .filter(it -> !it.locator.isEmpty())
-                .map(LocatorWrapper::modifyToByLocator)
+    private By getByLocator(LocatorWrapper ... locatorWrappers) {
+        return Stream.of(locatorWrappers)
+                .filter(LocatorWrapper::isNotEmptyLocator)
+                .map(LocatorWrapper::toBy)
                 .findFirst()
                 .orElseThrow(() -> new AtlasException("No valid locators found"));
     }
 
+    enum TypeLocator {
+        ID, XPATH;
+    }
 
     private final class LocatorWrapper {
         private TypeLocator type;
@@ -119,23 +98,19 @@ public class AppiumFindByExtension implements MethodExtension {
             this.locator = locator;
         }
 
-        private String getLocator() {
-            return locator;
+        private boolean isNotEmptyLocator() {
+            return !this.locator.isEmpty();
         }
 
-        private By modifyToByLocator() {
-            if (TypeLocator.XPATH == type) {
+        private By toBy() {
+            if (XPATH == type) {
                 return By.xpath(locator);
-            } else if (TypeLocator.ID == type) {
+            } else if (ID == type) {
                 return By.id(locator);
             } else {
                 throw new UnsupportedOperationException("Unsupported locator type");
             }
         }
-    }
-
-    private enum TypeLocator {
-        ID, XPATH;
     }
 }
 

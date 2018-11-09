@@ -5,6 +5,7 @@ import io.qameta.atlas.ScreenPage;
 import io.qameta.atlas.annotations.AndroidFindBy;
 import io.qameta.atlas.annotations.IOSFindBy;
 import io.qameta.atlas.api.Retry;
+import io.qameta.atlas.extension.Param;
 
 
 public interface MainScreen extends ScreenPage {
@@ -16,6 +17,6 @@ public interface MainScreen extends ScreenPage {
 
     @Retry
     @IOSFindBy(id = "{{ value }}")
-    AtlasMobileElement button(String value);
+    AtlasMobileElement button(@Param("value") String value);
 
 }
