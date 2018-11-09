@@ -40,7 +40,6 @@ subprojects { project ->
     apply plugin: 'ru.vyarus.quality'
     apply plugin: 'io.spring.dependency-management'
     apply from: "${gradleScriptDir}/maven.gradle"
-    //apply from: "${gradleScriptDir}/maven-publish.gradle"
 
     compileJava {
         sourceCompatibility = 1.8
