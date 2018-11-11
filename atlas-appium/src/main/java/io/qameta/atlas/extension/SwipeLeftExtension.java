@@ -9,19 +9,20 @@ import io.qameta.atlas.context.AppiumDriverContext;
 import io.qameta.atlas.internal.Configuration;
 import io.qameta.atlas.util.MethodInfo;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
-public class SwipeToUpExtension implements MethodExtension {
+public class SwipeLeftExtension implements MethodExtension {
 
     private static final Duration SWIPE_DURATION = Duration.of(1000, ChronoUnit.MILLIS);
 
     @Override
     public boolean test(Method method) {
-        return method.getName().equals("swipeToUp");
+        return method.getName().equals("swipeToLeft");
     }
 
     @Override
@@ -29,13 +30,14 @@ public class SwipeToUpExtension implements MethodExtension {
         AppiumDriver driver = config.getContext(AppiumDriverContext.class).get().getValue();
 
         TouchAction action = new TouchAction(driver);
+        Point location = ((WebElement) proxy).getLocation();
         Dimension size = ((WebElement) proxy).getSize();
-        int xStart =  size.width / 2;
-        int yStart = (int) (size.height * 0.20);
-        int xEnd = size.width / 2;
-        int yEnd = (int) (size.height * 0.80);
-        action.longPress(new PointOption().withCoordinates(xStart, yStart)).waitAction(new WaitOptions()
-                .withDuration(SWIPE_DURATION)).moveTo(new PointOption().withCoordinates(xEnd, yEnd)).release().perform();
+        int xStart = (int) (size.width * 0.90);
+        int y = location.getY() + size.height / 2;
+        int xEnd = (int) (size.width * 0.05);
+        action.press(new PointOption().withCoordinates(xStart, y)).waitAction(new WaitOptions()
+                .withDuration(SWIPE_DURATION)).moveTo(new PointOption().withCoordinates(xEnd, y)).release().perform();
         return proxy;
     }
 }
+

@@ -9,13 +9,15 @@ public interface AtlasMobileElement<T extends MobileElement> extends AtlasWebEle
 
     void longPress();
 
-    void swipeToLeft();
+    void swipeLeftOn();
 
-    void swipeToRight();
+    void swipeRightOn();
 
-    void swipeToDown();
+    AtlasMobileElement swipeDownOn();
 
-    void swipeToUp();
+    AtlasMobileElement swipeUpOn();
+
+    boolean isDisplayed();
 
     /**
      * The same as {@link WrapsElement#getWrappedElement()}.

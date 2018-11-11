@@ -9,14 +9,14 @@ import io.qameta.atlas.api.Context;
  */
 public class AppiumDriverContext implements Context<AppiumDriver> {
 
-    private final AppiumDriver mobileDriver;
+    private final AppiumDriver appiumDriver;
 
     public AppiumDriverContext(AppiumDriver mobileDriver) {
-        this.mobileDriver = mobileDriver;
+        this.appiumDriver = mobileDriver;
     }
 
     @Override
     public AppiumDriver getValue() {
-        return mobileDriver;
+        return appiumDriver;
     }
 }

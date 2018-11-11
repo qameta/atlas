@@ -5,10 +5,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.qameta.atlas.AppiumDriverConfiguration;
 import io.qameta.atlas.Atlas;
-import io.qameta.atlas.ScreenPage;
+import io.qameta.atlas.Screen;
 import io.qameta.atlas.github.mobile.config.MobileConfig;
 import io.qameta.atlas.github.mobile.page.MainScreen;
-import io.qameta.atlas.github.mobile.page.SearchPage;
+import io.qameta.atlas.github.mobile.page.SearchScreen;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +17,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class WikipediaTest {
 
@@ -49,15 +50,17 @@ public class WikipediaTest {
             desiredCapabilities.setCapability("newCommandTimeout", config.newCommandTimeout());
             desiredCapabilities.setCapability("app", config.appFile());
             driver = new IOSDriver(url, desiredCapabilities);
+        } else {
+            throw new UnsupportedOperationException("Set valid driver");
         }
         atlas = new Atlas(new AppiumDriverConfiguration(driver));
 
     }
 
     @Test
-    public void simpleTest() {
-        onMainScreen().searchWikipediaInputInit().click();
-        onSearchScreen().searchInput().sendKeys("Java");
+    public void simpleTestAndroid() {
+        onMainScreen().searchWikipedia().click();
+        onSearchScreen().search().sendKeys("Java");
     }
 
     @Test
@@ -66,7 +69,18 @@ public class WikipediaTest {
         onMainScreen().button("Next").click();
         onMainScreen().button("Next").click();
         onMainScreen().button("Get started").click();
-        onMainScreen().searchWikipediaInputInit().click();
+        onMainScreen().searchWikipedia().click();
+    }
+
+    @Test
+    public void simpleSwipeToDown() throws InterruptedException {
+        //driver.hideKeyboard();
+        //onMainScreen().button("Skip").click();
+        onMainScreen().searchWikipedia().click();
+        onSearchScreen().search().sendKeys("Atlas");
+        TimeUnit.SECONDS.sleep(5);
+        onSearchScreen().item("Atlas Mountains").swipeUpOn().click();
+        TimeUnit.SECONDS.sleep(5);
     }
 
 
@@ -79,11 +93,11 @@ public class WikipediaTest {
         return onPage(MainScreen.class);
     }
 
-    private SearchPage onSearchScreen() {
-        return onPage(SearchPage.class);
+    private SearchScreen onSearchScreen() {
+        return onPage(SearchScreen.class);
     }
 
-    private <T extends ScreenPage> T onPage(Class<T> page) {
+    private <T extends Screen> T onPage(Class<T> page) {
         return atlas.create(driver, page);
     }
 }

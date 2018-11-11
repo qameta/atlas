@@ -8,7 +8,7 @@ import org.openqa.selenium.internal.WrapsDriver;
 /**
  * Mobile Page.
  */
-public interface ScreenPage extends WrapsDriver, SearchContext {
+public interface Screen extends WrapsDriver, SearchContext {
 
     @AppiumDriverProvider
     AppiumDriver getWrappedDriver();
