@@ -7,7 +7,9 @@ import io.qameta.atlas.annotations.IOSFindBy;
 import io.qameta.atlas.api.Retry;
 import io.qameta.atlas.extension.Param;
 
-
+/**
+ * Main screen of mobile application.
+ */
 public interface MainScreen extends Screen {
 
     @Retry(timeout = 20000L)
@@ -18,5 +20,4 @@ public interface MainScreen extends Screen {
     @Retry
     @IOSFindBy(id = "{{ value }}")
     AtlasMobileElement button(@Param("value") String value);
-
 }

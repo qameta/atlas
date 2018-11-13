@@ -10,7 +10,10 @@ import org.openqa.selenium.interactions.HasInputDevices;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;
 
-public class ObjectFactory {
+/**
+ * Factory of mocks for AppiumDriver, MobileElement, AtlasMobileElement.
+ */
+public final class ObjectFactory {
 
     private ObjectFactory() {
     }

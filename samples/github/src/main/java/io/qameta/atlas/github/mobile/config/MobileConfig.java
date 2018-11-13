@@ -1,7 +1,7 @@
 package io.qameta.atlas.github.mobile.config;
 
 import org.aeonbits.owner.Config;
-import org.aeonbits.owner.Config.*;
+import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Converter;
 
 import java.io.File;
@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 
 
 /**
- * Read props from mobile.properties
+ * Read props from mobile.properties.
  */
 @Sources("classpath:mobile.properties")
 public interface MobileConfig extends Config {
@@ -59,6 +59,9 @@ public interface MobileConfig extends Config {
     @Key("ios.capability.app")
     File appFile();
 
+    /**
+     * Converter to {@link File}.
+     */
     class FileConverter implements Converter<File> {
         @Override
         public File convert(Method method, String apkName) {

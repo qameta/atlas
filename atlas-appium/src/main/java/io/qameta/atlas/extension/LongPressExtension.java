@@ -18,6 +18,9 @@ import java.time.temporal.ChronoUnit;
 
 import static io.appium.java_client.touch.LongPressOptions.longPressOptions;
 
+/**
+ *  LongPress.
+ */
 public class LongPressExtension implements MethodExtension {
 
     private static final Duration LONG_TAP_DURATION = Duration.of(1000, ChronoUnit.MILLIS);
@@ -29,14 +32,14 @@ public class LongPressExtension implements MethodExtension {
 
     @Override
     public Object invoke(Object proxy, MethodInfo methodInfo, Configuration configuration) throws Throwable {
-        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class).
-                orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
+        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
+                .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
 
-        TouchAction action = new TouchAction(driver);
-        Point location = ((WebElement) proxy).getLocation();
-        Dimension size = ((WebElement) proxy).getSize();
-        int x = location.getX() + size.width / 2;
-        int y = location.getY() + size.height / 2;
+        final TouchAction action = new TouchAction(driver);
+        final Point location = ((WebElement) proxy).getLocation();
+        final Dimension size = ((WebElement) proxy).getSize();
+        final int x = location.getX() + size.width / 2;
+        final int y = location.getY() + size.height / 2;
         action.longPress(longPressOptions().withDuration(LONG_TAP_DURATION)
                 .withPosition(new PointOption().withCoordinates(x, y))).perform();
         return proxy;

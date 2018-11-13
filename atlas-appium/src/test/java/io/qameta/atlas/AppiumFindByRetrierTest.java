@@ -5,37 +5,44 @@ import io.qameta.atlas.annotations.AndroidFindBy;
 import io.qameta.atlas.api.Retry;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 
 import static io.qameta.atlas.testdata.ObjectFactory.mockAppiumDriver;
 import static io.qameta.atlas.testdata.ObjectFactory.mockAppiumElement;
 import static org.mockito.Mockito.when;
 
+/**
+ * Check retries functional for AtlasMobileElement.
+ */
 public class AppiumFindByRetrierTest {
 
     @Test
     @Ignore
     public void retryChildFind() {
-        MobileElement parentOrigin = mockAppiumElement();
-        MobileElement childOrigin = mockAppiumElement();
+        final MobileElement parentOrigin = mockAppiumElement();
+        final MobileElement childOrigin = mockAppiumElement();
 
         when(parentOrigin.findElementsByXPath("//div")).thenThrow(new NotFoundException());
         when(childOrigin.findElementsByXPath("//")).thenThrow(new NotFoundException());
 
-        Atlas atlas = new Atlas(new AppiumDriverConfiguration(mockAppiumDriver()));
-        ParentElement parent = atlas.create(parentOrigin, ParentElement.class);
-
+        final Atlas atlas = new Atlas(new AppiumDriverConfiguration(mockAppiumDriver()));
+        final ParentElement parent = atlas.create(parentOrigin, ParentElement.class);
 
         parent.child().isDisplayed();
     }
 
+    /**
+     * Parent mobile element.
+     */
     interface ParentElement extends AtlasMobileElement {
         @Retry(timeout = 1000L)
         @AndroidFindBy(xpath = "//div")
         NestedElement child();
     }
 
+    /**
+     * Child mobile element.
+     */
     interface NestedElement extends AtlasMobileElement {
 
     }

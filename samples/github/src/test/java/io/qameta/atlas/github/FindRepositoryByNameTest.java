@@ -14,6 +14,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.hamcrest.Matchers.hasSize;
 
+/**
+ * Demo of simple test. Using atlas-webdriver.
+ */
 public class FindRepositoryByNameTest {
 
     private WebDriver driver;

@@ -7,10 +7,14 @@ import io.qameta.atlas.annotations.IOSFindBy;
 import io.qameta.atlas.api.Retry;
 import io.qameta.atlas.extension.Param;
 
+/**
+ * Search screen of mobile application.
+ */
 public interface SearchScreen extends Screen {
 
     @Retry(timeout = 20000L)
-    @AndroidFindBy(xpath = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[contains(@text, '{{ value }}')]")
+    @AndroidFindBy(xpath = "//*[@resource-id='org.wikipedia:id/page_list_item_container']"
+            + "//*[contains(@text, '{{ value }}')]")
     @IOSFindBy(xpath = "//XCUIElementTypeLink[contains(@name, '{{ value }}')]")
     AtlasMobileElement item(@Param("value") String value);
 

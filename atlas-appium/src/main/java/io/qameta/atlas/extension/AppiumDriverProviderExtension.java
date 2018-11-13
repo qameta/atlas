@@ -20,8 +20,7 @@ public class AppiumDriverProviderExtension implements MethodExtension {
     }
 
     @Override
-    public AppiumDriver invoke(final Object proxy, final MethodInfo methodInfo, final Configuration config)
-            throws Throwable {
+    public AppiumDriver invoke(final Object proxy, final MethodInfo methodInfo, final Configuration config) {
         return config.getContext(AppiumDriverContext.class).get().getValue();
     }
 }

@@ -14,6 +14,9 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Swipe (Scroll) up to element.
+ */
 public class SwipeUpOnExtension implements MethodExtension {
 
     private static final Duration SWIPE_DURATION = Duration.of(1000, ChronoUnit.MILLIS);
@@ -25,15 +28,15 @@ public class SwipeUpOnExtension implements MethodExtension {
 
     @Override
     public Object invoke(Object proxy, MethodInfo methodInfo, Configuration configuration) throws Throwable {
-        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class).
-                orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
+        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
+                .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
 
-        int xStart = driver.manage().window().getSize().width / 2;
-        int yStart = driver.manage().window().getSize().height / 8;
-        int xEnd = xStart;
-        int yEnd = driver.manage().window().getSize().height * 4 / 5;
+        final int xStart = driver.manage().window().getSize().width / 2;
+        final int yStart = driver.manage().window().getSize().height / 8;
+        final int xEnd = xStart;
+        final int yEnd = driver.manage().window().getSize().height * 4 / 5;
 
-        TouchAction action = new TouchAction(driver);
+        final TouchAction action = new TouchAction(driver);
         action.press(new PointOption().withCoordinates(xStart, yStart))
                 .waitAction(new WaitOptions().withDuration(SWIPE_DURATION))
                 .moveTo(new PointOption().withCoordinates(xEnd, yEnd))

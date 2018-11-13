@@ -18,20 +18,24 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Demo of simple tests for IOS and Android platform. Using atlas-mobile.
+ */
 public class WikipediaTest {
 
     private AppiumDriver driver;
     private Atlas atlas;
     private MobileConfig config = ConfigFactory.create(MobileConfig.class);
+    private static final String NEXT = "NEXT";
 
     @Before
     public void setUp() throws MalformedURLException {
-        String platform = config.platformName().trim();
-        URL url = new URL(config.url());
-        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        final String platform = config.platformName().trim();
+        final URL url = new URL(config.url());
+        final DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 
         if ("android".equalsIgnoreCase(platform)) {
-            desiredCapabilities.setCapability("platformName", config.platformName());
+            desiredCapabilities.setCapability("platformName", platform);
             desiredCapabilities.setCapability("deviceName", config.deviceName());
             desiredCapabilities.setCapability("platformVersion", config.platformVersion());
             desiredCapabilities.setCapability("appPackage", config.appPackage());
@@ -43,7 +47,7 @@ public class WikipediaTest {
             desiredCapabilities.setCapability("app", config.apkFile());
             driver = new AndroidDriver(url, desiredCapabilities);
         } else if ("ios".equalsIgnoreCase(platform)) {
-            desiredCapabilities.setCapability("platformName", config.platformName());
+            desiredCapabilities.setCapability("platformName", platform);
             desiredCapabilities.setCapability("deviceName", config.deviceIOSName());
             desiredCapabilities.setCapability("platformVersion", config.platformIOSVersion());
             desiredCapabilities.setCapability("newCommandTimeout", config.newCommandTimeout());
@@ -64,9 +68,9 @@ public class WikipediaTest {
 
     @Test
     public void iosSimpleTest() {
-        onMainScreen().button("Next").click();
-        onMainScreen().button("Next").click();
-        onMainScreen().button("Next").click();
+        onMainScreen().button(NEXT).click();
+        onMainScreen().button(NEXT).click();
+        onMainScreen().button(NEXT).click();
         onMainScreen().button("Get started").click();
         onMainScreen().searchWikipedia().click();
     }

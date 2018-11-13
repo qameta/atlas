@@ -9,7 +9,10 @@ import static io.qameta.atlas.testdata.ObjectFactory.mockAppiumElement;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class AtlasMobileElementMethodsTest{
+/**
+ * Check methods of AtlasMobileElement, that it are invoked.
+ */
+public class AtlasMobileElementMethodsTest {
 
     private AtlasMobileElement atlasMobileElement;
     private MobileElement originMobileElement;

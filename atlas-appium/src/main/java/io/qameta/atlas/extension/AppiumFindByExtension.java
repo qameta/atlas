@@ -29,7 +29,7 @@ import static io.qameta.atlas.util.MethodInfoUtils.getParameters;
 import static io.qameta.atlas.util.MethodInfoUtils.processTemplate;
 
 /**
- * FindBy for both platfrom (Android&IOS)
+ * FindBy for both platfrom (Android&IOS).
  */
 public class AppiumFindByExtension implements MethodExtension {
 
@@ -56,8 +56,8 @@ public class AppiumFindByExtension implements MethodExtension {
         final String name = Optional.ofNullable(method.getAnnotation(Name.class))
                 .map(Name::value)
                 .orElse(method.getName());
-        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class).
-                orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
+        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
+                .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
 
         final By locator;
         if (driver instanceof AndroidDriver) {
@@ -73,12 +73,11 @@ public class AppiumFindByExtension implements MethodExtension {
             throw new AtlasException("Сan not identified driver");
         }
 
-        final Target target = new LazyTarget(name,
-                () -> searchContext.getWrappedDriver().findElement(locator));
+        final Target target = new LazyTarget(name, () -> searchContext.getWrappedDriver().findElement(locator));
         return new Atlas(childConfiguration).create(target, method.getReturnType());
     }
 
-    private By getByLocator(LocatorWrapper ... locatorWrappers) {
+    private By getByLocator(LocatorWrapper... locatorWrappers) {
         return Stream.of(locatorWrappers)
                 .filter(LocatorWrapper::isNotEmptyLocator)
                 .map(LocatorWrapper::toBy)
@@ -86,10 +85,16 @@ public class AppiumFindByExtension implements MethodExtension {
                 .orElseThrow(() -> new AtlasException("No valid locators found"));
     }
 
+    /**
+     * Type of locator.
+     */
     enum TypeLocator {
         ID, XPATH;
     }
 
+    /**
+     * Locator's wrapper.
+     */
     private final class LocatorWrapper {
         private TypeLocator type;
         private String locator;
