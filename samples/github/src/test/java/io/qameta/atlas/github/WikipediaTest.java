@@ -27,7 +27,7 @@ public class WikipediaTest {
     private AppiumDriver driver;
     private Atlas atlas;
     private MobileConfig config = ConfigFactory.create(MobileConfig.class);
-    private static final String NEXT = "NEXT";
+    private static final String NEXT = "Next";
 
     @Before
     public void setUp() throws MalformedURLException {

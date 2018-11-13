@@ -95,7 +95,7 @@ public class AppiumFindByExtension implements MethodExtension {
     /**
      * Locator's wrapper.
      */
-    private final class LocatorWrapper {
+    private static final class LocatorWrapper {
         private TypeLocator type;
         private String locator;
 
