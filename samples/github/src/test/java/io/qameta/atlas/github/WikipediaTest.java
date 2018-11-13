@@ -17,7 +17,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 public class WikipediaTest {
 
@@ -31,19 +30,19 @@ public class WikipediaTest {
         URL url = new URL(config.url());
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 
-        if("android".equalsIgnoreCase(platform)) {
+        if ("android".equalsIgnoreCase(platform)) {
             desiredCapabilities.setCapability("platformName", config.platformName());
             desiredCapabilities.setCapability("deviceName", config.deviceName());
             desiredCapabilities.setCapability("platformVersion", config.platformVersion());
             desiredCapabilities.setCapability("appPackage", config.appPackage());
             desiredCapabilities.setCapability("appActivity", config.appActivity());
-            desiredCapabilities.setCapability( "unicodeKeyboard", config.unicodeKeyboard());
+            desiredCapabilities.setCapability("unicodeKeyboard", config.unicodeKeyboard());
             desiredCapabilities.setCapability("resetKeyboard", config.resetKeyboard());
             desiredCapabilities.setCapability("automationName", config.automationName());
             desiredCapabilities.setCapability("newCommandTimeout", config.newCommandTimeout());
             desiredCapabilities.setCapability("app", config.apkFile());
             driver = new AndroidDriver(url, desiredCapabilities);
-        } else if("ios".equalsIgnoreCase(platform)) {
+        } else if ("ios".equalsIgnoreCase(platform)) {
             desiredCapabilities.setCapability("platformName", config.platformName());
             desiredCapabilities.setCapability("deviceName", config.deviceIOSName());
             desiredCapabilities.setCapability("platformVersion", config.platformIOSVersion());
@@ -58,31 +57,19 @@ public class WikipediaTest {
     }
 
     @Test
-    public void simpleTestAndroid() {
+    public void androidSimpleTest() {
         onMainScreen().searchWikipedia().click();
         onSearchScreen().search().sendKeys("Java");
     }
 
     @Test
-    public void simpleTestIOS() {
+    public void iosSimpleTest() {
         onMainScreen().button("Next").click();
         onMainScreen().button("Next").click();
         onMainScreen().button("Next").click();
         onMainScreen().button("Get started").click();
         onMainScreen().searchWikipedia().click();
     }
-
-    @Test
-    public void simpleSwipeToDown() throws InterruptedException {
-        //driver.hideKeyboard();
-        //onMainScreen().button("Skip").click();
-        onMainScreen().searchWikipedia().click();
-        onSearchScreen().search().sendKeys("Atlas");
-        TimeUnit.SECONDS.sleep(5);
-        onSearchScreen().item("Atlas Mountains").swipeUpOn().click();
-        TimeUnit.SECONDS.sleep(5);
-    }
-
 
     @After
     public void stopDriver() {

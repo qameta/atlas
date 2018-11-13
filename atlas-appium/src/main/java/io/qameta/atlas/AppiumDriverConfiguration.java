@@ -20,9 +20,6 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new ToStringMethodExtension());
         registerExtension(new LongPressExtension());
         registerExtension(new SwipeUpOnExtension());
-        registerExtension(new ScrollDownOnExtension());
-        registerExtension(new SwipeLeftExtension());
-        registerExtension(new SwipeToRightExtension());
         registerExtension(new ShouldMethodExtension());
         registerExtension(new ToStringMethodExtension());
     }

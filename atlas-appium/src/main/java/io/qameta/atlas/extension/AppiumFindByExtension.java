@@ -56,7 +56,8 @@ public class AppiumFindByExtension implements MethodExtension {
         final String name = Optional.ofNullable(method.getAnnotation(Name.class))
                 .map(Name::value)
                 .orElse(method.getName());
-        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class).get().getValue(); //TODO:refactor
+        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class).
+                orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
 
         final By locator;
         if (driver instanceof AndroidDriver) {

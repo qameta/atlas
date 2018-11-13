@@ -3,6 +3,7 @@ package io.qameta.atlas.extension;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
+import io.qameta.atlas.AtlasException;
 import io.qameta.atlas.api.MethodExtension;
 import io.qameta.atlas.context.AppiumDriverContext;
 import io.qameta.atlas.internal.Configuration;
@@ -27,8 +28,10 @@ public class LongPressExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(Object proxy, MethodInfo methodInfo, Configuration config) throws Throwable {
-        AppiumDriver driver = config.getContext(AppiumDriverContext.class).get().getValue();
+    public Object invoke(Object proxy, MethodInfo methodInfo, Configuration configuration) throws Throwable {
+        final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class).
+                orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
+
         TouchAction action = new TouchAction(driver);
         Point location = ((WebElement) proxy).getLocation();
         Dimension size = ((WebElement) proxy).getSize();

@@ -7,7 +7,6 @@ import io.qameta.atlas.context.AppiumDriverContext;
 import io.qameta.atlas.internal.Configuration;
 import io.qameta.atlas.util.MethodInfo;
 
-
 import java.lang.reflect.Method;
 
 /**
