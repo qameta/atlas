@@ -10,6 +10,7 @@ import io.qameta.atlas.internal.DefaultMethodExtension;
 /**
  * Appium configuration.
  */
+//CHECKSTYLE:OFF: ClassDataAbstractionCoupling
 public class AppiumDriverConfiguration extends Configuration {
 
     public AppiumDriverConfiguration(final AppiumDriver appiumDriver) {
@@ -24,3 +25,4 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new ToStringMethodExtension());
     }
 }
+//CHECKSTYLE:ON: ClassDataAbstractionCoupling
