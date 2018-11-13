@@ -8,6 +8,7 @@ import io.qameta.atlas.github.web.page.MainPage;
 import io.qameta.atlas.github.web.page.SearchPage;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -32,6 +33,7 @@ public class FindRepositoryByNameTest {
     }
 
     @Test
+    @Ignore
     public void simpleTest() throws InterruptedException {
         onMainPage().open("https://github.com");
         onMainPage().header().searchInput().sendKeys("Atlas");

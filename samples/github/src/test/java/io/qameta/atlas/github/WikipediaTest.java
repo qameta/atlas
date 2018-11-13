@@ -12,6 +12,7 @@ import io.qameta.atlas.github.mobile.page.SearchScreen;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -60,12 +61,14 @@ public class WikipediaTest {
 
     }
 
+    @Ignore
     @Test
     public void androidSimpleTest() {
         onMainScreen().searchWikipedia().click();
         onSearchScreen().search().sendKeys("Java");
     }
 
+    @Ignore
     @Test
     public void iosSimpleTest() {
         onMainScreen().button(NEXT).click();
