@@ -41,7 +41,7 @@ public class AppiumFindByExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) throws Throwable {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) {
         final Method method = methodInfo.getMethod();
         final boolean annotationsPresent = Stream.of(method.getDeclaredAnnotations())
                 .anyMatch(it -> it instanceof IOSFindBy || it instanceof AndroidFindBy);

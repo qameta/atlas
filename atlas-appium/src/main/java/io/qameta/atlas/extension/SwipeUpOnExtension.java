@@ -27,7 +27,7 @@ public class SwipeUpOnExtension implements MethodExtension {
     }
 
     @Override
-    public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) throws Throwable {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) {
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
                 .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
 
