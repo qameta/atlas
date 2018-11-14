@@ -11,7 +11,7 @@ public interface AtlasMobileElement extends AtlasWebElement {
 
     void longPress();
 
-    AtlasMobileElement swipeUpOn();
+    AtlasMobileElement swipeDownOn();
 
     /**
      * The same as {@link WrapsElement#getWrappedElement()}.

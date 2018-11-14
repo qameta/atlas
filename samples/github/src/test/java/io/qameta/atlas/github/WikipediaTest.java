@@ -7,6 +7,7 @@ import io.qameta.atlas.AppiumDriverConfiguration;
 import io.qameta.atlas.Atlas;
 import io.qameta.atlas.Screen;
 import io.qameta.atlas.github.mobile.config.MobileConfig;
+import io.qameta.atlas.github.mobile.page.ArticleScreen;
 import io.qameta.atlas.github.mobile.page.MainScreen;
 import io.qameta.atlas.github.mobile.page.SearchScreen;
 import org.aeonbits.owner.ConfigFactory;
@@ -18,6 +19,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static org.hamcrest.Matchers.allOf;
+import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
+import static ru.yandex.qatools.matchers.webdriver.TextMatcher.text;
 
 /**
  * Demo of simple tests for IOS and Android platform. Using atlas-mobile.
@@ -78,9 +83,22 @@ public class WikipediaTest {
         onMainScreen().searchWikipedia().click();
     }
 
+    @Ignore
+    @Test
+    public void androidSwipeToDown() {
+        onMainScreen().searchWikipedia().click();
+        onSearchScreen().search().sendKeys("Atlas");
+        onSearchScreen().item("Atlas LV-3B").swipeDownOn().click();
+        onArticleScreen().articleTitle().should(allOf(displayed(), text("Atlas LV-3B")));
+    }
+
     @After
     public void stopDriver() {
         this.driver.quit();
+    }
+
+    private ArticleScreen onArticleScreen() {
+        return onPage(ArticleScreen.class);
     }
 
     private MainScreen onMainScreen() {
