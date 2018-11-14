@@ -22,12 +22,12 @@ public class SwipeUpOnExtension implements MethodExtension {
     private static final Duration SWIPE_DURATION = Duration.of(1000, ChronoUnit.MILLIS);
 
     @Override
-    public boolean test(Method method) {
+    public boolean test(final Method method) {
         return method.getName().equals("swipeUpOn");
     }
 
     @Override
-    public Object invoke(Object proxy, MethodInfo methodInfo, Configuration configuration) throws Throwable {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) throws Throwable {
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
                 .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
 

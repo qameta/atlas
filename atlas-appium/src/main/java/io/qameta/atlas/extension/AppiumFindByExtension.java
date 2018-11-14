@@ -34,14 +34,14 @@ import static io.qameta.atlas.util.MethodInfoUtils.processTemplate;
 public class AppiumFindByExtension implements MethodExtension {
 
     @Override
-    public boolean test(Method method) {
+    public boolean test(final Method method) {
         return method.isAnnotationPresent(IOSFindBy.class)
                 || method.isAnnotationPresent(AndroidFindBy.class)
                 && WebElement.class.isAssignableFrom(method.getReturnType());
     }
 
     @Override
-    public Object invoke(Object proxy, MethodInfo methodInfo, Configuration configuration) throws Throwable {
+    public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) throws Throwable {
         final Method method = methodInfo.getMethod();
         final boolean annotationsPresent = Stream.of(method.getDeclaredAnnotations())
                 .anyMatch(it -> it instanceof IOSFindBy || it instanceof AndroidFindBy);
@@ -51,11 +51,6 @@ public class AppiumFindByExtension implements MethodExtension {
         assert annotationsPresent;
 
         final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
-        final WrapsDriver searchContext = (WrapsDriver) proxy;
-        final Configuration childConfiguration = configuration.child();
-        final String name = Optional.ofNullable(method.getAnnotation(Name.class))
-                .map(Name::value)
-                .orElse(method.getName());
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
                 .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
 
@@ -73,11 +68,17 @@ public class AppiumFindByExtension implements MethodExtension {
             throw new AtlasException("Сan not identified driver");
         }
 
+        final WrapsDriver searchContext = (WrapsDriver) proxy;
+        final Configuration childConfiguration = configuration.child();
+        final String name = Optional.ofNullable(method.getAnnotation(Name.class))
+                .map(Name::value)
+                .orElse(method.getName());
         final Target target = new LazyTarget(name, () -> searchContext.getWrappedDriver().findElement(locator));
+
         return new Atlas(childConfiguration).create(target, method.getReturnType());
     }
 
-    private By getByLocator(LocatorWrapper... locatorWrappers) {
+    private By getByLocator(final LocatorWrapper... locatorWrappers) {
         return Stream.of(locatorWrappers)
                 .filter(LocatorWrapper::isNotEmptyLocator)
                 .map(LocatorWrapper::toBy)
@@ -96,10 +97,10 @@ public class AppiumFindByExtension implements MethodExtension {
      * Locator's wrapper.
      */
     private static final class LocatorWrapper {
-        private TypeLocator type;
-        private String locator;
+        private final TypeLocator type;
+        private final String locator;
 
-        private LocatorWrapper(final TypeLocator type, final String locator) {
+        LocatorWrapper(final TypeLocator type, final String locator) {
             this.type = type;
             this.locator = locator;
         }

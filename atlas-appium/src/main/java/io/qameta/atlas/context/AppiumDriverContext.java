@@ -11,7 +11,7 @@ public class AppiumDriverContext implements Context<AppiumDriver> {
 
     private final AppiumDriver appiumDriver;
 
-    public AppiumDriverContext(AppiumDriver mobileDriver) {
+    public AppiumDriverContext(final AppiumDriver mobileDriver) {
         this.appiumDriver = mobileDriver;
     }
 
