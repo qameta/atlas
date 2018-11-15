@@ -1,13 +1,13 @@
 package io.qameta.atlas;
 
-import io.appium.java_client.MobileElement;
 import io.qameta.atlas.annotations.AndroidFindBy;
 import io.qameta.atlas.api.Retry;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.WebElement;
 
-import static io.qameta.atlas.testdata.ObjectFactory.mockAppiumDriver;
+import static io.qameta.atlas.testdata.ObjectFactory.mockAndroidDriver;
 import static io.qameta.atlas.testdata.ObjectFactory.mockAppiumElement;
 import static org.mockito.Mockito.when;
 
@@ -16,16 +16,15 @@ import static org.mockito.Mockito.when;
  */
 public class AppiumFindByRetrierTest {
 
-    @Test
-    @Ignore
+    @Test(expected = NotFoundException.class)
     public void retryChildFind() {
-        final MobileElement parentOrigin = mockAppiumElement();
-        final MobileElement childOrigin = mockAppiumElement();
+        final WebElement parentOrigin = mockAppiumElement();
+        final WebElement childOrigin = mockAppiumElement();
 
-        when(parentOrigin.findElementsByXPath("//div")).thenThrow(new NotFoundException());
-        when(childOrigin.findElementsByXPath("//")).thenThrow(new NotFoundException());
+        when(parentOrigin.findElement(By.xpath("//div"))).thenThrow(new NotFoundException());
+        when(childOrigin.findElement(By.xpath("//"))).thenThrow(new NotFoundException());
 
-        final Atlas atlas = new Atlas(new AppiumDriverConfiguration(mockAppiumDriver()));
+        final Atlas atlas = new Atlas(new AppiumDriverConfiguration(mockAndroidDriver()));
         final ParentElement parent = atlas.create(parentOrigin, ParentElement.class);
 
         parent.child().isDisplayed();

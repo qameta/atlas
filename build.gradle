@@ -66,6 +66,7 @@ subprojects { project ->
             dependency 'io.appium:java-client:6.1.0'
             dependency 'io.github.bonigarcia:webdrivermanager:2.1.0'
             dependency 'ru.yandex.qatools.matchers:webdriver-matchers:1.4.1'
+            dependency 'org.awaitility:awaitility:3.1.2'
 
             dependency 'org.slf4j:slf4j-api:1.7.25'
             dependency 'org.slf4j:slf4j-simple:1.7.25'

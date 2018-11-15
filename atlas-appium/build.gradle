@@ -6,9 +6,8 @@ dependencies {
 
     compile 'io.appium:java-client'
     compile 'org.seleniumhq.selenium:selenium-java'
-    compile 'ru.yandex.qatools.matchers:webdriver-matchers:1.4.1'
-    compile 'ru.yandex.qatools.matchers:matcher-decorators:1.4.1'
-    compile 'org.awaitility:awaitility:3.1.2'
+    compile 'ru.yandex.qatools.matchers:webdriver-matchers'
+    compile 'org.awaitility:awaitility'
 
     testCompile 'org.mockito:mockito-all'
     testCompile 'org.assertj:assertj-core'

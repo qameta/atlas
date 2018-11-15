@@ -1,11 +1,13 @@
 package io.qameta.atlas.testdata;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.qameta.atlas.AtlasMobileElement;
 import io.qameta.atlas.AtlasWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.HasInputDevices;
+import org.openqa.selenium.internal.WrapsDriver;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;
@@ -19,11 +21,20 @@ public final class ObjectFactory {
     }
 
     public static AppiumDriver mockAppiumDriver() {
-        return mock(AppiumDriver.class, withSettings().extraInterfaces(HasInputDevices.class));
+        return mock(AppiumDriver.class, withSettings().extraInterfaces(WrapsDriver.class, HasInputDevices.class));
     }
 
-    public static MobileElement mockAppiumElement() {
-        return mock(MobileElement.class, withSettings().extraInterfaces(WebElement.class));
+    public static AppiumDriver mockAndroidDriver() {
+        return mock(AndroidDriver.class, withSettings().extraInterfaces(WrapsDriver.class, HasInputDevices.class));
+    }
+
+
+    public static IOSDriver mockIOSDriver() {
+        return mock(IOSDriver.class, withSettings().extraInterfaces(WrapsDriver.class, HasInputDevices.class));
+    }
+
+    public static WebElement mockAppiumElement() {
+        return mock(WebElement.class);
     }
 
     public static AtlasMobileElement mockAtlasMobileElement() {

@@ -16,7 +16,6 @@ import io.qameta.atlas.util.MethodInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.WrapsDriver;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -43,12 +42,8 @@ public class AppiumFindByExtension implements MethodExtension {
     @Override
     public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) {
         final Method method = methodInfo.getMethod();
-        final boolean annotationsPresent = Stream.of(method.getDeclaredAnnotations())
-                .anyMatch(it -> it instanceof IOSFindBy || it instanceof AndroidFindBy);
 
         assert proxy instanceof SearchContext;
-        assert proxy instanceof WrapsDriver;
-        assert annotationsPresent;
 
         final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
@@ -68,12 +63,12 @@ public class AppiumFindByExtension implements MethodExtension {
             throw new AtlasException("Сan not identified driver");
         }
 
-        final WrapsDriver searchContext = (WrapsDriver) proxy;
+        final SearchContext searchContext = (SearchContext) proxy;
         final Configuration childConfiguration = configuration.child();
         final String name = Optional.ofNullable(method.getAnnotation(Name.class))
                 .map(Name::value)
                 .orElse(method.getName());
-        final Target target = new LazyTarget(name, () -> searchContext.getWrappedDriver().findElement(locator));
+        final Target target = new LazyTarget(name, () -> searchContext.findElement(locator));
 
         return new Atlas(childConfiguration).create(target, method.getReturnType());
     }

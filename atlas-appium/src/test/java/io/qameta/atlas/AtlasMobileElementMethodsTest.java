@@ -1,9 +1,9 @@
 package io.qameta.atlas;
 
-import io.appium.java_client.MobileElement;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import static io.qameta.atlas.testdata.ObjectFactory.mockAppiumElement;
 import static org.mockito.Mockito.times;
@@ -15,48 +15,48 @@ import static org.mockito.Mockito.verify;
 public class AtlasMobileElementMethodsTest {
 
     private AtlasMobileElement atlasMobileElement;
-    private MobileElement originMobileElement;
+    private WebElement originElement;
 
     @Before
     public void initElements() {
-        originMobileElement = mockAppiumElement();
+        originElement = mockAppiumElement();
         atlasMobileElement = new Atlas()
-                .create(originMobileElement, AtlasMobileElement.class);
+                .create(originElement, AtlasMobileElement.class);
     }
 
     @Test
     public void clickMethodTest() {
         atlasMobileElement.click();
-        verify(originMobileElement, times(1)).click();
+        verify(originElement, times(1)).click();
     }
 
     @Test
     public void sendKeysMethodTest() {
         atlasMobileElement.sendKeys();
-        verify(originMobileElement, times(1)).sendKeys();
+        verify(originElement, times(1)).sendKeys();
     }
 
     @Test
     public void isEnabledMethodTest() {
         atlasMobileElement.isEnabled();
-        verify(originMobileElement, times(1)).isEnabled();
+        verify(originElement, times(1)).isEnabled();
     }
 
     @Test
     public void getTextMethodTest() {
         atlasMobileElement.getText();
-        verify(originMobileElement, times(1)).getText();
+        verify(originElement, times(1)).getText();
     }
 
     @Test
     public void findElementsMethodTest() {
         atlasMobileElement.findElements(By.xpath(""));
-        verify(originMobileElement, times(1)).findElements(By.xpath(""));
+        verify(originElement, times(1)).findElements(By.xpath(""));
     }
 
     @Test
     public void isDisplayedMethodTest() {
         atlasMobileElement.isDisplayed();
-        verify(originMobileElement, times(1)).isDisplayed();
+        verify(originElement, times(1)).isDisplayed();
     }
 }
