@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static io.qameta.atlas.testdata.ObjectFactory.mockAppiumElement;
+import static io.qameta.atlas.testdata.ObjectFactory.mockWebElement;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -19,7 +19,7 @@ public class AtlasMobileElementMethodsTest {
 
     @Before
     public void initElements() {
-        originElement = mockAppiumElement();
+        originElement = mockWebElement();
         atlasMobileElement = new Atlas()
                 .create(originElement, AtlasMobileElement.class);
     }
@@ -58,5 +58,10 @@ public class AtlasMobileElementMethodsTest {
     public void isDisplayedMethodTest() {
         atlasMobileElement.isDisplayed();
         verify(originElement, times(1)).isDisplayed();
+    }
+
+    @Test
+    public void findElement() {
+        atlasMobileElement.findElement(By.xpath("//"));
     }
 }

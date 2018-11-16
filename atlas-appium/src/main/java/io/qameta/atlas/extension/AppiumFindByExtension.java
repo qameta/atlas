@@ -41,10 +41,9 @@ public class AppiumFindByExtension implements MethodExtension {
 
     @Override
     public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) {
-        final Method method = methodInfo.getMethod();
-
         assert proxy instanceof SearchContext;
 
+        final Method method = methodInfo.getMethod();
         final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
                 .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
@@ -59,6 +58,7 @@ public class AppiumFindByExtension implements MethodExtension {
             final String xpath = processTemplate(method.getAnnotation(IOSFindBy.class).xpath(), parameters);
             final String id = processTemplate(method.getAnnotation(IOSFindBy.class).id(), parameters);
             locator = getByLocator(new LocatorWrapper(XPATH, xpath), new LocatorWrapper(ID, id));
+
         } else {
             throw new AtlasException("Сan not identified driver");
         }
@@ -69,7 +69,6 @@ public class AppiumFindByExtension implements MethodExtension {
                 .map(Name::value)
                 .orElse(method.getName());
         final Target target = new LazyTarget(name, () -> searchContext.findElement(locator));
-
         return new Atlas(childConfiguration).create(target, method.getReturnType());
     }
 

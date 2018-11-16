@@ -8,7 +8,7 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
 
 import static io.qameta.atlas.testdata.ObjectFactory.mockAndroidDriver;
-import static io.qameta.atlas.testdata.ObjectFactory.mockAppiumElement;
+import static io.qameta.atlas.testdata.ObjectFactory.mockWebElement;
 import static org.mockito.Mockito.when;
 
 /**
@@ -18,8 +18,8 @@ public class AppiumFindByRetrierTest {
 
     @Test(expected = NotFoundException.class)
     public void retryChildFind() {
-        final WebElement parentOrigin = mockAppiumElement();
-        final WebElement childOrigin = mockAppiumElement();
+        final WebElement parentOrigin = mockWebElement();
+        final WebElement childOrigin = mockWebElement();
 
         when(parentOrigin.findElement(By.xpath("//div"))).thenThrow(new NotFoundException());
         when(childOrigin.findElement(By.xpath("//"))).thenThrow(new NotFoundException());

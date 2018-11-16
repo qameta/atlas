@@ -19,7 +19,7 @@ public class TargetMethodInvoker implements MethodInvoker {
     public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration config) throws Throwable {
         final Object target = config.requireContext(TargetContext.class).getValue().instance();
 
-        final Method targetMethod = MethodUtils.getMatchingAccessibleMethod(
+        final Method targetMethod = MethodUtils.getMatchingMethod(
                 target.getClass(), methodInfo.getMethod().getName(), getParametersTypes(methodInfo.getArgs()));
         try {
             return targetMethod.invoke(target, methodInfo.getArgs());

@@ -33,7 +33,7 @@ public final class ObjectFactory {
         return mock(IOSDriver.class, withSettings().extraInterfaces(WrapsDriver.class, HasInputDevices.class));
     }
 
-    public static WebElement mockAppiumElement() {
+    public static WebElement mockWebElement() {
         return mock(WebElement.class);
     }
 
