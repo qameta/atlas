@@ -1,4 +1,4 @@
-description = 'Atlas Core'
+description = 'Atlas Webdriver'
 
 dependencies {
     compile project(':atlas-core')
