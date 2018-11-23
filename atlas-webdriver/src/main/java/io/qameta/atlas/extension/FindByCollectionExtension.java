@@ -46,7 +46,9 @@ public class FindByCollectionExtension implements MethodExtension {
         final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
         final String xpath = processTemplate(method.getAnnotation(FindBy.class).value(), parameters);
 
-        final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)
+        final String name = Optional.ofNullable(method.getAnnotation(Name.class))
+                .map(Name::value)
+                .map(template -> processTemplate(template, parameters))
                 .orElse(method.getName());
         final SearchContext context = (SearchContext) proxy;
 
