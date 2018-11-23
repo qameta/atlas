@@ -3,7 +3,7 @@ package io.qameta.atlas.internal;
 import io.qameta.atlas.api.Context;
 import io.qameta.atlas.api.Extension;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class Configuration {
     private final Map<Class<? extends Extension>, Extension> extensions;
 
     public Configuration() {
-        this.extensions = new HashMap<>();
+        this.extensions = new LinkedHashMap<>();
     }
 
     public void registerExtension(final Extension extension) {
