@@ -1,8 +1,8 @@
 package io.qameta.atlas.github.mobile.page;
 
-import io.qameta.atlas.AtlasMobileElement;
-import io.qameta.atlas.Screen;
-import io.qameta.atlas.annotations.AndroidFindBy;
+import io.qameta.appium.AtlasMobileElement;
+import io.qameta.appium.Screen;
+import io.qameta.appium.annotations.AndroidFindBy;
 
 public interface ArticleScreen extends Screen {
 

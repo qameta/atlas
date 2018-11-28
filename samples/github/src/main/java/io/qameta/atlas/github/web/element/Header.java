@@ -1,8 +1,8 @@
 package io.qameta.atlas.github.web.element;
 
 
-import io.qameta.atlas.AtlasWebElement;
-import io.qameta.atlas.extension.FindBy;
+import io.qameta.webdriver.AtlasWebElement;
+import io.qameta.webdriver.extension.FindBy;
 
 /**
  * Header of web page.
