@@ -5,7 +5,6 @@ import io.qameta.atlas.appium.Screen;
 import io.qameta.atlas.appium.annotations.AndroidFindBy;
 import io.qameta.atlas.appium.annotations.IOSFindBy;
 import io.qameta.atlas.core.api.Retry;
-import io.qameta.atlas.webdriver.extension.Name;
 import io.qameta.atlas.webdriver.extension.Param;
 
 /**
@@ -13,7 +12,6 @@ import io.qameta.atlas.webdriver.extension.Param;
  */
 public interface MainScreen extends Screen {
 
-    @Name("dddv {{ }}")
     @Retry(timeout = 20000L)
     @IOSFindBy(xpath = "//XCUIElementTypeSearchField[@name='Search Wikipedia']")
     @AndroidFindBy(xpath = "//*[contains(@text, 'Search Wikipedia')]")

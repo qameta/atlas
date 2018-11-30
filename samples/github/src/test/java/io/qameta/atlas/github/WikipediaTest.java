@@ -83,7 +83,7 @@ public class WikipediaTest {
         onMainScreen().searchWikipedia().click();
     }
 
-   @Ignore
+    @Ignore
     @Test
     public void androidSwipeToDown() {
         onMainScreen().searchWikipedia().click();

@@ -19,7 +19,6 @@ public class TargetMethodInvoker implements MethodInvoker {
     @Override
     public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration config) throws Throwable {
         final Object target = config.requireContext(TargetContext.class).getValue().instance();
-
         final Optional<Method> targetMethod = Optional.ofNullable(MethodUtils.getMatchingMethod(
                 target.getClass(), methodInfo.getMethod().getName(), getParametersTypes(methodInfo.getArgs())));
         try {
