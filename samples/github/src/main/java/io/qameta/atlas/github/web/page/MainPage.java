@@ -1,6 +1,6 @@
 package io.qameta.atlas.github.web.page;
 
-import io.qameta.webdriver.WebPage;
+import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.github.web.layout.WithHeader;
 
 /**

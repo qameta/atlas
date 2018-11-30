@@ -1,9 +1,9 @@
 package io.qameta.atlas.github;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.qameta.core.Atlas;
-import io.qameta.webdriver.WebDriverConfiguration;
-import io.qameta.webdriver.WebPage;
+import io.qameta.atlas.core.Atlas;
+import io.qameta.atlas.webdriver.WebDriverConfiguration;
+import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.github.web.page.MainPage;
 import io.qameta.atlas.github.web.page.SearchPage;
 import org.junit.After;

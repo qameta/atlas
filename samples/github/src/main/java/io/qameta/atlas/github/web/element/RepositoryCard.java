@@ -1,7 +1,7 @@
 package io.qameta.atlas.github.web.element;
 
-import io.qameta.webdriver.AtlasWebElement;
-import io.qameta.webdriver.extension.FindBy;
+import io.qameta.atlas.webdriver.AtlasWebElement;
+import io.qameta.atlas.webdriver.extension.FindBy;
 
 /**
  * Repository card.
