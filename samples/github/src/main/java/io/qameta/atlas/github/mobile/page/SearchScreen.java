@@ -1,11 +1,11 @@
 package io.qameta.atlas.github.mobile.page;
 
-import io.qameta.atlas.AtlasMobileElement;
-import io.qameta.atlas.Screen;
-import io.qameta.atlas.annotations.AndroidFindBy;
-import io.qameta.atlas.annotations.IOSFindBy;
-import io.qameta.atlas.api.Retry;
-import io.qameta.atlas.extension.Param;
+import io.qameta.atlas.appium.AtlasMobileElement;
+import io.qameta.atlas.appium.Screen;
+import io.qameta.atlas.appium.annotations.AndroidFindBy;
+import io.qameta.atlas.appium.annotations.IOSFindBy;
+import io.qameta.atlas.core.api.Retry;
+import io.qameta.atlas.webdriver.extension.Param;
 
 /**
  * Search screen of mobile application.
