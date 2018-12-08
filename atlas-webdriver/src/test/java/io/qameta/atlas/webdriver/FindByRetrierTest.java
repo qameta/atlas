@@ -3,7 +3,6 @@ package io.qameta.atlas.webdriver;
 import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.core.api.Retry;
 import io.qameta.atlas.webdriver.extension.FindBy;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
@@ -15,8 +14,7 @@ import static org.mockito.Mockito.when;
 
 public class FindByRetrierTest {
 
-    @Test
-    @Ignore
+    @Test(expected = NotFoundException.class)
     public void retryChildFind() {
         WebElement parentOrigin = mockWebElement();
         WebElement childOrigin = mockWebElement();
@@ -28,21 +26,15 @@ public class FindByRetrierTest {
         ParentElement parent = atlas.create(parentOrigin, ParentElement.class);
 
         parent.child().isDisplayed();
-
     }
 
     interface ParentElement extends AtlasWebElement {
-
         @Retry(timeout = 8000)
         @FindBy("//div")
         NestedElement child();
-
     }
 
     interface NestedElement extends AtlasWebElement {
-
         boolean isDisplayed();
-
     }
-
 }
