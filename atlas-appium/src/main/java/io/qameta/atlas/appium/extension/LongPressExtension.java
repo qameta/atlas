@@ -27,7 +27,7 @@ public class LongPressExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals("longTap");
+        return method.getName().equals("longPress");
     }
 
     @Override
