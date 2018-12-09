@@ -3,9 +3,9 @@ package io.qameta.atlas.appium.extension;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
+import io.qameta.atlas.appium.context.AppiumDriverContext;
 import io.qameta.atlas.core.AtlasException;
 import io.qameta.atlas.core.api.MethodExtension;
-import io.qameta.atlas.appium.context.AppiumDriverContext;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.util.MethodInfo;
 import org.openqa.selenium.Dimension;
@@ -19,14 +19,14 @@ import static org.awaitility.Awaitility.given;
 import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
 
 /**
- * Swipe (Scroll) down to element.
+ * Swipe (Scroll) up to element.
  */
-public class SwipeDownOnExtension implements MethodExtension {
+public class SwipeUpOnExtension implements MethodExtension {
 
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals("swipeDownOn");
+        return method.getName().equals("swipeUpOn");
     }
 
     @Override
@@ -38,9 +38,9 @@ public class SwipeDownOnExtension implements MethodExtension {
             if (!displayed().matches(proxy)) {
                 final Dimension size = driver.manage().window().getSize();
                 final int startX = size.width / 2;
-                final int startY = (int) (size.height * BOTTOM.getValue());
+                final int startY = (int) (size.height * TOP.getValue());
                 final int endX = size.width / 2;
-                final int endY = (int) (size.height * TOP.getValue());
+                final int endY = (int) (size.height * BOTTOM.getValue());
 
                 final TouchAction touchAction = new TouchAction(driver);
                 touchAction.longPress(new PointOption().withCoordinates(startX, startY))
@@ -51,3 +51,4 @@ public class SwipeDownOnExtension implements MethodExtension {
         return proxy;
     }
 }
+

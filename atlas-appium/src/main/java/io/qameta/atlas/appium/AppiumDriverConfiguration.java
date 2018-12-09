@@ -25,6 +25,7 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new SwipeDownOnExtension());
         registerExtension(new ShouldMethodExtension());
         registerExtension(new ToStringMethodExtension());
+        registerExtension(new SwipeUpOnExtension());
     }
 }
 //CHECKSTYLE:ON: ClassDataAbstractionCoupling
