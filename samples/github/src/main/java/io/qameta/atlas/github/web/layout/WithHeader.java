@@ -1,6 +1,6 @@
 package io.qameta.atlas.github.web.layout;
 
-import io.qameta.atlas.extension.FindBy;
+import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.github.web.element.Header;
 
 /**
