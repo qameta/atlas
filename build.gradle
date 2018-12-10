@@ -39,7 +39,9 @@ subprojects { project ->
     apply plugin: 'java'
     apply plugin: 'ru.vyarus.quality'
     apply plugin: 'io.spring.dependency-management'
+
     apply from: "${gradleScriptDir}/maven.gradle"
+    apply from: "${gradleScriptDir}/bintray.gradle"
 
     compileJava {
         sourceCompatibility = 1.8
