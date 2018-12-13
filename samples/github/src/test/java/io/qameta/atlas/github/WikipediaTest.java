@@ -92,6 +92,15 @@ public class WikipediaTest {
         onArticleScreen().articleTitle().should(allOf(displayed(), text("Atlas LV-3B")));
     }
 
+    @Ignore
+    @Test
+    public void androidSwipeToUp() {
+        onMainScreen().searchWikipedia().click();
+        onSearchScreen().search().sendKeys("Java");
+        onSearchScreen().item("JaVale McGee").swipeDownOn();
+        onSearchScreen().item("Java (programming language)").swipeUpOn().click();
+    }
+
     @After
     public void stopDriver() {
         this.driver.quit();

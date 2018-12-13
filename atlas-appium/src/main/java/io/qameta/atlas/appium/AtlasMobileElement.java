@@ -13,7 +13,17 @@ public interface AtlasMobileElement extends AtlasWebElement {
 
     void longPress();
 
+    /**
+     * Swipe (Scroll) down to element.
+     * @return {@link AtlasMobileElement}
+     */
     AtlasMobileElement swipeDownOn();
+
+    /**
+     * Swipe (Scroll) up to element.
+     * @return {@link AtlasMobileElement}
+     */
+    AtlasMobileElement swipeUpOn();
 
     /**
      * The same as {@link WrapsElement#getWrappedElement()}.
