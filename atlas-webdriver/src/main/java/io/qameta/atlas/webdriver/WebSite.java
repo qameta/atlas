@@ -1,24 +1,19 @@
 package io.qameta.atlas.webdriver;
 
+import io.qameta.atlas.webdriver.extension.DefaultSite;
 import io.qameta.atlas.webdriver.extension.DriverProvider;
-import io.qameta.atlas.webdriver.extension.Page;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsDriver;
 
 /**
- * Web Page.
+ * Web Site.
  */
-public interface WebPage extends WrapsDriver, SearchContext {
+public interface WebSite extends WrapsDriver, SearchContext {
 
     @DriverProvider
     WebDriver getWrappedDriver();
 
-    default void open(String url) {
-        getWrappedDriver().get(url);
-    }
-
-    @Page
-    <T extends WebPage> T onPage(Class<T> page);
-
+    @DefaultSite
+    void setBaseURI(String baseURI);
 }
