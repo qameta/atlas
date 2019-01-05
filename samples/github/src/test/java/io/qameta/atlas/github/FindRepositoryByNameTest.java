@@ -10,10 +10,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.should;
+import static ru.yandex.qatools.matchers.webdriver.driver.HasTextMatcher.textOnCurrentPage;
 
 /**
  * Demo of simple test. Using atlas-webdriver.
@@ -40,6 +47,16 @@ public class FindRepositoryByNameTest {
         onMainPage().header().searchInput().submit();
 
         onSearchPage().repositories().waitUntil(hasSize(10));
+    }
+
+    @Test
+    @Ignore
+    public void simpleTestWithJS()  {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        onMainPage().open("https://github.com");
+        WebElement element = onMainPage().trial().getWrappedElement();
+        js.executeScript("arguments[0].click();", element);
+        assertThat(driver, should(textOnCurrentPage(is(containsString("Start your 45-day free trial")))));
     }
 
     @After
