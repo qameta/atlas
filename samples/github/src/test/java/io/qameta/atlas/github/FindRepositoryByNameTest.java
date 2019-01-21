@@ -54,8 +54,15 @@ public class FindRepositoryByNameTest {
     public void simpleTestWithJS()  {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         onMainPage().open("https://github.com");
-        WebElement element = onMainPage().trial().getWrappedElement();
-        js.executeScript("arguments[0].click();", element);
+        js.executeScript("arguments[0].click();", onMainPage().trial());
+        assertThat(driver, should(textOnCurrentPage(is(containsString("Start your 45-day free trial")))));
+    }
+
+    @Test
+    @Ignore
+    public void secondTestWithJS() {
+        onMainPage().open("https://github.com");
+        onMainPage().trial().executeScript("arguments[0].click();");
         assertThat(driver, should(textOnCurrentPage(is(containsString("Start your 45-day free trial")))));
     }
 

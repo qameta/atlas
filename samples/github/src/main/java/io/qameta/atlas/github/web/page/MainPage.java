@@ -10,7 +10,7 @@ import io.qameta.atlas.webdriver.extension.FindBy;
  */
 public interface MainPage extends WebPage, WithHeader {
 
-    @FindBy("//a[contains(text(), 'Start a free trial')]")
+    @FindBy("//a[contains(text(), 'Or start a free trial of Enterprise Server')]")
     AtlasWebElement trial();
 
 }
