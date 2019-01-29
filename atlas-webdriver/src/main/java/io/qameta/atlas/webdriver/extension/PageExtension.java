@@ -16,7 +16,8 @@ public class PageExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.isAnnotationPresent(Page.class);
+        return method.isAnnotationPresent(Page.class)
+                && method.getAnnotation(Page.class).url().isEmpty();
     }
 
     @Override

@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class URLExtensionTest {
+public class PageUrlExtensionTest {
 
     private WebDriver driver;
 
@@ -41,10 +41,12 @@ public class URLExtensionTest {
     public void shouldHandleSingleQueryParam() {
         String exceptedURI = "https://github.com/search?abs=%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0";
         TestSite onSite = new Atlas()
-                .extension(new URLExtension())
+                .extension(new BaseUriExtension())
+                .extension(new PageUrlExtension())
                 .extension(new DriverProviderExtension())
                 .context(new WebDriverContext(driver))
                 .create(driver, TestSite.class);
+        onSite.setBaseURI("https://github.com");
 
         onSite.onMainPage("кириллица").atlasWebElement.click();
         verify(driver, times(1)).get(exceptedURI);
@@ -55,10 +57,12 @@ public class URLExtensionTest {
     public void shouldHandleQueryParams() {
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
         TestSite onSite = new Atlas()
-                .extension(new URLExtension())
+                .extension(new PageUrlExtension())
+                .extension(new BaseUriExtension())
                 .extension(new DriverProviderExtension())
                 .context(new WebDriverContext(driver))
                 .create(driver, TestSite.class);
+        onSite.setBaseURI("https://github.com");
 
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("first", "value-1");
@@ -72,12 +76,13 @@ public class URLExtensionTest {
                 containsString("first=value-1"),
                 containsString("second=value-2"),
                 containsString("?")));
-        assertEquals(capturedStringArg.split("&").length, 3);
+        assertEquals( 3, capturedStringArg.split("&").length);
     }
 
 
     @Test(expected = AtlasException.class)
     public void siteWithOutAnyBaseURIShouldThrowException() {
+        System.getProperties().clear();
         TestSiteWithOutAnyURI siteWithOutUrl = new Atlas(new WebDriverConfiguration(mockWebDriver()))
                 .create(driver, TestSiteWithOutAnyURI.class);
         siteWithOutUrl.onMainPage("null");
@@ -86,9 +91,9 @@ public class URLExtensionTest {
     @Test
     public void setBaseURIMethodShouldHaveWebSite() {
         TestSiteWithOutAnyURI siteWithOutUrl = new Atlas()
-                .extension(new URLExtension())
+                .extension(new PageUrlExtension())
                 .extension(new DriverProviderExtension())
-                .extension(new DefaultSiteExtension())
+                .extension(new BaseUriExtension())
                 .context(new WebDriverContext(driver))
                 .create(driver, TestSiteWithOutAnyURI.class);
         siteWithOutUrl.setBaseURI("https://github.com");
@@ -99,35 +104,68 @@ public class URLExtensionTest {
     @Test
     public void shouldHandlePathParams() {
         TestSiteWithPathParams siteWithPath = new Atlas()
-                .extension(new URLExtension())
+                .extension(new PageUrlExtension())
                 .extension(new DriverProviderExtension())
-                .extension(new DefaultSiteExtension())
+                .extension(new BaseUriExtension())
                 .context(new WebDriverContext(driver))
                 .create(driver, TestSiteWithPathParams.class);
+        siteWithPath.setBaseURI("https://github.com");
+
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("first", "value-1");
 
-        siteWithPath.onMainPage(1100109, "Atlas", 100, queryMap).atlasWebElement.click();
-        verify(driver, times(1)).get("https://github.com/users/1100109/Atlas?q=100&first=value-1");
+        Map<String, String> queryMap1 = new HashMap<>();
+        queryMap1.put("second", "value-2");
+
+        siteWithPath.onMainPage(1100109, "Atlas", 100, queryMap, queryMap1).atlasWebElement.click();
+        verify(driver, times(1)).get("https://github.com/users/1100109/Atlas?q=100&first=value-1&second=value-2");
     }
 
-    @BaseURI("https://github.com")
+
+    @Test
+    public void shouldHandleUrlWithUserAndPassword() {
+        TestSiteWithOutAnyURI siteWithUserAndPass = new Atlas()
+                .extension(new PageUrlExtension())
+                .extension(new DriverProviderExtension())
+                .extension(new BaseUriExtension())
+                .context(new WebDriverContext(driver))
+                .create(driver, TestSiteWithOutAnyURI.class);
+
+        siteWithUserAndPass.setBaseURI("http://username:password@example.com/");
+        siteWithUserAndPass.onMainPage("zero").atlasWebElement.click();
+        verify(driver, times(1)).get("http://username:password@example.com/search?a=zero");
+    }
+
+
+    @Test
+    public void shouldHandleUrlWithPort() {
+        TestSiteWithOutAnyURI siteWithUserAndPass = new Atlas()
+                .extension(new PageUrlExtension())
+                .extension(new DriverProviderExtension())
+                .extension(new BaseUriExtension())
+                .context(new WebDriverContext(driver))
+                .create(driver, TestSiteWithOutAnyURI.class);
+
+        siteWithUserAndPass.setBaseURI("http://example.com:8443/");
+        siteWithUserAndPass.onMainPage("zero").atlasWebElement.click();
+        verify(driver, times(1)).get("http://example.com:8443/search?a=zero");
+    }
+
     public interface TestSite extends WebSite {
-        @URL("total")
+        @Page(url = "total")
         MainPage onMainPage(@Query("q") String value, @QueryMap Map<String, String> queryMap);
 
-        @URL("search")
+        @Page(url = "search")
         MainPage onMainPage(@Query("abs") String value);
     }
 
-    @BaseURI("https://github.com")
     public interface TestSiteWithPathParams extends WebSite {
-        @URL("users/{id}/{project}")
-        MainPage onMainPage(@Path("id") long customerId, @Path("project") String name, @Query("q") Integer value, @QueryMap Map<String, String> queryMap);
+        @Page(url = "users/{id}/{project}")
+        MainPage onMainPage(@Path("id") long customerId, @Path("project") String name, @Query("q") Integer value, @QueryMap Map<String, String> queryMap, @QueryMap Map<String, String> queryMap1);
     }
 
     public interface TestSiteWithOutAnyURI extends WebSite {
-        @URL("search")
+        @Page(url = "search")
         MainPage onMainPage(@Query("a") String value);
     }
 

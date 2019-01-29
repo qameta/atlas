@@ -3,13 +3,13 @@ package io.qameta.atlas.appium.extension;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import io.qameta.atlas.core.Atlas;
-import io.qameta.atlas.core.AtlasException;
 import io.qameta.atlas.appium.annotations.AndroidFindBy;
 import io.qameta.atlas.appium.annotations.IOSFindBy;
+import io.qameta.atlas.appium.context.AppiumDriverContext;
+import io.qameta.atlas.core.Atlas;
+import io.qameta.atlas.core.AtlasException;
 import io.qameta.atlas.core.api.MethodExtension;
 import io.qameta.atlas.core.api.Target;
-import io.qameta.atlas.appium.context.AppiumDriverContext;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.target.LazyTarget;
 import io.qameta.atlas.core.util.MethodInfo;
@@ -25,8 +25,8 @@ import java.util.stream.Stream;
 
 import static io.qameta.atlas.appium.extension.AppiumFindByExtension.TypeLocator.ID;
 import static io.qameta.atlas.appium.extension.AppiumFindByExtension.TypeLocator.XPATH;
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParameters;
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processTemplate;
+import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamParameters;
+import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processParamTemplate;
 
 /**
  * FindBy for both platfrom (Android&IOS).
@@ -45,19 +45,19 @@ public class AppiumFindByExtension implements MethodExtension {
         assert proxy instanceof SearchContext;
 
         final Method method = methodInfo.getMethod();
-        final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
+        final Map<String, String> parameters = getParamParameters(method, methodInfo.getArgs());
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
                 .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
 
         final By locator;
         if (driver instanceof AndroidDriver) {
-            final String xpath = processTemplate(method.getAnnotation(AndroidFindBy.class).xpath(), parameters);
-            final String id = processTemplate(method.getAnnotation(AndroidFindBy.class).id(), parameters);
+            final String xpath = processParamTemplate(method.getAnnotation(AndroidFindBy.class).xpath(), parameters);
+            final String id = processParamTemplate(method.getAnnotation(AndroidFindBy.class).id(), parameters);
             locator = getByLocator(new LocatorWrapper(XPATH, xpath), new LocatorWrapper(ID, id));
 
         } else if (driver instanceof IOSDriver) {
-            final String xpath = processTemplate(method.getAnnotation(IOSFindBy.class).xpath(), parameters);
-            final String id = processTemplate(method.getAnnotation(IOSFindBy.class).id(), parameters);
+            final String xpath = processParamTemplate(method.getAnnotation(IOSFindBy.class).xpath(), parameters);
+            final String id = processParamTemplate(method.getAnnotation(IOSFindBy.class).id(), parameters);
             locator = getByLocator(new LocatorWrapper(XPATH, xpath), new LocatorWrapper(ID, id));
 
         } else {

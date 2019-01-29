@@ -20,9 +20,9 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new FindByCollectionExtension());
         registerExtension(new ShouldMethodExtension());
         registerExtension(new WaitUntilMethodExtension());
-        registerExtension(new URLExtension());
+        registerExtension(new PageUrlExtension());
         registerExtension(new PageExtension());
-        registerExtension(new DefaultSiteExtension());
+        registerExtension(new BaseUriExtension());
     }
 }
 //CHECKSTYLE:ON: ClassDataAbstractionCoupling

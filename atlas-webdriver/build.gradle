@@ -6,7 +6,6 @@ dependencies {
     compile 'org.seleniumhq.selenium:selenium-java'
     compile 'org.hamcrest:hamcrest-all'
     compile 'ru.yandex.qatools.matchers:webdriver-matchers'
-    compile 'com.squareup.okhttp3:okhttp'
 
     testCompile 'org.mockito:mockito-all'
     testCompile 'org.assertj:assertj-core'

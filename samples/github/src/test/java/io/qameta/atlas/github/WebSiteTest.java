@@ -4,6 +4,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.github.web.site.GitHubSite;
 import io.qameta.atlas.webdriver.WebDriverConfiguration;
+import io.qameta.atlas.webdriver.extension.BaseURI;
+import io.qameta.atlas.webdriver.extension.BaseUriExtension;
+import io.qameta.atlas.webdriver.extension.PageUrlExtension;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,11 +23,11 @@ import static ru.yandex.qatools.matchers.webdriver.TextMatcher.text;
  * In additional you can open any Page through domain URL.
  * With WebSite implementation look to
  *
- * {@link io.qameta.atlas.webdriver.extension.DefaultSite},
- * {@link io.qameta.atlas.webdriver.extension.DefaultSiteExtension}, {@link io.qameta.atlas.webdriver.extension.Page},
+ * {@link BaseURI},
+ * {@link BaseUriExtension}, {@link io.qameta.atlas.webdriver.extension.Page},
  * {@link io.qameta.atlas.webdriver.extension.PageExtension}, {@link io.qameta.atlas.webdriver.extension.Path},
  * {@link io.qameta.atlas.webdriver.extension.Query}, {@link io.qameta.atlas.webdriver.extension.QueryMap},
- * {@link io.qameta.atlas.webdriver.extension.URL}, {@link io.qameta.atlas.webdriver.extension.URLExtension}.
+ * {@link io.qameta.atlas.webdriver.extension.Page}, {@link PageUrlExtension}.
  *
  */
 public class WebSiteTest {
@@ -32,12 +35,12 @@ public class WebSiteTest {
     private Atlas atlas;
     private WebDriver driver;
 
-
     @Before
     public void startDriver() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         atlas = new Atlas(new WebDriverConfiguration(driver));
+        onSite().setBaseURI("https://github.com");
     }
 
     @Ignore
@@ -52,12 +55,10 @@ public class WebSiteTest {
     @Ignore
     @Test
     public void baseUriWebSiteTest()  {
-        onSite().setBaseURI("https://github.com");
         onSite().onSearchPage("Junit 5").repositories().waitUntil(hasSize(10))
                 .should(everyItem(text(containsString("junit"))
         ));
     }
-
 
     @Ignore
     @Test
@@ -65,7 +66,6 @@ public class WebSiteTest {
         onSite().onProjectPage("qameta", "atlas").contributors().click();
         onSite().onContributorsPage().hovercards().waitUntil(hasSize(4));
     }
-
 
     private GitHubSite onSite() {
         return atlas.create(driver, GitHubSite.class);

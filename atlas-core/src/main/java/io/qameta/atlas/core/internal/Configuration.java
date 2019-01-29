@@ -14,12 +14,10 @@ import java.util.stream.Collectors;
  */
 public class Configuration {
 
-    private final Map<Object, Object> store;
     private final Map<Class<? extends Extension>, Extension> extensions;
 
     public Configuration() {
         this.extensions = new HashMap<>();
-        this.store = new HashMap<>();
     }
 
     public void registerExtension(final Extension extension) {
@@ -55,8 +53,5 @@ public class Configuration {
         return configuration;
     }
 
-    public Map<Object, Object> getStore() {
-        return store;
-    }
 
 }

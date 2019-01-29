@@ -6,10 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * BaseURI marker. Use on your {@link io.qameta.atlas.webdriver.WebSite} implementation.
+ * BaseURI marker.
  */
-@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 public @interface BaseURI {
-    String value();
 }

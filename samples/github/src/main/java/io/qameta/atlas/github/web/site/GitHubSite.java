@@ -10,16 +10,15 @@ import io.qameta.atlas.webdriver.extension.*;
 /**
  * Point of testing WebSite.
  */
-@BaseURI("https://github.com")
 public interface GitHubSite extends WebSite {
 
     @Page
     MainPage onMainPage();
 
-    @URL("search")
+    @Page(url = "search")
     SearchPage onSearchPage(@Query("q") String value);
 
-    @URL("{profile}/{project}/tree/master/")
+    @Page(url = "{profile}/{project}/tree/master/")
     ProjectPage onProjectPage(@Path("profile") String profile, @Path("project") String project);
 
     @Page
