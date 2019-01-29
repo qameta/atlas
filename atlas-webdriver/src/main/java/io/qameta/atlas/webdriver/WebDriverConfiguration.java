@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 /**
  * WebDriver configuration.
  */
-//CHECKSTYLE:OFF: ClassDataAbstractionCoupling
+//CHECKSTYLE:OFF
 public class WebDriverConfiguration extends Configuration {
 
     public WebDriverConfiguration(final WebDriver webDriver) {
@@ -25,4 +25,4 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new BaseUriExtension());
     }
 }
-//CHECKSTYLE:ON: ClassDataAbstractionCoupling
+//CHECKSTYLE:ON
