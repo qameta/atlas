@@ -33,7 +33,7 @@ public class LongPressExtension implements MethodExtension {
     @Override
     public Object invoke(final Object proxy, final MethodInfo methodInfo, final Configuration configuration) {
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
-                .orElseThrow(() -> new AtlasException("WebDriver is missing")).getValue();
+                .orElseThrow(() -> new AtlasException("AppiumDriver is missing")).getValue();
 
         final TouchAction action = new TouchAction(driver);
         final Point location = ((WebElement) proxy).getLocation();
