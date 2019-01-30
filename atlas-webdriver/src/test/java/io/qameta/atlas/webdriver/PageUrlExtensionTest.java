@@ -42,7 +42,7 @@ public class PageUrlExtensionTest {
         String exceptedURI = "https://github.com/search?abs=%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0";
         TestSite onSite = new Atlas()
                 .extension(new BaseUriExtension())
-                .extension(new PageUrlExtension())
+                .extension(new PageExtension())
                 .extension(new DriverProviderExtension())
                 .context(new WebDriverContext(driver))
                 .create(driver, TestSite.class);
@@ -57,7 +57,7 @@ public class PageUrlExtensionTest {
     public void shouldHandleQueryParams() {
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
         TestSite onSite = new Atlas()
-                .extension(new PageUrlExtension())
+                .extension(new PageExtension())
                 .extension(new BaseUriExtension())
                 .extension(new DriverProviderExtension())
                 .context(new WebDriverContext(driver))
@@ -91,7 +91,7 @@ public class PageUrlExtensionTest {
     @Test
     public void setBaseURIMethodShouldHaveWebSite() {
         TestSiteWithOutAnyURI siteWithOutUrl = new Atlas()
-                .extension(new PageUrlExtension())
+                .extension(new PageExtension())
                 .extension(new DriverProviderExtension())
                 .extension(new BaseUriExtension())
                 .context(new WebDriverContext(driver))
@@ -104,7 +104,7 @@ public class PageUrlExtensionTest {
     @Test
     public void shouldHandlePathParams() {
         TestSiteWithPathParams siteWithPath = new Atlas()
-                .extension(new PageUrlExtension())
+                .extension(new PageExtension())
                 .extension(new DriverProviderExtension())
                 .extension(new BaseUriExtension())
                 .context(new WebDriverContext(driver))
@@ -125,7 +125,7 @@ public class PageUrlExtensionTest {
     @Test
     public void shouldHandleUrlWithUserAndPassword() {
         TestSiteWithOutAnyURI siteWithUserAndPass = new Atlas()
-                .extension(new PageUrlExtension())
+                .extension(new PageExtension())
                 .extension(new DriverProviderExtension())
                 .extension(new BaseUriExtension())
                 .context(new WebDriverContext(driver))
@@ -140,7 +140,7 @@ public class PageUrlExtensionTest {
     @Test
     public void shouldHandleUrlWithPort() {
         TestSiteWithOutAnyURI siteWithUserAndPass = new Atlas()
-                .extension(new PageUrlExtension())
+                .extension(new PageExtension())
                 .extension(new DriverProviderExtension())
                 .extension(new BaseUriExtension())
                 .context(new WebDriverContext(driver))

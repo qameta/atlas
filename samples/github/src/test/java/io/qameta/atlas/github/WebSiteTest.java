@@ -6,7 +6,7 @@ import io.qameta.atlas.github.web.site.GitHubSite;
 import io.qameta.atlas.webdriver.WebDriverConfiguration;
 import io.qameta.atlas.webdriver.extension.BaseURI;
 import io.qameta.atlas.webdriver.extension.BaseUriExtension;
-import io.qameta.atlas.webdriver.extension.PageUrlExtension;
+import io.qameta.atlas.webdriver.extension.PageExtension;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -27,7 +27,7 @@ import static ru.yandex.qatools.matchers.webdriver.TextMatcher.text;
  * {@link BaseUriExtension}, {@link io.qameta.atlas.webdriver.extension.Page},
  * {@link io.qameta.atlas.webdriver.extension.PageExtension}, {@link io.qameta.atlas.webdriver.extension.Path},
  * {@link io.qameta.atlas.webdriver.extension.Query}, {@link io.qameta.atlas.webdriver.extension.QueryMap},
- * {@link io.qameta.atlas.webdriver.extension.Page}, {@link PageUrlExtension}.
+ * {@link io.qameta.atlas.webdriver.extension.Page}, {@link PageExtension}.
  *
  */
 public class WebSiteTest {

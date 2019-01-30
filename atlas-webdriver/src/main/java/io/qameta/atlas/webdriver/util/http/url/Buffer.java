@@ -53,11 +53,6 @@ public final class Buffer {
         return b;
     }
 
-
-
-
-
-
     public String readUtf8() {
         try {
             return readString(size, UTF_8);
@@ -65,9 +60,6 @@ public final class Buffer {
             throw new AssertionError(e);
         }
     }
-
-
-
 
     private String readString(long byteCount, Charset charset) throws EOFException {
         if (charset == null) throw new IllegalArgumentException("charset == null");
@@ -94,9 +86,6 @@ public final class Buffer {
         return result;
     }
 
-
-
-
      private byte[] readByteArray(long byteCount) throws EOFException {
         if (byteCount > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("byteCount > Integer.MAX_VALUE: " + byteCount);
@@ -106,8 +95,6 @@ public final class Buffer {
         readFully(result);
         return result;
     }
-
-
 
     private void readFully(byte[] sink) throws EOFException {
         int offset = 0;
@@ -135,10 +122,6 @@ public final class Buffer {
 
         return toCopy;
     }
-
-
-
-
 
      public Buffer writeUtf8(String string) {
         return writeUtf8(string, 0, string.length());

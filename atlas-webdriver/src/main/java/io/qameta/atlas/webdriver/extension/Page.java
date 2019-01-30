@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Page {
 
-    String url() default "";
+    String url() default "/";
 }

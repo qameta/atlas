@@ -20,7 +20,7 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new FindByCollectionExtension());
         registerExtension(new ShouldMethodExtension());
         registerExtension(new WaitUntilMethodExtension());
-        registerExtension(new PageUrlExtension());
+        registerExtension(new PageExtension());
         registerExtension(new PageExtension());
         registerExtension(new BaseUriExtension());
     }
