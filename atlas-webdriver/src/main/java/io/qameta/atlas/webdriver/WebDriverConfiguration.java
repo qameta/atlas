@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 /**
  * WebDriver configuration.
  */
-//CHECKSTYLE:OFF
+//CHECKSTYLE:OFF: ClassDataAbstractionCoupling
 public class WebDriverConfiguration extends Configuration {
 
     public WebDriverConfiguration(final WebDriver webDriver) {
@@ -20,11 +20,11 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new FindByCollectionExtension());
         registerExtension(new ShouldMethodExtension());
         registerExtension(new WaitUntilMethodExtension());
+        registerExtension(new WrappedElementMethodExtension());
+        registerExtension(new ExecuteJScriptMethodExtension());
         registerExtension(new PageExtension());
         registerExtension(new PageExtension());
         registerExtension(new BaseUriExtension());
-        registerExtension(new WrappedElementMethodExtension());
-        registerExtension(new ExecuteJScriptMethodExtension());
     }
 }
-//CHECKSTYLE:ON
+//CHECKSTYLE:ON: ClassDataAbstractionCoupling
