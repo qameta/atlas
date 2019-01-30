@@ -128,10 +128,6 @@ public class AtlasWebElementMethodsTest {
         verify((Locatable) originWebElement, times(1)).getCoordinates();
     }
 
-    @Test
-    @Ignore
-    public void getWrappedElementMethodTest() {
-    }
 
     @Test
     public void toStringMethodTest() {
