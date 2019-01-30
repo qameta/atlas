@@ -23,7 +23,6 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new WrappedElementMethodExtension());
         registerExtension(new ExecuteJScriptMethodExtension());
         registerExtension(new PageExtension());
-        registerExtension(new PageExtension());
         registerExtension(new BaseUriExtension());
     }
 }
