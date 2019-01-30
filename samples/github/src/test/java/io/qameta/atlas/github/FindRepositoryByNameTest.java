@@ -12,12 +12,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.should;
 import static ru.yandex.qatools.matchers.webdriver.driver.HasTextMatcher.textOnCurrentPage;
 
@@ -33,6 +34,7 @@ public class FindRepositoryByNameTest {
     @Before
     public void startDriver() {
         WebDriverManager.chromedriver().setup();
+
         driver = new ChromeDriver();
         atlas = new Atlas(new WebDriverConfiguration(driver));
     }
