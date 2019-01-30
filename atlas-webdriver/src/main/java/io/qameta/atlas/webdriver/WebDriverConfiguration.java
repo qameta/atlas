@@ -22,6 +22,8 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new WaitUntilMethodExtension());
         registerExtension(new WrappedElementMethodExtension());
         registerExtension(new ExecuteJScriptMethodExtension());
+        registerExtension(new PageExtension());
+        registerExtension(new BaseUriExtension());
     }
 }
 //CHECKSTYLE:ON: ClassDataAbstractionCoupling
