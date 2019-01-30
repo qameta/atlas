@@ -12,7 +12,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -41,7 +40,7 @@ public class FindRepositoryByNameTest {
 
     @Test
     @Ignore
-    public void simpleTest() throws InterruptedException {
+    public void simpleTest()  {
         onMainPage().open("https://github.com");
         onMainPage().header().searchInput().sendKeys("Atlas");
         onMainPage().header().searchInput().submit();
