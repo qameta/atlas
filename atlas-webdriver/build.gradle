@@ -2,11 +2,10 @@ description = 'Atlas Webdriver'
 
 dependencies {
     compile project(':atlas-core')
-
     compile 'org.seleniumhq.selenium:selenium-java'
     compile 'org.hamcrest:hamcrest-all'
-    compile 'ru.yandex.qatools.matchers:webdriver-matchers'
 
+    testCompile 'ru.yandex.qatools.matchers:webdriver-matchers'
     testCompile 'org.mockito:mockito-all'
     testCompile 'org.assertj:assertj-core'
     testCompile 'junit:junit'

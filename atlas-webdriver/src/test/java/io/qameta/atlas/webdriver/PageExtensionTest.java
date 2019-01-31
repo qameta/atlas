@@ -19,10 +19,9 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
-public class PageUrlExtensionTest {
+public class PageExtensionTest {
 
     private WebDriver driver;
 
@@ -52,6 +51,19 @@ public class PageUrlExtensionTest {
         verify(driver, times(1)).get(exceptedURI);
     }
 
+    @Test
+    public void shouldHandleDefaultPathOfPage() {
+        when(driver.getTitle()).thenReturn("atlas");
+        TestSiteWithDefaultPage onSite = new Atlas()
+                .extension(new PageExtension())
+                .extension(new BaseUriExtension())
+                .extension(new DriverProviderExtension())
+                .context(new WebDriverContext(driver))
+                .create(driver, TestSiteWithDefaultPage.class);
+        String title = onSite.onMainPage().getWrappedDriver().getTitle();
+        assertEquals("atlas", title);
+    }
+
 
     @Test
     public void shouldHandleQueryParams() {
@@ -76,7 +88,7 @@ public class PageUrlExtensionTest {
                 containsString("first=value-1"),
                 containsString("second=value-2"),
                 containsString("?")));
-        assertEquals( 3, capturedStringArg.split("&").length);
+        assertEquals(3, capturedStringArg.split("&").length);
     }
 
 
@@ -169,7 +181,14 @@ public class PageUrlExtensionTest {
         MainPage onMainPage(@Query("a") String value);
     }
 
+
+    public interface TestSiteWithDefaultPage extends WebSite {
+        @Page
+        MainPage onMainPage();
+    }
+
     public interface MainPage extends WebPage {
         AtlasWebElement atlasWebElement = mockAtlasWebElement();
     }
+
 }

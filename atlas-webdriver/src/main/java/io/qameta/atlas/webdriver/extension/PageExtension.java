@@ -5,10 +5,11 @@ import io.qameta.atlas.core.AtlasException;
 import io.qameta.atlas.core.api.MethodExtension;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.util.MethodInfo;
-import io.qameta.atlas.webdriver.util.http.url.HttpUrl;
+import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.internal.WrapsDriver;
 
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -36,7 +37,6 @@ public class PageExtension implements MethodExtension {
                          final MethodInfo methodInfo,
                          final Configuration configuration) {
         assert proxy instanceof WrapsDriver;
-
 
         final Method method = methodInfo.getMethod();
         final Object[] args = methodInfo.getArgs();
@@ -72,9 +72,14 @@ public class PageExtension implements MethodExtension {
      * @return {@link String}
      */
     private String buildUrl(final String baseURI, final String pathSegment, final Map<String, String> queryParameters) {
-        final HttpUrl.Builder urlBuilder = HttpUrl.get(baseURI).newBuilder();
-        urlBuilder.addPathSegments(pathSegment);
-        queryParameters.forEach(urlBuilder::addQueryParameter);
+        final URIBuilder urlBuilder;
+        try {
+            urlBuilder = new URIBuilder(baseURI);
+            urlBuilder.setPath(pathSegment);
+            queryParameters.forEach(urlBuilder::addParameter);
+        } catch (URISyntaxException e) {
+            throw new AtlasException("Can't parse base URL of your WebSite", e);
+        }
         return urlBuilder.toString();
     }
 }
