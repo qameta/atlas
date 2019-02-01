@@ -33,7 +33,6 @@ public class FindRepositoryByNameTest {
     @Before
     public void startDriver() {
         WebDriverManager.chromedriver().setup();
-
         driver = new ChromeDriver();
         atlas = new Atlas(new WebDriverConfiguration(driver));
     }
