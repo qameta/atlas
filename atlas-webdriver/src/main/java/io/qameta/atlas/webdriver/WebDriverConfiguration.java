@@ -23,7 +23,11 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new WrappedElementMethodExtension());
         registerExtension(new ExecuteJScriptMethodExtension());
         registerExtension(new PageExtension());
-        registerExtension(new BaseUriExtension());
+    }
+
+    public WebDriverConfiguration(final WebDriver webDriver, final String baseUrl) {
+        this(webDriver);
+        System.getProperties().setProperty("ATLAS_WEBSITE_URL", baseUrl);
     }
 }
 //CHECKSTYLE:ON: ClassDataAbstractionCoupling

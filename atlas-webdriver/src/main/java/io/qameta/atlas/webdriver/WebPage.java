@@ -18,6 +18,10 @@ public interface WebPage extends WrapsDriver, SearchContext {
         getWrappedDriver().get(url);
     }
 
+    default void open() {
+        getWrappedDriver().get(System.getProperties().getProperty("ATLAS_WEBSITE_URL"));
+    }
+
     @Page
     <T extends WebPage> T onPage(Class<T> page);
 

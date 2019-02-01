@@ -1,6 +1,5 @@
 package io.qameta.atlas.webdriver;
 
-import io.qameta.atlas.webdriver.extension.BaseURI;
 import io.qameta.atlas.webdriver.extension.DriverProvider;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +13,4 @@ public interface WebSite extends WrapsDriver, SearchContext {
     @DriverProvider
     WebDriver getWrappedDriver();
 
-    @BaseURI
-    void setBaseURI(String baseURI);
 }

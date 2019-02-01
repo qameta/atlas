@@ -39,13 +39,9 @@ public class PageExtensionTest {
     @Test
     public void shouldHandleSingleQueryParam() {
         String exceptedURI = "https://github.com/search?abs=%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D1%86%D0%B0";
-        TestSite onSite = new Atlas()
-                .extension(new BaseUriExtension())
-                .extension(new PageExtension())
-                .extension(new DriverProviderExtension())
-                .context(new WebDriverContext(driver))
-                .create(driver, TestSite.class);
-        onSite.setBaseURI("https://github.com");
+        TestSite onSite =
+                new Atlas(new WebDriverConfiguration(driver, "https://github.com"))
+                        .create(driver, TestSite.class);
 
         onSite.onMainPage("кириллица").atlasWebElement.click();
         verify(driver, times(1)).get(exceptedURI);
@@ -54,12 +50,10 @@ public class PageExtensionTest {
     @Test
     public void shouldHandleDefaultPathOfPage() {
         when(driver.getTitle()).thenReturn("atlas");
-        TestSiteWithDefaultPage onSite = new Atlas()
-                .extension(new PageExtension())
-                .extension(new BaseUriExtension())
-                .extension(new DriverProviderExtension())
-                .context(new WebDriverContext(driver))
-                .create(driver, TestSiteWithDefaultPage.class);
+        TestSiteWithDefaultPage onSite =
+                new Atlas(new WebDriverConfiguration(driver))
+                        .create(driver, TestSiteWithDefaultPage.class);
+
         String title = onSite.onMainPage().getWrappedDriver().getTitle();
         assertEquals("atlas", title);
     }
@@ -68,14 +62,9 @@ public class PageExtensionTest {
     @Test
     public void shouldHandleQueryParams() {
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
-        TestSite onSite = new Atlas()
-                .extension(new PageExtension())
-                .extension(new BaseUriExtension())
-                .extension(new DriverProviderExtension())
-                .context(new WebDriverContext(driver))
-                .create(driver, TestSite.class);
-        onSite.setBaseURI("https://github.com");
-
+        TestSite onSite =
+                new Atlas(new WebDriverConfiguration(driver, "https://github.com"))
+                        .create(driver, TestSite.class);
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("first", "value-1");
         queryMap.put("second", "value-2");
@@ -95,34 +84,27 @@ public class PageExtensionTest {
     @Test(expected = AtlasException.class)
     public void siteWithOutAnyBaseURIShouldThrowException() {
         System.getProperties().clear();
-        TestSiteWithOutAnyURI siteWithOutUrl = new Atlas(new WebDriverConfiguration(mockWebDriver()))
-                .create(driver, TestSiteWithOutAnyURI.class);
+        TestSiteWithOutAnyURI siteWithOutUrl =
+                new Atlas(new WebDriverConfiguration(mockWebDriver()))
+                        .create(driver, TestSiteWithOutAnyURI.class);
         siteWithOutUrl.onMainPage("null");
     }
 
     @Test
     public void setBaseURIMethodShouldHaveWebSite() {
-        TestSiteWithOutAnyURI siteWithOutUrl = new Atlas()
-                .extension(new PageExtension())
-                .extension(new DriverProviderExtension())
-                .extension(new BaseUriExtension())
-                .context(new WebDriverContext(driver))
-                .create(driver, TestSiteWithOutAnyURI.class);
-        siteWithOutUrl.setBaseURI("https://github.com");
+        TestSiteWithOutAnyURI siteWithOutUrl =
+                new Atlas(new WebDriverConfiguration(driver, "https://github.com"))
+                        .create(driver, TestSiteWithOutAnyURI.class);
+
         siteWithOutUrl.onMainPage("zero").atlasWebElement.click();
         verify(driver, times(1)).get("https://github.com/search?a=zero");
     }
 
     @Test
     public void shouldHandlePathParams() {
-        TestSiteWithPathParams siteWithPath = new Atlas()
-                .extension(new PageExtension())
-                .extension(new DriverProviderExtension())
-                .extension(new BaseUriExtension())
-                .context(new WebDriverContext(driver))
-                .create(driver, TestSiteWithPathParams.class);
-        siteWithPath.setBaseURI("https://github.com");
-
+        TestSiteWithPathParams siteWithPath =
+                new Atlas(new WebDriverConfiguration(driver, "https://github.com"))
+                        .create(driver, TestSiteWithPathParams.class);
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("first", "value-1");
 
@@ -136,14 +118,10 @@ public class PageExtensionTest {
 
     @Test
     public void shouldHandleUrlWithUserAndPassword() {
-        TestSiteWithOutAnyURI siteWithUserAndPass = new Atlas()
-                .extension(new PageExtension())
-                .extension(new DriverProviderExtension())
-                .extension(new BaseUriExtension())
-                .context(new WebDriverContext(driver))
-                .create(driver, TestSiteWithOutAnyURI.class);
+        TestSiteWithOutAnyURI siteWithUserAndPass =
+                new Atlas(new WebDriverConfiguration(driver, "http://username:password@example.com/"))
+                        .create(driver, TestSiteWithOutAnyURI.class);
 
-        siteWithUserAndPass.setBaseURI("http://username:password@example.com/");
         siteWithUserAndPass.onMainPage("zero").atlasWebElement.click();
         verify(driver, times(1)).get("http://username:password@example.com/search?a=zero");
     }
@@ -151,14 +129,10 @@ public class PageExtensionTest {
 
     @Test
     public void shouldHandleUrlWithPort() {
-        TestSiteWithOutAnyURI siteWithUserAndPass = new Atlas()
-                .extension(new PageExtension())
-                .extension(new DriverProviderExtension())
-                .extension(new BaseUriExtension())
-                .context(new WebDriverContext(driver))
-                .create(driver, TestSiteWithOutAnyURI.class);
+        TestSiteWithOutAnyURI siteWithUserAndPass =
+                new Atlas(new WebDriverConfiguration(driver, "http://example.com:8443/"))
+                        .create(driver, TestSiteWithOutAnyURI.class);
 
-        siteWithUserAndPass.setBaseURI("http://example.com:8443/");
         siteWithUserAndPass.onMainPage("zero").atlasWebElement.click();
         verify(driver, times(1)).get("http://example.com:8443/search?a=zero");
     }

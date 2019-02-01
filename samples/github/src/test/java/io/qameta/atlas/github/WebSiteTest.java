@@ -4,8 +4,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.github.web.site.GitHubSite;
 import io.qameta.atlas.webdriver.WebDriverConfiguration;
-import io.qameta.atlas.webdriver.extension.BaseURI;
-import io.qameta.atlas.webdriver.extension.BaseUriExtension;
 import io.qameta.atlas.webdriver.extension.PageExtension;
 import org.junit.After;
 import org.junit.Before;
@@ -23,8 +21,7 @@ import static ru.yandex.qatools.matchers.webdriver.TextMatcher.text;
  * In additional you can open any Page through domain URL.
  * With WebSite implementation look to
  *
- * {@link BaseURI},
- * {@link BaseUriExtension}, {@link io.qameta.atlas.webdriver.extension.Page},
+ * {@link io.qameta.atlas.webdriver.extension.Page},
  * {@link io.qameta.atlas.webdriver.extension.PageExtension}, {@link io.qameta.atlas.webdriver.extension.Path},
  * {@link io.qameta.atlas.webdriver.extension.Query}, {@link io.qameta.atlas.webdriver.extension.QueryMap},
  * {@link io.qameta.atlas.webdriver.extension.Page}, {@link PageExtension}.
@@ -39,14 +36,13 @@ public class WebSiteTest {
     public void startDriver() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        atlas = new Atlas(new WebDriverConfiguration(driver));
-        onSite().setBaseURI("https://github.com");
+        atlas = new Atlas(new WebDriverConfiguration(driver, "https://github.com"));
     }
 
     @Ignore
     @Test
     public void simpleWebSiteTest() {
-        onSite().onMainPage().open("https://github.com");
+        onSite().onMainPage().open();
         onSite().onMainPage().header().searchInput().sendKeys("Atlas");
         onSite().onMainPage().header().searchInput().submit();
         onSite().onSearchPage("Junit 5").repositories().waitUntil(hasSize(10));
