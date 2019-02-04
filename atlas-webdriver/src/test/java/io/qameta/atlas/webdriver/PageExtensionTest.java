@@ -2,8 +2,10 @@ package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.core.AtlasException;
-import io.qameta.atlas.webdriver.context.WebDriverContext;
-import io.qameta.atlas.webdriver.extension.*;
+import io.qameta.atlas.webdriver.extension.Page;
+import io.qameta.atlas.webdriver.extension.Path;
+import io.qameta.atlas.webdriver.extension.Query;
+import io.qameta.atlas.webdriver.extension.QueryMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +26,8 @@ import static org.mockito.Mockito.*;
 public class PageExtensionTest {
 
     private WebDriver driver;
+
+    private String atlas = "atlas";
 
     @Before
     public void setUp() {
@@ -49,13 +53,30 @@ public class PageExtensionTest {
 
     @Test
     public void shouldHandleDefaultPathOfPage() {
-        when(driver.getTitle()).thenReturn("atlas");
+        when(driver.getTitle()).thenReturn(atlas);
         TestSiteWithDefaultPage onSite =
-                new Atlas(new WebDriverConfiguration(driver))
+                new Atlas(new WebDriverConfiguration(driver, "https://github.com"))
                         .create(driver, TestSiteWithDefaultPage.class);
 
         String title = onSite.onMainPage().getWrappedDriver().getTitle();
-        assertEquals("atlas", title);
+        assertEquals(atlas, title);
+    }
+
+    @Test
+    public void shouldHandleDefaultPathWithPathSegment() {
+        TestSiteWithDefaultPageAndQuery onSite =
+                new Atlas(new WebDriverConfiguration(driver, "https://github.com"))
+                        .create(driver, TestSiteWithDefaultPageAndQuery.class);
+
+        Map<String, String> queryMap = new HashMap<>();
+        queryMap.put("first", "value-1");
+        queryMap.put("second", "value-2");
+
+        onSite.onMainPage(atlas, queryMap).atlasWebElement
+                .sendKeys("Use driver.get(...) and then sendKeys");
+
+        verify(driver, times(1))
+                .get("https://github.com/?q=atlas&first=value-1&second=value-2");
     }
 
 
@@ -136,6 +157,13 @@ public class PageExtensionTest {
         siteWithUserAndPass.onMainPage("zero").atlasWebElement.click();
         verify(driver, times(1)).get("http://example.com:8443/search?a=zero");
     }
+
+
+    public interface TestSiteWithDefaultPageAndQuery extends WebSite {
+        @Page
+        MainPage onMainPage(@Query("q") String value, @QueryMap Map<String, String> queryMap);
+    }
+
 
     public interface TestSite extends WebSite {
         @Page(url = "total")

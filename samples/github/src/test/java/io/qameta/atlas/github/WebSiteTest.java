@@ -56,12 +56,15 @@ public class WebSiteTest {
         ));
     }
 
+
+
     @Ignore
     @Test
     public void usePathWebSiteTest() {
         onSite().onProjectPage("qameta", "atlas").contributors().click();
         onSite().onContributorsPage().hovercards().waitUntil(hasSize(4));
     }
+
 
     private GitHubSite onSite() {
         return atlas.create(driver, GitHubSite.class);

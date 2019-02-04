@@ -74,14 +74,10 @@ public final class MethodInfoUtils {
     /**
      * Replace string template with special value.
      *
-     * @param template   {@link String}
-     *                                 - the string template of.
-     * @param parameters {@link Map}
-     *                              - parameters.
-     * @param prefix     {@link CharSequence}
-     *                                       - the sequence of characters to be used at the beginning
-     * @param suffix     {@link CharSequence}
-     *                                       - the sequence of characters to be used at the end
+     * @param template   {@link String} - the string template of.
+     * @param parameters {@link Map} - parameters.
+     * @param prefix     {@link CharSequence} - the sequence of characters to be used at the beginning
+     * @param suffix     {@link CharSequence} - the sequence of characters to be used at the end
      * @return - transformed value.
      */
     public static String processTemplate(final String template, final Map<String, String> parameters,
@@ -93,7 +89,7 @@ public final class MethodInfoUtils {
 
 
     @SuppressWarnings({"PMD.UseVarargs", "unchecked"})
-    public static Map<String, String> getQueryMapParameter(final Method method, final Object[] args) {
+    public static Map<String, String> getQueryMapValues(final Method method, final Object[] args) {
         final IntPredicate queryPredicate = index -> isAnnotated(method.getParameters()[index], QueryMap.class);
 
         return IntStream.range(0, method.getParameterCount())
@@ -104,29 +100,43 @@ public final class MethodInfoUtils {
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    /**
+     * Get parameters name with annotation {@link Query} and all argument values.
+     *
+     * @param method {@link Method} - the method on action.
+     * @param args - method arguments.
+     * @return {@link Map} return ParamName as Map Key, argument value as Map Value.
+     */
     @SuppressWarnings("PMD.UseVarargs")
-    public static Map<String, String> getQueryParameters(final Method method, final Object[] args) {
+    public static Map<String, String> getQueryValues(final Method method, final Object[] args) {
         final IntPredicate queryPredicate = index -> isAnnotated(method.getParameters()[index], Query.class);
         return getParameters(queryPredicate, method,
                 toMap(index -> getQueryValue(method.getParameters()[index]), index -> Objects.toString(args[index])));
-
     }
 
+    /**
+     * Get parameters name with annotation {@link Path} and all argument values.
+     *
+     * @param method {@link Method} - the method on action.
+     * @param args - method arguments.
+     * @return {@link Map} return ParamName as Map Key, argument value as Map Value.
+     */
     @SuppressWarnings("PMD.UseVarargs")
-    public static Map<String, String> getPathSegmentParameters(final Method method, final Object[] args) {
+    public static Map<String, String> getPathSegmentValues(final Method method, final Object[] args) {
         final IntPredicate pathSegmentPredicate = index -> isAnnotated(method.getParameters()[index], Path.class);
         return getParameters(pathSegmentPredicate, method,
                 toMap(index -> getPathValue(method.getParameters()[index]), index -> Objects.toString(args[index])));
     }
 
     /**
-     * Get parameters name with annotation {@link Path} and all argument values.
+     * Get parameters name with annotation {@link Param} and all argument values.
+     *
      * @param method {@link Method} - the method on action.
      * @param args - method arguments.
-     * @return {@link Map} return ParamName as Map Key, argument value as Map Value
+     * @return {@link Map} return ParamName as Map Key, argument value as Map Value.
      */
     @SuppressWarnings("PMD.UseVarargs")
-    public static Map<String, String> getParamParameters(final Method method, final Object[] args) {
+    public static Map<String, String> getParamValues(final Method method, final Object[] args) {
         final IntPredicate paramPredicate = index -> isAnnotated(method.getParameters()[index], Param.class);
         return getParameters(paramPredicate, method,
                 toMap(index -> getParamValue(method.getParameters()[index]), index -> Objects.toString(args[index])));
@@ -135,6 +145,7 @@ public final class MethodInfoUtils {
 
     /**
      * @param predicate {@link IntPredicate} - Predicate to find parameters with special annotation.
+     *
      * @param method    {@link Method} - action.
      * @param collector {@link Collector} - Map collector.
      * @return {@link Map} return ParamName as Map Key, argument value as Map Value
@@ -147,7 +158,6 @@ public final class MethodInfoUtils {
                 .collect(collector);
     }
 
-
     private static String getParamValue(final AnnotatedElement element) {
         return element.getAnnotation(Param.class).value();
     }
@@ -159,6 +169,5 @@ public final class MethodInfoUtils {
     private static String getPathValue(final AnnotatedElement element) {
         return element.getAnnotation(Path.class).value();
     }
-
 
 }

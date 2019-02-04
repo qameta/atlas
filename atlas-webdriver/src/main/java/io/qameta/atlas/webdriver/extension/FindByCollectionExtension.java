@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamParameters;
+import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamValues;
 import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processParamTemplate;
 import static java.util.stream.Collectors.toList;
 
@@ -43,7 +43,7 @@ public class FindByCollectionExtension implements MethodExtension {
         assert proxy instanceof SearchContext;
         assert method.isAnnotationPresent(FindBy.class);
 
-        final Map<String, String> parameters = getParamParameters(method, methodInfo.getArgs());
+        final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
         final String xpath = processParamTemplate(method.getAnnotation(FindBy.class).value(), parameters);
 
         final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)

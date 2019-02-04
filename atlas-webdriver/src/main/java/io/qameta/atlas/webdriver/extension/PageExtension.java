@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.toMap;
  */
 public class PageExtension implements MethodExtension {
 
-    private static final String SLASH = "/";
+    private static final String DEFAULT_PATH = "/";
 
     @Override
     public boolean test(final Method method) {
@@ -44,21 +44,22 @@ public class PageExtension implements MethodExtension {
         final String baseURL = method.getAnnotation(Page.class).url();
         final WrapsDriver wrapsDriver = (WrapsDriver) proxy;
 
-        if (!SLASH.equals(baseURL)) {
-            final String baseURI = Optional.ofNullable(System.getProperties().getProperty("ATLAS_WEBSITE_URL"))
-                    .orElseThrow(() -> new AtlasException("URI WebSite did'nt declared."));
 
-            final Map<String, String> pathParameters = getPathSegmentParameters(method, args);
-            final String pathSegment = processTemplate(baseURL, pathParameters, "{", "}");
+        final String baseURI = Optional.ofNullable(System.getProperties().getProperty("ATLAS_WEBSITE_URL"))
+                .orElseThrow(() -> new AtlasException("URI WebSite did'nt declared."));
 
-            final Map<String, String> queryParameters = Stream
-                    .of(getQueryParameters(method, args), getQueryMapParameter(method, args))
-                    .flatMap(map -> map.entrySet().stream())
-                    .collect(toMap(Entry::getKey, Entry::getValue));
-            final String requestURL = buildUrl(baseURI, pathSegment, queryParameters);
+        final Map<String, String> pathParameters = getPathSegmentValues(method, args);
+        final String pathSegment = processTemplate(baseURL, pathParameters, "{", "}");
 
-            wrapsDriver.getWrappedDriver().get(requestURL);
-        }
+        final Map<String, String> queryParameters = Stream
+                .of(getQueryValues(method, args), getQueryMapValues(method, args))
+                .flatMap(map -> map.entrySet().stream())
+                .collect(toMap(Entry::getKey, Entry::getValue));
+        final String requestURL = buildUrl(baseURI, pathSegment, queryParameters);
+
+        Optional.of(requestURL)
+                .filter(it -> !it.equals(baseURI + DEFAULT_PATH))
+                .ifPresent(url -> wrapsDriver.getWrappedDriver().get(requestURL));
 
         return new Atlas(configuration).create(wrapsDriver.getWrappedDriver(), (Class<?>) method.getReturnType());
     }

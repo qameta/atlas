@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Optional;
 
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamParameters;
+import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamValues;
 import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processParamTemplate;
 
 /**
@@ -37,7 +37,7 @@ public class FindByExtension implements MethodExtension {
         assert proxy instanceof SearchContext;
         assert method.isAnnotationPresent(FindBy.class);
 
-        final Map<String, String> parameters = getParamParameters(method, methodInfo.getArgs());
+        final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
         final String xpath = processParamTemplate(method.getAnnotation(FindBy.class).value(), parameters);
 
         final SearchContext searchContext = (SearchContext) proxy;
