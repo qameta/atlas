@@ -15,14 +15,12 @@ import static org.mockito.Mockito.*;
 public class ExecuteJScriptMethodExtensionTest {
 
     private AtlasWebElement atlasWebElement;
-    private WebElement originWebElement;
     private WebDriver driver;
-    private String bodyScript = "arguments[0].click();";
 
     @Before
     public void initElements() {
         driver = mock(RemoteWebDriver.class, withSettings().extraInterfaces(WebDriver.class, HasInputDevices.class));
-        originWebElement = mockWebElement();
+        WebElement originWebElement = mockWebElement();
         atlasWebElement = new Atlas(new WebDriverConfiguration(driver))
                 .create(originWebElement, AtlasWebElement.class);
     }
@@ -30,6 +28,7 @@ public class ExecuteJScriptMethodExtensionTest {
     @Test
     public void getWrappedElementMethodTest() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
+        String bodyScript = "arguments[0].click();";
         atlasWebElement.executeScript(bodyScript);
         verify(js, times(1)).executeScript(bodyScript, atlasWebElement);
     }

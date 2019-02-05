@@ -2,23 +2,22 @@ package io.qameta.atlas.github;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.atlas.core.Atlas;
-import io.qameta.atlas.webdriver.WebDriverConfiguration;
-import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.github.web.page.MainPage;
 import io.qameta.atlas.github.web.page.SearchPage;
+import io.qameta.atlas.webdriver.WebDriverConfiguration;
+import io.qameta.atlas.webdriver.WebPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.should;
 import static ru.yandex.qatools.matchers.webdriver.driver.HasTextMatcher.textOnCurrentPage;
 
@@ -34,18 +33,16 @@ public class FindRepositoryByNameTest {
     @Before
     public void startDriver() {
         WebDriverManager.chromedriver().setup();
-
         driver = new ChromeDriver();
         atlas = new Atlas(new WebDriverConfiguration(driver));
     }
 
     @Test
     @Ignore
-    public void simpleTest() throws InterruptedException {
+    public void simpleTest()  {
         onMainPage().open("https://github.com");
         onMainPage().header().searchInput().sendKeys("Atlas");
         onMainPage().header().searchInput().submit();
-
         onSearchPage().repositories().waitUntil(hasSize(10));
     }
 
