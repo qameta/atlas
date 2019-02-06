@@ -2,6 +2,7 @@ package io.qameta.atlas.core.internal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Retryer.
@@ -28,8 +29,12 @@ public class DefaultRetryer implements Retryer {
         this.ignoring.add(throwable);
     }
 
-    public void timeout(final Long millis) {
+    public void timeoutInMillis(final Long millis) {
         this.timeout = millis;
+    }
+
+    public void timeoutInSeconds(final int seconds) {
+        this.timeout = TimeUnit.SECONDS.toMillis(seconds);
     }
 
     public void polling(final Long polling) {

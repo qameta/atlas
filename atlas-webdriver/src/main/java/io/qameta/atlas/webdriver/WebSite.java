@@ -6,18 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsDriver;
 
 /**
- * Web Page.
+ * Web Site.
  */
-public interface WebPage extends WrapsDriver, SearchContext {
+public interface WebSite extends WrapsDriver, SearchContext {
 
     @DriverProvider
     WebDriver getWrappedDriver();
 
-    default void open(String url) {
-        getWrappedDriver().get(url);
-    }
-
-    default void open() {
-        getWrappedDriver().get(System.getProperties().getProperty("ATLAS_WEBSITE_URL"));
-    }
 }

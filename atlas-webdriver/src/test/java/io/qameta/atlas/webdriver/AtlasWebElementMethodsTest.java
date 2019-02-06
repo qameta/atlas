@@ -2,7 +2,6 @@ package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.Atlas;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -128,10 +127,6 @@ public class AtlasWebElementMethodsTest {
         verify((Locatable) originWebElement, times(1)).getCoordinates();
     }
 
-    @Test
-    @Ignore
-    public void getWrappedElementMethodTest() {
-    }
 
     @Test
     public void toStringMethodTest() {

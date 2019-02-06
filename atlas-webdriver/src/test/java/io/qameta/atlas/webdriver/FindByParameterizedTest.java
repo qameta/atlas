@@ -13,9 +13,7 @@ import org.openqa.selenium.WebElement;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author kurau (Yuri Kalinin)
@@ -47,7 +45,7 @@ public class FindByParameterizedTest {
         String param = RandomStringUtils.randomAlphanumeric(10);
 
         ParentElement atlasWebElement = atlas.create(parent, ParentElement.class);
-        atlasWebElement.elements(param);
+        atlasWebElement.elements(param).size();
 
         verify(parent, times(1)).findElements(By.xpath(String.format("//td[%s]", param)));
     }

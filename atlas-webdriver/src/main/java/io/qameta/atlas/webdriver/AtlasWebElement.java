@@ -1,13 +1,10 @@
 package io.qameta.atlas.webdriver;
 
+import io.qameta.atlas.core.api.Timeout;
 import io.qameta.atlas.webdriver.extension.ShouldMethodExtension;
 import io.qameta.atlas.webdriver.extension.WaitUntilMethodExtension;
 import org.hamcrest.Matcher;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.Rectangle;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.interactions.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
@@ -123,11 +120,26 @@ public interface AtlasWebElement<T extends WebElement> extends WrapsElement, Web
     /**
      * This method handled by the {@link WaitUntilMethodExtension}.
      */
+    T waitUntil(Matcher matcher, @Timeout Integer timeoutInSeconds);
+
+    /**
+     * This method handled by the {@link WaitUntilMethodExtension}.
+     */
     T waitUntil(String message, Matcher matcher);
+
+    /**
+     * This method handled by the {@link WaitUntilMethodExtension}.
+     */
+    T waitUntil(String message, Matcher matcher, @Timeout Integer timeoutInSeconds);
 
     /**
      * The same as {@link WrapsElement#getWrappedElement()}.
      */
     WebElement getWrappedElement();
+
+    /**
+     * Executes JavaScript in the context of the currently AtlasWebElement.
+     */
+    Object executeScript(String script);
 
 }

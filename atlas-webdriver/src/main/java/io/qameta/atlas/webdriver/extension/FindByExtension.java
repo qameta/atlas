@@ -14,8 +14,8 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Optional;
 
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParameters;
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processTemplate;
+import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamValues;
+import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processParamTemplate;
 
 /**
  * Extension for methods with {@link io.qameta.atlas.webdriver.extension.FindBy} annotation.
@@ -37,8 +37,8 @@ public class FindByExtension implements MethodExtension {
         assert proxy instanceof SearchContext;
         assert method.isAnnotationPresent(FindBy.class);
 
-        final Map<String, String> parameters = getParameters(method, methodInfo.getArgs());
-        final String xpath = processTemplate(method.getAnnotation(FindBy.class).value(), parameters);
+        final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
+        final String xpath = processParamTemplate(method.getAnnotation(FindBy.class).value(), parameters);
 
         final SearchContext searchContext = (SearchContext) proxy;
         final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)
