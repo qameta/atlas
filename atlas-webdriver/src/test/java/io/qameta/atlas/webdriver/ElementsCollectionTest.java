@@ -5,13 +5,22 @@ import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockAtlasWebElement;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -70,6 +79,22 @@ public class ElementsCollectionTest {
 
         ListElement element = parentElement.collection().get(0);
         assertThat(element.block().isDisplayed()).isEqualTo(true);
+    }
+
+    @Test
+    public void shouldRefreshCollectionWhenWaiting() {
+        WebElement listElement = mockWebElement();
+        final AtomicInteger count = new AtomicInteger();
+        when(parent.findElements(By.xpath(SELECTOR))).then((Answer<List<WebElement>>) (invocation) -> {
+            if (count.incrementAndGet() > 3) {
+                return Collections.singletonList(listElement);
+            }
+            return new ArrayList<>();
+        });
+        ParentElement parentElement = new Atlas(new WebDriverConfiguration(mock(WebDriver.class)))
+                .create(parent, ParentElement.class);
+        parentElement.collection()
+                .should(hasSize(1));
     }
 
     interface ParentElement extends AtlasWebElement {

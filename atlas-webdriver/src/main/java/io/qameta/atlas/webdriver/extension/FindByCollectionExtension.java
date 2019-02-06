@@ -5,6 +5,7 @@ import io.qameta.atlas.core.api.MethodExtension;
 import io.qameta.atlas.core.api.Target;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.target.HardcodedTarget;
+import io.qameta.atlas.core.target.LazyTarget;
 import io.qameta.atlas.core.util.MethodInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -50,21 +51,24 @@ public class FindByCollectionExtension implements MethodExtension {
                 .orElse(method.getName());
         final SearchContext context = (SearchContext) proxy;
 
-        final List<WebElement> originalElements = context.findElements(By.xpath(xpath));
-        final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+        final LazyTarget elementsTarget = new LazyTarget(name, () -> {
+            final List<WebElement> originalElements = context.findElements(By.xpath(xpath));
+            final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType())
+                    .getActualTypeArguments()[0];
 
-        final List newElements = IntStream.range(0, originalElements.size())
-                .mapToObj(i -> {
-                    final WebElement originalElement = originalElements.get(i);
-                    final Configuration childConfiguration = configuration.child();
-                    final Target target = new HardcodedTarget(listElementName(name, i), originalElement);
-                    return new Atlas(childConfiguration)
-                            .create(target, (Class<?>) methodReturnType);
-                })
-                .collect(toList());
+            return IntStream.range(0, originalElements.size())
+                    .mapToObj(i -> {
+                        final WebElement originalElement = originalElements.get(i);
+                        final Configuration childConfiguration = configuration.child();
+                        final Target target = new HardcodedTarget(listElementName(name, i), originalElement);
+                        return new Atlas(childConfiguration)
+                                .create(target, (Class<?>) methodReturnType);
+                    })
+                    .collect(toList());
+        });
 
         return new Atlas(configuration.child())
-                .create(newElements, method.getReturnType());
+                .create(elementsTarget, method.getReturnType());
     }
 
     private String listElementName(final String name, final int position) {
