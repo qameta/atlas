@@ -1,5 +1,6 @@
 package io.qameta.atlas.webdriver;
 
+import io.qameta.atlas.core.api.Timeout;
 import io.qameta.atlas.webdriver.extension.ShouldMethodExtension;
 import io.qameta.atlas.webdriver.extension.WaitUntilMethodExtension;
 import org.hamcrest.Matcher;
@@ -119,7 +120,17 @@ public interface AtlasWebElement<T extends WebElement> extends WrapsElement, Web
     /**
      * This method handled by the {@link WaitUntilMethodExtension}.
      */
+    T waitUntil(Matcher matcher, @Timeout Integer timeoutInSeconds);
+
+    /**
+     * This method handled by the {@link WaitUntilMethodExtension}.
+     */
     T waitUntil(String message, Matcher matcher);
+
+    /**
+     * This method handled by the {@link WaitUntilMethodExtension}.
+     */
+    T waitUntil(String message, Matcher matcher, @Timeout Integer timeoutInSeconds);
 
     /**
      * The same as {@link WrapsElement#getWrappedElement()}.

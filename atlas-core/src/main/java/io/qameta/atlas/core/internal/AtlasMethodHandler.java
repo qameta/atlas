@@ -2,6 +2,7 @@ package io.qameta.atlas.core.internal;
 
 import io.qameta.atlas.core.api.MethodInvoker;
 import io.qameta.atlas.core.api.Retry;
+import io.qameta.atlas.core.api.Timeout;
 import io.qameta.atlas.core.util.MethodInfo;
 
 import java.lang.reflect.InvocationHandler;
@@ -55,6 +56,8 @@ public class AtlasMethodHandler implements InvocationHandler {
                 .map(retry -> new DefaultRetryer(retry.timeout(), retry.polling(), Arrays.asList(retry.ignoring())))
                 .orElse(new DefaultRetryer(5000L, 1000L, new ArrayList<>()));
         retryer.ignore(Throwable.class);
+        methodInfo.getParameter(Integer.class, Timeout.class).ifPresent(retryer::timeoutInSeconds);
+
         Throwable lastException;
         do {
             try {

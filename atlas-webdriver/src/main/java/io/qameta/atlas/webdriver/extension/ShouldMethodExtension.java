@@ -8,9 +8,6 @@ import org.hamcrest.StringDescription;
 
 import java.lang.reflect.Method;
 
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getMatcher;
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getMessage;
-
 /**
  * Should method extension for {@link io.qameta.atlas.webdriver.AtlasWebElement}.
  */
@@ -27,10 +24,10 @@ public class ShouldMethodExtension implements MethodExtension {
     public Object invoke(final Object proxy,
                          final MethodInfo methodInfo,
                          final Configuration configuration) {
-        final Object[] args = methodInfo.getArgs();
-
-        final String message = getMessage(args);
-        final Matcher matcher = getMatcher(args);
+        final String message = methodInfo.getParameter(String.class)
+                .orElse("");
+        final Matcher matcher = methodInfo.getParameter(Matcher.class)
+                .orElseThrow(() -> new IllegalStateException("Unexpected method signature"));
 
         if (!matcher.matches(proxy)) {
             final StringDescription description = new StringDescription();

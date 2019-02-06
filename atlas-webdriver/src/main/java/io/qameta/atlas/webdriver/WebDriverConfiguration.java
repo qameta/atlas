@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 /**
  * WebDriver configuration.
  */
-//CHECKSTYLE:OFF: ClassDataAbstractionCoupling
+//CHECKSTYLE:OFF
 public class WebDriverConfiguration extends Configuration {
 
     public WebDriverConfiguration(final WebDriver webDriver) {
@@ -30,4 +30,4 @@ public class WebDriverConfiguration extends Configuration {
         System.getProperties().setProperty("ATLAS_WEBSITE_URL", baseUrl);
     }
 }
-//CHECKSTYLE:ON: ClassDataAbstractionCoupling
+//CHECKSTYLE:ON
