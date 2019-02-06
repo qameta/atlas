@@ -53,7 +53,8 @@ public class FindByCollectionExtension implements MethodExtension {
 
         final LazyTarget elementsTarget = new LazyTarget(name, () -> {
             final List<WebElement> originalElements = context.findElements(By.xpath(xpath));
-            final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+            final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType())
+                    .getActualTypeArguments()[0];
 
             return IntStream.range(0, originalElements.size())
                     .mapToObj(i -> {
