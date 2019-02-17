@@ -3,10 +3,7 @@ package io.qameta.atlas.core.internal;
 import io.qameta.atlas.core.api.Context;
 import io.qameta.atlas.core.api.Extension;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -16,8 +13,15 @@ public class Configuration {
 
     private final Map<Class<? extends Extension>, Extension> extensions;
 
+    private final DefaultRetryer defaultRetryer;
+
     public Configuration() {
         this.extensions = new HashMap<>();
+        this.defaultRetryer = new DefaultRetryer(5000L, 1000L, Collections.singletonList(Throwable.class));
+    }
+
+    DefaultRetryer getDefaultRetryer() {
+        return defaultRetryer;
     }
 
     public void registerExtension(final Extension extension) {
@@ -26,6 +30,11 @@ public class Configuration {
 
     public void registerContext(final Context context) {
         this.extensions.put(context.getClass(), context);
+    }
+
+    public void registerRetryer(final OptionalLong timeout, final OptionalLong polling) {
+        timeout.ifPresent(defaultRetryer::timeoutInMillis);
+        polling.ifPresent(defaultRetryer::polling);
     }
 
     public <T extends Extension> List<T> getExtensions(final Class<T> extensionType) {

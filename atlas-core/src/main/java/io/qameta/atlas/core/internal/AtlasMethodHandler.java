@@ -7,7 +7,6 @@ import io.qameta.atlas.core.util.MethodInfo;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -54,10 +53,9 @@ public class AtlasMethodHandler implements InvocationHandler {
                                    final MethodInfo methodInfo) throws Throwable {
         final DefaultRetryer retryer = Optional.ofNullable(methodInfo.getMethod().getAnnotation(Retry.class))
                 .map(retry -> new DefaultRetryer(retry.timeout(), retry.polling(), Arrays.asList(retry.ignoring())))
-                .orElse(new DefaultRetryer(5000L, 1000L, new ArrayList<>()));
+                .orElseGet(configuration::getDefaultRetryer);
         retryer.ignore(Throwable.class);
         methodInfo.getParameter(Integer.class, Timeout.class).ifPresent(retryer::timeoutInSeconds);
-
         Throwable lastException;
         do {
             try {
