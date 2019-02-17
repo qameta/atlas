@@ -20,7 +20,7 @@ public class Configuration {
         this.defaultRetryer = new DefaultRetryer(5000L, 1000L, Collections.singletonList(Throwable.class));
     }
 
-    DefaultRetryer getDefaultRetryer() {
+    public DefaultRetryer getDefaultRetryer() {
         return defaultRetryer;
     }
 

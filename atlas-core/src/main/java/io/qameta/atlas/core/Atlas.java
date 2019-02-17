@@ -29,6 +29,10 @@ public class Atlas {
         this(new Configuration());
     }
 
+    public Atlas(final Configuration configuration) {
+        this.configuration = configuration;
+    }
+
     public Atlas timeouts(final long timeout) {
         configuration.registerRetryer(OptionalLong.of(timeout), OptionalLong.empty());
         return this;
@@ -37,10 +41,6 @@ public class Atlas {
     public Atlas polling(final long polling) {
         configuration.registerRetryer(OptionalLong.empty(), OptionalLong.of(polling));
         return this;
-    }
-
-    public Atlas(final Configuration configuration) {
-        this.configuration = configuration;
     }
 
     public Atlas listener(final Listener listener) {
