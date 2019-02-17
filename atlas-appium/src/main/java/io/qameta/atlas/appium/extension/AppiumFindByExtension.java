@@ -68,6 +68,7 @@ public class AppiumFindByExtension implements MethodExtension {
         final Configuration childConfiguration = configuration.child();
         final String name = Optional.ofNullable(method.getAnnotation(Name.class))
                 .map(Name::value)
+                .map(template -> processParamTemplate(template, parameters))
                 .orElse(method.getName());
         final Target target = new LazyTarget(name, () -> searchContext.findElement(locator));
         return new Atlas(childConfiguration).create(target, method.getReturnType());
