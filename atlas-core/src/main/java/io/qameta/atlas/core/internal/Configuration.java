@@ -2,6 +2,7 @@ package io.qameta.atlas.core.internal;
 
 import io.qameta.atlas.core.api.Context;
 import io.qameta.atlas.core.api.Extension;
+import io.qameta.atlas.core.api.MethodInvoker;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 public class Configuration {
 
     private final Map<Class<? extends Extension>, Extension> extensions;
+
+    private MethodInvoker defaultInvoker = new TargetMethodInvoker();
 
     public Configuration() {
         this.extensions = new HashMap<>();
@@ -47,9 +50,18 @@ public class Configuration {
                 .orElseThrow(() -> new ArithmeticException("Context not found by type " + contextType));
     }
 
+    public MethodInvoker getDefaultInvoker() {
+        return defaultInvoker;
+    }
+
+    public void setDefaultInvoker(final MethodInvoker defaultInvoker) {
+        this.defaultInvoker = defaultInvoker;
+    }
+
     public Configuration child() {
         final Configuration configuration = new Configuration();
         this.getExtensions(Extension.class).forEach(configuration::registerExtension);
+        configuration.setDefaultInvoker(this.getDefaultInvoker());
         return configuration;
     }
 

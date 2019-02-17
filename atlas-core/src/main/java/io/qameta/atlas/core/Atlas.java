@@ -9,7 +9,6 @@ import io.qameta.atlas.core.context.TargetContext;
 import io.qameta.atlas.core.internal.AtlasMethodHandler;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.ListenerNotifier;
-import io.qameta.atlas.core.internal.TargetMethodInvoker;
 import io.qameta.atlas.core.target.HardcodedTarget;
 
 import java.lang.reflect.Method;
@@ -59,7 +58,7 @@ public class Atlas {
         methods.forEach(method -> {
             final MethodInvoker invoker = configuration.getExtensions(MethodExtension.class).stream()
                     .filter(extension -> extension.test(method)).map(MethodInvoker.class::cast).findFirst()
-                    .orElse(new TargetMethodInvoker());
+                    .orElse(configuration.getDefaultInvoker());
             invokers.put(method, invoker);
         });
 
