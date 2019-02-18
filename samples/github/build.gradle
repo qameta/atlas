@@ -20,5 +20,6 @@ dependencies {
     testCompile 'com.github.detro:ghostdriver:2.1.0'
     testCompile 'junit:junit:4.12'
     testCompile 'io.appium:java-client:6.1.0'
+    testCompile 'org.zeroturnaround:zt-zip:1.13'
 }
 
