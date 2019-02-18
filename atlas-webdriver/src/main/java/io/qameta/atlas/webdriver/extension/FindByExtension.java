@@ -41,7 +41,9 @@ public class FindByExtension implements MethodExtension {
         final String xpath = processParamTemplate(method.getAnnotation(FindBy.class).value(), parameters);
 
         final SearchContext searchContext = (SearchContext) proxy;
-        final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)
+        final String name = Optional.ofNullable(method.getAnnotation(Name.class))
+                .map(Name::value)
+                .map(template -> processParamTemplate(template, parameters))
                 .orElse(method.getName());
 
         final Configuration childConfiguration = configuration.child();
