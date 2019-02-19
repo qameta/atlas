@@ -45,7 +45,8 @@ public class FindByCollectionExtension implements MethodExtension {
         assert method.isAnnotationPresent(FindBy.class);
 
         final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
-        final String xpath = processParamTemplate(method.getAnnotation(FindBy.class).value(), parameters);
+        final FindBy findBy = method.getAnnotation(FindBy.class);
+        final By by = findBy.how().buildBy(processParamTemplate(findBy.value(), parameters));
 
         final String name = Optional.ofNullable(method.getAnnotation(Name.class))
                 .map(Name::value)
@@ -54,7 +55,7 @@ public class FindByCollectionExtension implements MethodExtension {
         final SearchContext context = (SearchContext) proxy;
 
         final LazyTarget elementsTarget = new LazyTarget(name, () -> {
-            final List<WebElement> originalElements = context.findElements(By.xpath(xpath));
+            final List<WebElement> originalElements = context.findElements(by);
             final Type methodReturnType = ((ParameterizedType) method.getGenericReturnType())
                     .getActualTypeArguments()[0];
 
