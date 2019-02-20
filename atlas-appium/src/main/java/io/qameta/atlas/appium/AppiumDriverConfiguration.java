@@ -12,7 +12,7 @@ import io.qameta.atlas.webdriver.extension.ToStringMethodExtension;
 /**
  * Appium configuration.
  */
-//CHECKSTYLE:OFF: ClassDataAbstractionCoupling
+//CHECKSTYLE:OFF
 public class AppiumDriverConfiguration extends Configuration {
 
     public AppiumDriverConfiguration(final AppiumDriver appiumDriver) {
@@ -28,4 +28,4 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new SwipeUpOnExtension());
     }
 }
-//CHECKSTYLE:ON: ClassDataAbstractionCoupling
+//CHECKSTYLE:ON
