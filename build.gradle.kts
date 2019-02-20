@@ -14,19 +14,19 @@ buildscript {
     }
 }
 
+val gradleScriptDir by extra("${rootProject.projectDir}/gradle")
+
 tasks.withType(Wrapper::class) {
     gradleVersion = "5.2.1"
 }
 
-val gradleScriptDir by extra("${rootProject.projectDir}/gradle")
-
 plugins {
     java
+    id("net.researchgate.release") version "2.7.0"
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+release {
+    tagTemplate = "\${version}"
 }
 
 configure(listOf(rootProject)) {
@@ -34,8 +34,9 @@ configure(listOf(rootProject)) {
     group = "io.qameta.atlas"
 }
 
+val afterReleaseBuild by tasks.existing
+
 configure(subprojects) {
-    val project = this
     group = "io.qameta.atlas"
     version = version
 
@@ -45,11 +46,21 @@ configure(subprojects) {
     apply(plugin = "ru.vyarus.quality")
     apply(plugin = "io.spring.dependency-management")
 
-    apply(from = "$gradleScriptDir/bintray.gradle")
     apply(from = "$gradleScriptDir/maven.gradle")
+    apply(from = "$gradleScriptDir/bintray.gradle")
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 
     tasks.compileJava {
         options.encoding = "UTF-8"
+    }
+
+    val bintrayUpload by tasks.existing
+    afterReleaseBuild {
+        dependsOn(bintrayUpload)
     }
 
     configure<DependencyManagementExtension> {
