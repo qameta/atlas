@@ -1,5 +1,6 @@
 package io.qameta.atlas.appium;
 
+//CHECKSTYLE:OFF
 import io.appium.java_client.AppiumDriver;
 import io.qameta.atlas.appium.context.AppiumDriverContext;
 import io.qameta.atlas.appium.extension.*;
@@ -12,7 +13,6 @@ import io.qameta.atlas.webdriver.extension.ToStringMethodExtension;
 /**
  * Appium configuration.
  */
-//CHECKSTYLE:OFF
 public class AppiumDriverConfiguration extends Configuration {
 
     public AppiumDriverConfiguration(final AppiumDriver appiumDriver) {
