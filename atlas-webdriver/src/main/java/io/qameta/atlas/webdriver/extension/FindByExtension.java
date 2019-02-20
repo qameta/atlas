@@ -39,7 +39,7 @@ public class FindByExtension implements MethodExtension {
 
         final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
         final FindBy findBy = method.getAnnotation(FindBy.class);
-        final By by = findBy.how().buildBy(processParamTemplate(findBy.value(), parameters));
+        final By by = findBy.selector().buildBy(processParamTemplate(findBy.value(), parameters));
 
         final SearchContext searchContext = (SearchContext) proxy;
         final String name = Optional.ofNullable(method.getAnnotation(Name.class))
