@@ -1,5 +1,6 @@
 package io.qameta.atlas.webdriver;
 
+//CHECKSTYLE:OFF
 import io.qameta.atlas.webdriver.context.WebDriverContext;
 import io.qameta.atlas.webdriver.extension.*;
 import io.qameta.atlas.core.internal.Configuration;
@@ -9,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 /**
  * WebDriver configuration.
  */
-//CHECKSTYLE:OFF
 public class WebDriverConfiguration extends Configuration {
 
     public WebDriverConfiguration(final WebDriver webDriver) {
