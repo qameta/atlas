@@ -63,6 +63,6 @@ public enum Selector {
         }
     };
 
-    public abstract By buildBy(final String value);
+    public abstract By buildBy(String value);
 
 }
