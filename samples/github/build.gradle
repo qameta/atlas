@@ -14,11 +14,14 @@ dependencies {
     compile project(':atlas-appium')
 
     compile 'org.aeonbits.owner:owner-java8:1.0.6'
+    compile 'org.seleniumhq.selenium:selenium-java:3.8.1'
+
     testCompile 'ru.yandex.qatools.matchers:webdriver-matchers:1.4.1'
     testCompile 'ru.yandex.qatools.matchers:matcher-decorators:1.4.1'
     testCompile 'io.github.bonigarcia:webdrivermanager:2.2.4'
     testCompile 'com.github.detro:ghostdriver:2.1.0'
     testCompile 'junit:junit:4.12'
     testCompile 'io.appium:java-client:6.1.0'
+    testCompile 'org.zeroturnaround:zt-zip:1.13'
 }
 

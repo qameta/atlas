@@ -38,14 +38,17 @@ public class FindByExtension implements MethodExtension {
         assert method.isAnnotationPresent(FindBy.class);
 
         final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
-        final String xpath = processParamTemplate(method.getAnnotation(FindBy.class).value(), parameters);
+        final FindBy findBy = method.getAnnotation(FindBy.class);
+        final By by = findBy.selector().buildBy(processParamTemplate(findBy.value(), parameters));
 
         final SearchContext searchContext = (SearchContext) proxy;
-        final String name = Optional.ofNullable(method.getAnnotation(Name.class)).map(Name::value)
+        final String name = Optional.ofNullable(method.getAnnotation(Name.class))
+                .map(Name::value)
+                .map(template -> processParamTemplate(template, parameters))
                 .orElse(method.getName());
 
         final Configuration childConfiguration = configuration.child();
-        final Target target = new HardcodedTarget(name, searchContext.findElement(By.xpath(xpath)));
+        final Target target = new HardcodedTarget(name, searchContext.findElement(by));
         return new Atlas(childConfiguration)
                 .create(target, method.getReturnType());
     }

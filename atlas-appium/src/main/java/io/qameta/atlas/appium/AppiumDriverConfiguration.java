@@ -2,7 +2,11 @@ package io.qameta.atlas.appium;
 
 import io.appium.java_client.AppiumDriver;
 import io.qameta.atlas.appium.context.AppiumDriverContext;
-import io.qameta.atlas.appium.extension.*;
+import io.qameta.atlas.appium.extension.AppiumDriverProviderExtension;
+import io.qameta.atlas.appium.extension.AppiumFindByExtension;
+import io.qameta.atlas.appium.extension.LongPressExtension;
+import io.qameta.atlas.appium.extension.SwipeDownOnExtension;
+import io.qameta.atlas.appium.extension.SwipeUpOnExtension;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
 import io.qameta.atlas.webdriver.extension.ShouldMethodExtension;
@@ -12,7 +16,7 @@ import io.qameta.atlas.webdriver.extension.ToStringMethodExtension;
 /**
  * Appium configuration.
  */
-//CHECKSTYLE:OFF: ClassDataAbstractionCoupling
+@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class AppiumDriverConfiguration extends Configuration {
 
     public AppiumDriverConfiguration(final AppiumDriver appiumDriver) {
@@ -28,4 +32,3 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new SwipeUpOnExtension());
     }
 }
-//CHECKSTYLE:ON: ClassDataAbstractionCoupling

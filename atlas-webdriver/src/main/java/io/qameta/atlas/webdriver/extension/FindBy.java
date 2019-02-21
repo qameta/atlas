@@ -14,4 +14,6 @@ public @interface FindBy {
 
     String value();
 
+    Selector selector() default Selector.XPATH;
+
 }

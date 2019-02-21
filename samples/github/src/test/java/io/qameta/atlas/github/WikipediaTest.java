@@ -10,11 +10,9 @@ import io.qameta.atlas.github.mobile.config.MobileConfig;
 import io.qameta.atlas.github.mobile.page.ArticleScreen;
 import io.qameta.atlas.github.mobile.page.MainScreen;
 import io.qameta.atlas.github.mobile.page.SearchScreen;
+import io.qameta.atlas.github.rules.UnZipResource;
 import org.aeonbits.owner.ConfigFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -33,6 +31,9 @@ public class WikipediaTest {
     private Atlas atlas;
     private MobileConfig config = ConfigFactory.create(MobileConfig.class);
     private static final String NEXT = "Next";
+
+    @ClassRule
+    public static final UnZipResource unZipResource = new UnZipResource();
 
     @Before
     public void setUp() throws MalformedURLException {

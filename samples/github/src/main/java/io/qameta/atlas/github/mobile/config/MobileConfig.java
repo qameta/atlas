@@ -64,8 +64,8 @@ public interface MobileConfig extends Config {
      */
     class FileConverter implements Converter<File> {
         @Override
-        public File convert(Method method, String apkName) {
-            return new File("src/test/resources/apk/".concat(apkName)).getAbsoluteFile();
+        public File convert(Method method, String name) {
+            return new File("src/test/resources/mobile-applications/".concat(name)).getAbsoluteFile();
         }
     }
 }
