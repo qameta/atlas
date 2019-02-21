@@ -1,24 +1,22 @@
 package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.Atlas;
+import io.qameta.atlas.core.internal.DefaultRetryer;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockAtlasWebElement;
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.mock;
@@ -31,11 +29,13 @@ public class ElementsCollectionTest {
 
     private WebElement parent;
     private ElementsCollection collection;
+    private DefaultRetryer defaultRetryer;
 
     @Before
     public void setUp() {
         parent = mockWebElement();
         collection = mock(ElementsCollection.class);
+        defaultRetryer = mockDefaultRetryer();
     }
 
     @Test
@@ -45,6 +45,7 @@ public class ElementsCollectionTest {
 
         ParentElement parentElement = new Atlas()
                 .extension(new FindByCollectionExtension())
+                .context(defaultRetryer)
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.collection().size()).isEqualTo(DEFAULT_SIZE);
@@ -57,6 +58,7 @@ public class ElementsCollectionTest {
 
         ParentElement parentElement = new Atlas()
                 .extension(new FindByCollectionExtension())
+                .context(defaultRetryer)
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.collection().size()).isEqualTo(DEFAULT_SIZE);

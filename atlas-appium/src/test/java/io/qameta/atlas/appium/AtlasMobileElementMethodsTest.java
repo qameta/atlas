@@ -1,10 +1,13 @@
 package io.qameta.atlas.appium;
 
 import io.qameta.atlas.core.Atlas;
+import io.qameta.atlas.core.internal.DefaultRetryer;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import java.util.Collections;
 
 import static io.qameta.atlas.appium.testdata.ObjectFactory.mockWebElement;
 import static org.mockito.Mockito.times;
@@ -22,6 +25,7 @@ public class AtlasMobileElementMethodsTest {
     public void initElements() {
         originElement = mockWebElement();
         atlasMobileElement = new Atlas()
+                .context(new DefaultRetryer(5000L, 1000L, Collections.singletonList(Throwable.class)))
                 .create(originElement, AtlasMobileElement.class);
     }
 

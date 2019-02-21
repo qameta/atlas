@@ -6,10 +6,7 @@ import io.qameta.atlas.core.api.MethodExtension;
 import io.qameta.atlas.core.api.MethodInvoker;
 import io.qameta.atlas.core.api.Target;
 import io.qameta.atlas.core.context.TargetContext;
-import io.qameta.atlas.core.internal.AtlasMethodHandler;
-import io.qameta.atlas.core.internal.Configuration;
-import io.qameta.atlas.core.internal.ListenerNotifier;
-import io.qameta.atlas.core.internal.TargetMethodInvoker;
+import io.qameta.atlas.core.internal.*;
 import io.qameta.atlas.core.target.HardcodedTarget;
 
 import java.lang.reflect.Method;
@@ -33,6 +30,16 @@ public class Atlas {
 
     public Atlas(final Configuration configuration) {
         this.configuration = configuration;
+    }
+
+    public Atlas timeouts(final long timeout) {
+        configuration.getContext(DefaultRetryer.class).ifPresent(it -> it.timeoutInMillis(timeout));
+        return this;
+    }
+
+    public Atlas polling(final long polling) {
+        configuration.getContext(DefaultRetryer.class).ifPresent(it -> it.polling(polling));
+        return this;
     }
 
     public Atlas listener(final Listener listener) {

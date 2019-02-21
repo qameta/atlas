@@ -36,7 +36,8 @@ public class FindByWithNameTest {
         atlas = new Atlas()
                 .extension(new ToStringMethodExtension())
                 .extension(new FindByExtension())
-                .extension(new FindByCollectionExtension());
+                .extension(new FindByCollectionExtension())
+                .context(mockDefaultRetryer());
     }
 
     @Test

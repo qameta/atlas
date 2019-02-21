@@ -11,8 +11,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockAtlasWebElement;
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.*;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -36,7 +35,8 @@ public class FindByWithToStringExtensionTest {
         parent = mockWebElement();
         atlas = new Atlas()
                 .extension(new ToStringMethodExtension())
-                .extension(new FindByExtension());
+                .extension(new FindByExtension())
+                .context(mockDefaultRetryer());
     }
 
     @Test

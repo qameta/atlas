@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasItem;
@@ -37,6 +38,7 @@ public class WaitUntilExtensionTest {
     public void createAtlasElementWithExtension() {
         atlasWebElement = new Atlas()
                 .extension(new WaitUntilMethodExtension())
+                .context(mockDefaultRetryer())
                 .create(baseElement, AtlasWebElement.class);
     }
 
@@ -100,6 +102,7 @@ public class WaitUntilExtensionTest {
         target.addAll(asList(elements));
         return new Atlas()
                 .extension(new WaitUntilMethodExtension())
+                .context(mockDefaultRetryer())
                 .create(target, ElementsCollection.class);
     }
 
