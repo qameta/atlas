@@ -1,10 +1,6 @@
 package io.qameta.atlas.core;
 
-import io.qameta.atlas.core.api.Context;
-import io.qameta.atlas.core.api.Listener;
-import io.qameta.atlas.core.api.MethodExtension;
-import io.qameta.atlas.core.api.MethodInvoker;
-import io.qameta.atlas.core.api.Target;
+import io.qameta.atlas.core.api.*;
 import io.qameta.atlas.core.context.TargetContext;
 import io.qameta.atlas.core.internal.*;
 import io.qameta.atlas.core.target.HardcodedTarget;
@@ -14,7 +10,6 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalLong;
 
 import static io.qameta.atlas.core.util.ReflectionUtils.getMethods;
 
@@ -33,13 +28,14 @@ public class Atlas {
         this.configuration = configuration;
     }
 
+
     public Atlas timeouts(final long timeout) {
-        configuration.registerRetryer(OptionalLong.of(timeout), OptionalLong.empty());
+        configuration.getContext(DefaultRetryer.class).ifPresent(it -> it.timeoutInMillis(timeout));
         return this;
     }
 
     public Atlas polling(final long polling) {
-        configuration.registerRetryer(OptionalLong.empty(), OptionalLong.of(polling));
+        configuration.getContext(DefaultRetryer.class).ifPresent(it -> it.polling(polling));
         return this;
     }
 

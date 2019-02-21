@@ -1,15 +1,18 @@
 package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.Atlas;
+import io.qameta.atlas.core.internal.DefaultRetryer;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import io.qameta.atlas.webdriver.extension.FindByExtension;
 import io.qameta.atlas.webdriver.extension.Param;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.any;
@@ -21,13 +24,18 @@ import static org.mockito.Mockito.*;
 public class FindByParameterizedTest {
 
     private WebElement parent = mockWebElement();
-
     private Atlas atlas;
+    DefaultRetryer defaultRetryer = mockDefaultRetryer();
+
+    @Before
+    public void setUp() {
+
+    }
 
     @Test
     public void shouldParameterizedFindBy() {
         when(parent.findElement(any())).thenReturn(mockWebElement());
-        atlas = new Atlas().extension(new FindByExtension());
+        atlas = new Atlas().extension(new FindByExtension()).context(mockDefaultRetryer());
 
         String param = RandomStringUtils.randomAlphanumeric(10);
 
@@ -40,7 +48,7 @@ public class FindByParameterizedTest {
     @Test
     public void shouldParameterizedFindByCollection() {
         when(parent.findElements(any())).thenReturn(asList(mockWebElement()));
-        atlas = new Atlas().extension(new FindByCollectionExtension());
+        atlas = new Atlas().extension(new FindByCollectionExtension()).context(mockDefaultRetryer());
 
         String param = RandomStringUtils.randomAlphanumeric(10);
 

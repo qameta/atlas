@@ -1,5 +1,6 @@
 package io.qameta.atlas.webdriver.testdata;
 
+import io.qameta.atlas.core.internal.DefaultRetryer;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,5 +25,9 @@ public class ObjectFactory {
 
     public static AtlasWebElement mockAtlasWebElement() {
         return mock(AtlasWebElement.class, withSettings());
+    }
+
+    public static DefaultRetryer mockDefaultRetryer() {
+        return mock(DefaultRetryer.class);
     }
 }

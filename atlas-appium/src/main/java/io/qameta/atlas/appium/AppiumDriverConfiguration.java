@@ -5,8 +5,11 @@ import io.qameta.atlas.appium.context.AppiumDriverContext;
 import io.qameta.atlas.appium.extension.*;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
+import io.qameta.atlas.core.internal.DefaultRetryer;
 import io.qameta.atlas.webdriver.extension.ShouldMethodExtension;
 import io.qameta.atlas.webdriver.extension.ToStringMethodExtension;
+
+import java.util.Collections;
 
 
 /**
@@ -26,6 +29,7 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new ShouldMethodExtension());
         registerExtension(new ToStringMethodExtension());
         registerExtension(new SwipeUpOnExtension());
+        registerContext(new DefaultRetryer(5000L, 1000L, Collections.singletonList(Throwable.class)));
     }
 }
 //CHECKSTYLE:ON: ClassDataAbstractionCoupling

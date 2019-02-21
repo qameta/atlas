@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -31,6 +32,7 @@ public class NestedElementMethodTest {
         ParentElement parentElement = new Atlas()
                 .extension(new FindByExtension())
                 .extension(new ToStringMethodExtension())
+                .context(mockDefaultRetryer())
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.child()).isNotNull();

@@ -1,6 +1,7 @@
 package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.Atlas;
+import io.qameta.atlas.core.internal.DefaultRetryer;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import org.junit.Before;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockAtlasWebElement;
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -31,11 +33,13 @@ public class ElementsCollectionTest {
 
     private WebElement parent;
     private ElementsCollection collection;
+    private DefaultRetryer defaultRetryer;
 
     @Before
     public void setUp() {
         parent = mockWebElement();
         collection = mock(ElementsCollection.class);
+        defaultRetryer = mockDefaultRetryer();
     }
 
     @Test
@@ -45,6 +49,7 @@ public class ElementsCollectionTest {
 
         ParentElement parentElement = new Atlas()
                 .extension(new FindByCollectionExtension())
+                .context(defaultRetryer)
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.collection().size()).isEqualTo(DEFAULT_SIZE);
@@ -57,6 +62,7 @@ public class ElementsCollectionTest {
 
         ParentElement parentElement = new Atlas()
                 .extension(new FindByCollectionExtension())
+                .context(defaultRetryer)
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.collection().size()).isEqualTo(DEFAULT_SIZE);

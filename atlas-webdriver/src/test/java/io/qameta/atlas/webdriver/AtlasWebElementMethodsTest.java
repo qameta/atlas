@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Locatable;
 
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -22,6 +23,7 @@ public class AtlasWebElementMethodsTest {
     public void initElements() {
         originWebElement = mockWebElement();
         atlasWebElement = new Atlas()
+                .context(mockDefaultRetryer())
                 .create(originWebElement, AtlasWebElement.class);
     }
 

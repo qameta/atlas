@@ -1,9 +1,12 @@
 package io.qameta.atlas.core;
 
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
+import io.qameta.atlas.core.internal.DefaultRetryer;
 import io.qameta.atlas.core.testdata.CustomException;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Collections;
 
 public class DefaultMethodTest {
 
@@ -12,6 +15,7 @@ public class DefaultMethodTest {
     @Before
     public void initAtlas() {
         atlas = new Atlas()
+                .context(new DefaultRetryer(5000L, 1000L, Collections.singletonList(Throwable.class)))
                 .extension(new DefaultMethodExtension());
     }
 
