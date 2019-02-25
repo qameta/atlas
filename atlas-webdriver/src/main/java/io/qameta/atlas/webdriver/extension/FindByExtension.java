@@ -48,9 +48,8 @@ public class FindByExtension implements MethodExtension {
                 .orElse(method.getName());
 
         final LazyTarget elementTarget = new LazyTarget(name, () -> {
-            final WebElement element = searchContext.findElement(by);
             final Configuration childConfiguration = configuration.child();
-            final Target target = new LazyTarget(name, () -> element);
+            final Target target = new LazyTarget(name, () -> searchContext.findElement(by));
             return new Atlas(childConfiguration)
                     .create(target, method.getReturnType());
         });
