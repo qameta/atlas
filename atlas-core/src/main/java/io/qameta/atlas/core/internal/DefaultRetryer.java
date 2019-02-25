@@ -1,7 +1,5 @@
 package io.qameta.atlas.core.internal;
 
-import io.qameta.atlas.core.api.Context;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -10,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * Retryer.
  */
 @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
-public class DefaultRetryer implements Retryer, Context<DefaultRetryer> {
+public class DefaultRetryer implements Retryer {
 
     private final List<Class<? extends Throwable>> ignoring;
 
