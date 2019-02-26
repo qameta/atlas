@@ -47,14 +47,9 @@ public class FindByExtension implements MethodExtension {
                 .map(template -> processParamTemplate(template, parameters))
                 .orElse(method.getName());
 
-        final LazyTarget elementTarget = new LazyTarget(name, () -> {
-            final Configuration childConfiguration = configuration.child();
-            final Target target = new LazyTarget(name, () -> searchContext.findElement(by));
-            return new Atlas(childConfiguration)
-                    .create(target, method.getReturnType());
-        });
-
-        return new Atlas(configuration.child())
+        final Configuration childConfiguration = configuration.child();
+        final Target elementTarget = new LazyTarget(name, () -> searchContext.findElement(by));
+        return new Atlas(childConfiguration)
                 .create(elementTarget, method.getReturnType());
     }
 }
