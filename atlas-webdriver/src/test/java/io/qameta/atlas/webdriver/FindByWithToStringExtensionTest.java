@@ -35,8 +35,7 @@ public class FindByWithToStringExtensionTest {
         parent = mockWebElement();
         atlas = new Atlas()
                 .extension(new ToStringMethodExtension())
-                .extension(new FindByExtension())
-                .context(mockDefaultRetryer());
+                .extension(new FindByExtension());
     }
 
     @Test

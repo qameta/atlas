@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.any;
@@ -28,7 +27,7 @@ public class FindByParameterizedTest {
     @Test
     public void shouldParameterizedFindBy() {
         when(parent.findElement(any())).thenReturn(mockWebElement());
-        atlas = new Atlas().extension(new FindByExtension()).context(mockDefaultRetryer());
+        atlas = new Atlas().extension(new FindByExtension());
 
         String param = RandomStringUtils.randomAlphanumeric(10);
 
@@ -41,7 +40,7 @@ public class FindByParameterizedTest {
     @Test
     public void shouldParameterizedFindByCollection() {
         when(parent.findElements(any())).thenReturn(asList(mockWebElement()));
-        atlas = new Atlas().extension(new FindByCollectionExtension()).context(mockDefaultRetryer());
+        atlas = new Atlas().extension(new FindByCollectionExtension());
 
         String param = RandomStringUtils.randomAlphanumeric(10);
 

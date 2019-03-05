@@ -16,7 +16,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.*;
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockAtlasWebElement;
+import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.mock;
@@ -35,7 +36,6 @@ public class ElementsCollectionTest {
     public void setUp() {
         parent = mockWebElement();
         collection = mock(ElementsCollection.class);
-        defaultRetryer = mockDefaultRetryer();
     }
 
     @Test
@@ -45,7 +45,6 @@ public class ElementsCollectionTest {
 
         ParentElement parentElement = new Atlas()
                 .extension(new FindByCollectionExtension())
-                .context(defaultRetryer)
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.collection().size()).isEqualTo(DEFAULT_SIZE);

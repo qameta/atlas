@@ -52,6 +52,4 @@ public class Configuration {
         this.getExtensions(Extension.class).forEach(configuration::registerExtension);
         return configuration;
     }
-
-
 }

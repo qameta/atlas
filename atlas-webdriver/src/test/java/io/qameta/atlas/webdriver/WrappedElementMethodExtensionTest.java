@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -21,7 +20,6 @@ public class WrappedElementMethodExtensionTest {
     public void initElements() {
         originWebElement = mockWebElement();
         atlasWebElement = new Atlas()
-                .context(mockDefaultRetryer())
                 .extension(new WrappedElementMethodExtension())
                 .create(originWebElement, AtlasWebElement.class);
     }

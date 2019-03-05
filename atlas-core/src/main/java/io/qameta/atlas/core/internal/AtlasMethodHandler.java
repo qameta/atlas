@@ -1,6 +1,5 @@
 package io.qameta.atlas.core.internal;
 
-import io.qameta.atlas.core.AtlasException;
 import io.qameta.atlas.core.api.MethodInvoker;
 import io.qameta.atlas.core.api.Retry;
 import io.qameta.atlas.core.api.Timeout;
@@ -9,6 +8,7 @@ import io.qameta.atlas.core.util.MethodInfo;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -55,10 +55,8 @@ public class AtlasMethodHandler implements InvocationHandler {
         final DefaultRetryer retryer = Optional.ofNullable(methodInfo.getMethod().getAnnotation(Retry.class))
                 .map(retry -> new DefaultRetryer(retry.timeout(), retry.polling(), Arrays.asList(retry.ignoring())))
                 .orElseGet(() -> configuration.getContext(DefaultRetryer.class)
-                        .orElseThrow(() -> new AtlasException("Can not find default retry settings")));
-        retryer.ignore(Throwable.class);
+                        .orElseGet(() -> new DefaultRetryer(5000L, 1000L, Collections.singletonList(Throwable.class))));
         methodInfo.getParameter(Integer.class, Timeout.class).ifPresent(retryer::timeoutInSeconds);
-
         Throwable lastException;
         do {
             try {
@@ -69,5 +67,4 @@ public class AtlasMethodHandler implements InvocationHandler {
         } while (retryer.shouldRetry(lastException));
         throw lastException;
     }
-
 }

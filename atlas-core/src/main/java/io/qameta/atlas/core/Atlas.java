@@ -32,16 +32,6 @@ public class Atlas {
         this.configuration = configuration;
     }
 
-    public Atlas timeouts(final long timeout) {
-        configuration.getContext(DefaultRetryer.class).ifPresent(it -> it.timeoutInMillis(timeout));
-        return this;
-    }
-
-    public Atlas polling(final long polling) {
-        configuration.getContext(DefaultRetryer.class).ifPresent(it -> it.polling(polling));
-        return this;
-    }
-
     public Atlas listener(final Listener listener) {
         this.configuration.registerExtension(listener);
         return this;

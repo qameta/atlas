@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockAtlasWebElement;
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -59,7 +58,6 @@ public class FilterCollectionExtensionTest {
         List target = new ArrayList();
         target.addAll(asList(elements));
         return new Atlas()
-                .context(mockDefaultRetryer())
                 .extension(new FilterCollectionExtension())
                 .create(target, ElementsCollection.class);
     }

@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 
-import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockDefaultRetryer;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -29,7 +28,6 @@ public class ToStringExtensionTest {
     @Test
     public void shouldUseDefaultToStringMethodWithoutExtension() {
         AtlasWebElement atlasWebElement = new Atlas()
-                .context(mockDefaultRetryer())
                 .create(parent, AtlasWebElement.class);
         when(parent.toString()).thenReturn(message);
 
@@ -40,7 +38,6 @@ public class ToStringExtensionTest {
     public void shouldUseToStringExtensionMethodName() {
         AtlasWebElement atlasWebElement = new Atlas()
                 .extension(new ToStringMethodExtension())
-                .context(mockDefaultRetryer())
                 .create(message, parent, AtlasWebElement.class);
 
         assertThat(atlasWebElement.toString()).isEqualTo(message);

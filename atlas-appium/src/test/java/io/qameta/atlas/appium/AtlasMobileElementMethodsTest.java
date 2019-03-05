@@ -25,7 +25,6 @@ public class AtlasMobileElementMethodsTest {
     public void initElements() {
         originElement = mockWebElement();
         atlasMobileElement = new Atlas()
-                .context(new DefaultRetryer(5000L, 1000L, Collections.singletonList(Throwable.class)))
                 .create(originElement, AtlasMobileElement.class);
     }
 

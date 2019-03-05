@@ -1,11 +1,8 @@
 package io.qameta.atlas.core;
 
-import io.qameta.atlas.core.internal.DefaultRetryer;
 import io.qameta.atlas.core.testdata.CustomException;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Collections;
 
 import static org.mockito.Mockito.*;
 
@@ -18,7 +15,6 @@ public class TargetMethodTest {
     public void setUp() {
         sayHello = mock(SayHello.class);
         origin = new Atlas()
-                .context(new DefaultRetryer(5000L, 1000L, Collections.singletonList(Throwable.class)))
                 .create(sayHello, Origin.class);
     }
 
