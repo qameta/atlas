@@ -1,7 +1,6 @@
 package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.Atlas;
-import io.qameta.atlas.core.internal.DefaultRetryer;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import org.junit.Before;
@@ -30,7 +29,6 @@ public class ElementsCollectionTest {
 
     private WebElement parent;
     private ElementsCollection collection;
-    private DefaultRetryer defaultRetryer;
 
     @Before
     public void setUp() {
@@ -57,7 +55,6 @@ public class ElementsCollectionTest {
 
         ParentElement parentElement = new Atlas()
                 .extension(new FindByCollectionExtension())
-                .context(defaultRetryer)
                 .create(parent, ParentElement.class);
 
         assertThat(parentElement.collection().size()).isEqualTo(DEFAULT_SIZE);
