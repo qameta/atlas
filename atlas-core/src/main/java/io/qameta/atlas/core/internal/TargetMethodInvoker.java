@@ -20,6 +20,7 @@ public class TargetMethodInvoker implements MethodInvoker {
         final Method targetMethod = ReflectionUtils.getMatchingMethod(
                 target.getClass(), methodInfo.getMethod().getName(), getParametersTypes(methodInfo.getArgs()));
         try {
+            targetMethod.setAccessible(true);
             return targetMethod.invoke(target, methodInfo.getArgs());
         } catch (InvocationTargetException e) {
             throw e.getTargetException();

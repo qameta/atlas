@@ -4,7 +4,7 @@ import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.core.api.MethodExtension;
 import io.qameta.atlas.core.api.Target;
 import io.qameta.atlas.core.internal.Configuration;
-import io.qameta.atlas.core.target.HardcodedTarget;
+import io.qameta.atlas.core.target.LazyTarget;
 import io.qameta.atlas.core.util.MethodInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -48,8 +48,8 @@ public class FindByExtension implements MethodExtension {
                 .orElse(method.getName());
 
         final Configuration childConfiguration = configuration.child();
-        final Target target = new HardcodedTarget(name, searchContext.findElement(by));
+        final Target elementTarget = new LazyTarget(name, () -> searchContext.findElement(by));
         return new Atlas(childConfiguration)
-                .create(target, method.getReturnType());
+                .create(elementTarget, method.getReturnType());
     }
 }
