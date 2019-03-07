@@ -58,6 +58,23 @@ configure(subprojects) {
         options.encoding = "UTF-8"
     }
 
+    val sourceJar by tasks.creating(Jar::class) {
+        from(sourceSets.getByName("main").allSource)
+        archiveClassifier.set("sources")
+    }
+
+    val javadocJar by tasks.creating(Jar::class) {
+        from(tasks.getByName("javadoc"))
+        archiveClassifier.set("javadoc")
+    }
+
+    tasks.withType(Javadoc::class) {
+        (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+    }
+
+    artifacts.add("archives", sourceJar)
+    artifacts.add("archives", javadocJar)
+
     val bintrayUpload by tasks.existing
     afterReleaseBuild {
         dependsOn(bintrayUpload)
