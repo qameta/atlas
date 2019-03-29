@@ -9,8 +9,12 @@ import io.qameta.atlas.appium.extension.SwipeDownOnExtension;
 import io.qameta.atlas.appium.extension.SwipeUpOnExtension;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
+import io.qameta.atlas.webdriver.extension.FilterCollectionExtension;
+import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import io.qameta.atlas.webdriver.extension.ShouldMethodExtension;
 import io.qameta.atlas.webdriver.extension.ToStringMethodExtension;
+import io.qameta.atlas.webdriver.extension.WaitUntilMethodExtension;
+import io.qameta.atlas.webdriver.extension.WrappedElementMethodExtension;
 
 
 /**
@@ -28,7 +32,10 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new LongPressExtension());
         registerExtension(new SwipeDownOnExtension());
         registerExtension(new ShouldMethodExtension());
-        registerExtension(new ToStringMethodExtension());
         registerExtension(new SwipeUpOnExtension());
+        registerExtension(new WaitUntilMethodExtension());
+        registerExtension(new WrappedElementMethodExtension());
+        registerExtension(new FilterCollectionExtension());
+        registerExtension(new FindByCollectionExtension());
     }
 }
