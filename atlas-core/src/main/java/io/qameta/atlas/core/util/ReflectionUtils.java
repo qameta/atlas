@@ -69,7 +69,8 @@ public final class ReflectionUtils {
                 .map(Class::getDeclaredMethods)
                 .flatMap(Arrays::stream)
                 .filter(filter1.or(filter2))
-                .findFirst().orElseThrow(() -> new AtlasException("Can't find valid method"));
+                .findFirst()
+                .orElseThrow(() -> new AtlasException("Can't find valid method: " + cls.getName() + "." + methodName));
     }
 
 
