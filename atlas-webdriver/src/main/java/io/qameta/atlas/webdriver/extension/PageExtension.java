@@ -6,7 +6,7 @@ import io.qameta.atlas.core.api.MethodExtension;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.util.MethodInfo;
 import org.apache.http.client.utils.URIBuilder;
-import org.openqa.selenium.internal.WrapsDriver;
+import org.openqa.selenium.WrapsDriver;
 
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
