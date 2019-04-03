@@ -3,6 +3,7 @@ package io.qameta.atlas.webdriver;
 import io.qameta.atlas.webdriver.context.WebDriverContext;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
+import io.qameta.atlas.webdriver.extension.ConvertMethodExtension;
 import io.qameta.atlas.webdriver.extension.DriverProviderExtension;
 import io.qameta.atlas.webdriver.extension.ExecuteJScriptMethodExtension;
 import io.qameta.atlas.webdriver.extension.FilterCollectionExtension;
@@ -34,6 +35,7 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new PageExtension());
         registerExtension(new FilterCollectionExtension());
         registerExtension(new ToStringMethodExtension());
+        registerExtension(new ConvertMethodExtension());
     }
 
     public WebDriverConfiguration(final WebDriver webDriver, final String baseUrl) {
