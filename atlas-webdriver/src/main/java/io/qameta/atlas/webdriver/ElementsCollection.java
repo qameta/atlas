@@ -6,6 +6,7 @@ import io.qameta.atlas.webdriver.extension.WaitUntilMethodExtension;
 import org.hamcrest.Matcher;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -18,6 +19,11 @@ public interface ElementsCollection<E> extends List<E> {
      * This method handled by the {@link io.qameta.atlas.webdriver.extension.FilterCollectionExtension}.
      */
     ElementsCollection<E> filter(Predicate<E> predicate);
+
+    /**
+     * This method handled by the {@link io.qameta.atlas.webdriver.extension.ConvertMethodExtension}.
+     */
+    <R> ElementsCollection<R> convert(Function<E, R> function);
 
     /**
      * This method handled by the {@link ShouldMethodExtension}.
