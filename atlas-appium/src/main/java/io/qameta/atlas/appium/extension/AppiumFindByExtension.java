@@ -29,7 +29,7 @@ import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamValues;
 import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processParamTemplate;
 
 /**
- * FindBy for both platfrom (Android&IOS).
+ * FindBy for both platform (Android and IOS).
  */
 public class AppiumFindByExtension implements MethodExtension {
 

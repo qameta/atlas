@@ -12,7 +12,7 @@ import io.qameta.atlas.webdriver.extension.Param;
  */
 public interface SearchScreen extends Screen {
 
-    @Retry(timeout = 20000L)
+    @Retry(timeout = 20_000L)
     @AndroidFindBy(xpath = "//*[@resource-id='org.wikipedia:id/page_list_item_container']"
             + "//*[contains(@text, '{{ value }}')]")
     @IOSFindBy(xpath = "//XCUIElementTypeLink[contains(@name, '{{ value }}')]")

@@ -28,5 +28,6 @@ public interface AtlasMobileElement extends AtlasWebElement {
     /**
      * The same as {@link WrapsElement#getWrappedElement()}.
      */
+    @Override
     WebElement getWrappedElement();
 }

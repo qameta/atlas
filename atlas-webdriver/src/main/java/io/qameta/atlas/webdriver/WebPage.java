@@ -11,6 +11,7 @@ import org.openqa.selenium.internal.WrapsDriver;
 public interface WebPage extends WrapsDriver, SearchContext {
 
     @DriverProvider
+    @Override
     WebDriver getWrappedDriver();
 
     default void open(String url) {

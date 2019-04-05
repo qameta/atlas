@@ -7,7 +7,8 @@ buildscript {
     }
 
     dependencies {
-        classpath("ru.vyarus:gradle-quality-plugin:2.3.0")
+        classpath("ru.vyarus:gradle-quality-plugin:3.4.0")
+//        classpath("com.puppycrawl.tools:checkstyle:8.17")
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0")
         classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
         classpath("net.researchgate:gradle-release:2.7.0")

@@ -41,6 +41,7 @@ public class DefaultRetryer implements Retryer {
         this.polling = polling;
     }
 
+    @Override
     public boolean shouldRetry(final Throwable e) {
         final long current = System.currentTimeMillis();
         if (!(ignoring.stream().anyMatch(clazz -> clazz.isInstance(e)) && start + timeout < current)) {

@@ -12,7 +12,7 @@ import io.qameta.atlas.webdriver.extension.Param;
  */
 public interface MainScreen extends Screen {
 
-    @Retry(timeout = 20000L)
+    @Retry(timeout = 20_000L)
     @IOSFindBy(xpath = "//XCUIElementTypeSearchField[@name='Search Wikipedia']")
     @AndroidFindBy(xpath = "//*[contains(@text, 'Search Wikipedia')]")
     AtlasMobileElement searchWikipedia();

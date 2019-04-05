@@ -33,8 +33,10 @@ public final class MethodInfoUtils {
      * @return - transformed value.
      *
      * Example:
+     *  <pre>{@code
      *  @FindBy("//div[{{ value }}]")
      *  AtlasWebElement childWithName(@Param("value") String value);
+     *  }</pre>
      *
      * where "//div[{{ value }}]" - the template, value - the method's parameter.
      *

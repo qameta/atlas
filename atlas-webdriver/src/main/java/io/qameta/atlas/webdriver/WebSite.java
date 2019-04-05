@@ -11,6 +11,7 @@ import org.openqa.selenium.internal.WrapsDriver;
 public interface WebSite extends WrapsDriver, SearchContext {
 
     @DriverProvider
+    @Override
     WebDriver getWrappedDriver();
 
 }
