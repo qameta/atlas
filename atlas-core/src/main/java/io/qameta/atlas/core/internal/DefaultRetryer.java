@@ -33,6 +33,7 @@ public class DefaultRetryer implements Retryer {
         this.timeout = millis;
     }
 
+    @Override
     public void timeoutInSeconds(final int seconds) {
         this.timeout = TimeUnit.SECONDS.toMillis(seconds);
     }
@@ -41,21 +42,8 @@ public class DefaultRetryer implements Retryer {
         this.polling = polling;
     }
 
-    public boolean shouldRetry(final Throwable e) {
-        final long current = System.currentTimeMillis();
-        if (!(ignoring.stream().anyMatch(clazz -> clazz.isInstance(e)) && start + timeout < current)) {
-            try {
-                Thread.sleep(polling);
-                return true;
-            } catch (InterruptedException i) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        return false;
-    }
-
     @Override
-    public DefaultRetryer getValue() {
-        return this;
+    public boolean shouldRetry(final Throwable e) {
+        return shouldRetry(start, timeout, polling, ignoring, e);
     }
 }
