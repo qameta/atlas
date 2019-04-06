@@ -7,7 +7,7 @@ import org.openqa.selenium.internal.WrapsElement;
 
 
 /**
- * @author Artem Sokoevts.
+ * @author Artem Sokovets.
  */
 public interface AtlasMobileElement extends AtlasWebElement {
 

@@ -27,6 +27,7 @@ public class ShouldExtensionTest {
 
     private static final boolean IS_DISPLAYED = true;
     private static final boolean NOT_DISPLAYED = false;
+    private static final int TIMEOUT = 5;
 
     private WebElement baseElement = mockWebElement();
     private AtlasWebElement atlasWebElement;
@@ -47,11 +48,23 @@ public class ShouldExtensionTest {
     }
 
     @Test
+    public void shouldPassOneArgumentShouldMethodWithTimeOut() {
+        when(baseElement.isDisplayed()).thenReturn(IS_DISPLAYED);
+        atlasWebElement.should(DISPLAYED_MATCHER, TIMEOUT);
+    }
+
+    @Test
     public void shouldPassTwoArgumentShouldMethod() {
         String message = RandomStringUtils.randomAlphanumeric(10);
-
         when(baseElement.isDisplayed()).thenReturn(IS_DISPLAYED);
         atlasWebElement.should(message, DISPLAYED_MATCHER);
+    }
+
+    @Test
+    public void shouldPassTwoArgumentShouldMethodWithTimeOut() {
+        String message = RandomStringUtils.randomAlphanumeric(10);
+        when(baseElement.isDisplayed()).thenReturn(IS_DISPLAYED);
+        atlasWebElement.should(message, DISPLAYED_MATCHER, TIMEOUT);
     }
 
     @Test(expected = AssertionError.class)
