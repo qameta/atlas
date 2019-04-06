@@ -25,6 +25,7 @@ public class WebDriverConfiguration extends Configuration {
 
     public WebDriverConfiguration(final WebDriver webDriver) {
         registerContext(new WebDriverContext(webDriver));
+        registerContext(new RetryerContext(new EmptyRetryer()));
         registerExtension(new DriverProviderExtension());
         registerExtension(new DefaultMethodExtension());
         registerExtension(new FindByExtension());
@@ -36,7 +37,6 @@ public class WebDriverConfiguration extends Configuration {
         registerExtension(new PageExtension());
         registerExtension(new FilterCollectionExtension());
         registerExtension(new ToStringMethodExtension());
-        registerContext(new RetryerContext(new EmptyRetryer()));
     }
 
     public WebDriverConfiguration(final WebDriver webDriver, final String baseUrl) {

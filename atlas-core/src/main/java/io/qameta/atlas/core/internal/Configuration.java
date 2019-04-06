@@ -1,5 +1,6 @@
 package io.qameta.atlas.core.internal;
 
+import io.qameta.atlas.core.AtlasException;
 import io.qameta.atlas.core.api.Context;
 import io.qameta.atlas.core.api.Extension;
 
@@ -44,7 +45,7 @@ public class Configuration {
 
     public <T> T requireContext(final Class<T> contextType) {
         return getContext(contextType)
-                .orElseThrow(() -> new ArithmeticException("Context not found by type " + contextType));
+                .orElseThrow(() -> new AtlasException("Context not found by type " + contextType));
     }
 
     public Configuration child() {

@@ -27,6 +27,7 @@ public class AppiumDriverConfiguration extends Configuration {
 
     public AppiumDriverConfiguration(final AppiumDriver appiumDriver) {
         registerContext(new AppiumDriverContext(appiumDriver));
+        registerContext(new RetryerContext(new EmptyRetryer()));
         registerExtension(new AppiumDriverProviderExtension());
         registerExtension(new DefaultMethodExtension());
         registerExtension(new AppiumFindByExtension());
@@ -39,6 +40,5 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new WrappedElementMethodExtension());
         registerExtension(new FilterCollectionExtension());
         registerExtension(new FindByCollectionExtension());
-        registerContext(new RetryerContext(new EmptyRetryer()));
     }
 }
