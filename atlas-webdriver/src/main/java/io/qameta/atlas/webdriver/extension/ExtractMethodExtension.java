@@ -1,8 +1,10 @@
 package io.qameta.atlas.webdriver.extension;
 
+import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.core.api.MethodExtension;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.util.MethodInfo;
+import io.qameta.atlas.webdriver.ElementsCollection;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -13,13 +15,13 @@ import static java.util.stream.Collectors.toList;
 /**
  * @author artem.krosheninnikov
  */
-public class ConvertMethodExtension implements MethodExtension {
+public class ExtractMethodExtension implements MethodExtension {
 
-    private static final String CONVERT = "convert";
+    private static final String EXTRACT = "extract";
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(CONVERT)
+        return method.getName().equals(EXTRACT)
                 && List.class.isAssignableFrom(method.getReturnType());
     }
 
@@ -28,8 +30,12 @@ public class ConvertMethodExtension implements MethodExtension {
     public Object invoke(final Object proxy,
                          final MethodInfo methodInfo,
                          final Configuration config) {
-        final Function converter = (Function) methodInfo.getArgs()[0];
+        final Function converter = methodInfo.getParameter(Function.class).orElse(o -> o);
 
-        return ((List) proxy).stream().map(converter).collect(toList());
+        return new Atlas(config).create(
+                ((List) proxy)
+                        .stream()
+                        .map(converter)
+                        .collect(toList()), ElementsCollection.class);
     }
 }

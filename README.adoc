@@ -253,14 +253,14 @@ on the subsequent calls, and their usage may lead to the `StaleElementReferenceE
 
 *Waiting and verifying collection state.* `ElementsCollection` has the same `waitUntil()` and `should()` methods as were
 described above. Overall logic of their usage should be roughly the same, but with a little difference introduced by
-abilities to filter via `filter()` and to perform a mapping transformation via `convert()` methods.
+abilities to filter via `filter()` and to perform a mapping transformation via `extract()` methods.
 [source, java]
 ----
     @Step("Check that search results contain exactly «{expectedItems}»")
     public SearchPageSteps checkSearchResults(List<String> expectedItems){
         onSearchPage().resultsForm().usersFound()
         .waitUntil(not(empty()) //waiting for elements to load
-        .convert(user -> user.name().getText()) //convert AtlasWebElement to String
+        .extract(user -> user.name().getText()) //extract AtlasWebElement to String
         .should(containsInAnyOrder(expectedItems.toArray())); //assertion for a collection
     }
 ----
@@ -273,7 +273,7 @@ abilities to filter via `filter()` and to perform a mapping transformation via `
         onSearchPage().resultsForm().usersFound()
         .waitUntil(not(empty()) //waiting for elements to load
         .filter(user -> user.getAttribute("class").contains("selected"))
-        .convert(user -> user.name().getText()) //convert AtlasWebElement to String
+        .extract(user -> user.name().getText()) //extract AtlasWebElement to String
         .should(containsInAnyOrder(expectedItems.toArray())); //assertion for a collection
     }
 ----
