@@ -9,7 +9,7 @@ import org.openqa.selenium.interactions.Locatable;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;
 
-public class ObjectFactory {
+public final class ObjectFactory {
 
     private ObjectFactory() {
     }
