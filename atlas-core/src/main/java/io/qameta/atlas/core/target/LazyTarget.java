@@ -2,6 +2,9 @@ package io.qameta.atlas.core.target;
 
 import io.qameta.atlas.core.api.Target;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -12,11 +15,20 @@ public class LazyTarget implements Target {
 
     private final String name;
 
-    private final Supplier<Object> supplier;
+    private Supplier<Object> supplier;
+
+    private List<Function> extractor;
 
     public LazyTarget(final String name, final Supplier<Object> supplier) {
         this.supplier = supplier;
         this.name = name;
+    }
+
+    public LazyTarget(final String name, final Supplier<Object> supplier, final Function extractor) {
+        this.supplier = supplier;
+        this.name = name;
+        this.extractor = new ArrayList<>();
+        this.extractor.add(extractor);
     }
 
     @Override
@@ -27,5 +39,9 @@ public class LazyTarget implements Target {
     @Override
     public Object instance() {
         return supplier.get();
+    }
+
+    public List<Function> extractors() {
+        return extractor;
     }
 }
