@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.internal.Locatable;
+import org.openqa.selenium.interactions.Locatable;
 
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static org.assertj.core.api.Assertions.assertThat;

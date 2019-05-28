@@ -4,7 +4,7 @@ import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.HasInputDevices;
-import org.openqa.selenium.interactions.internal.Locatable;
+import org.openqa.selenium.interactions.Locatable;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;

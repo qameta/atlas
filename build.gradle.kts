@@ -84,7 +84,7 @@ configure(subprojects) {
         dependencies {
             dependency("org.apache.commons:commons-lang3:3.7")
 
-            dependency("org.seleniumhq.selenium:selenium-java:3.8.1")
+            dependency("org.seleniumhq.selenium:selenium-java:3.141.59")
             dependency("io.appium:java-client:6.1.0")
             dependency("io.github.bonigarcia:webdrivermanager:2.1.0")
             dependency("ru.yandex.qatools.matchers:webdriver-matchers:1.4.1")

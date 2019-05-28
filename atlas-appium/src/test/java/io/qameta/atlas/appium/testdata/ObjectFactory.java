@@ -7,7 +7,7 @@ import io.qameta.atlas.appium.AtlasMobileElement;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.HasInputDevices;
-import org.openqa.selenium.internal.WrapsDriver;
+import org.openqa.selenium.WrapsDriver;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;

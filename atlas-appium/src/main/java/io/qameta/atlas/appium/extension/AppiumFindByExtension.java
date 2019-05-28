@@ -61,7 +61,7 @@ public class AppiumFindByExtension implements MethodExtension {
             locator = getByLocator(new LocatorWrapper(XPATH, xpath), new LocatorWrapper(ID, id));
 
         } else {
-            throw new AtlasException("Сan not identified driver");
+            throw new AtlasException("Can not identified driver");
         }
 
         final SearchContext searchContext = (SearchContext) proxy;

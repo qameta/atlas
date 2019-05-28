@@ -14,7 +14,7 @@ dependencies {
     compile project(':atlas-appium')
 
     compile 'org.aeonbits.owner:owner-java8:1.0.6'
-    compile 'org.seleniumhq.selenium:selenium-java:3.8.1'
+    compile 'org.seleniumhq.selenium:selenium-java:3.141.59'
 
     testCompile 'ru.yandex.qatools.matchers:webdriver-matchers:1.4.1'
     testCompile 'ru.yandex.qatools.matchers:matcher-decorators:1.4.1'
