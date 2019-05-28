@@ -20,86 +20,103 @@ public interface AtlasWebElement<T extends WebElement> extends WrapsElement, Web
     /**
      * The same as {@link WebElement#click()}.
      */
+    @Override
     void click();
 
     /**
      * The same as {@link WebElement#submit()}.
      */
+    @Override
     void submit();
 
     /**
      * The same as {@link WebElement#sendKeys(CharSequence...)}.
      */
+    @Override
     void sendKeys(CharSequence... keysToSend);
 
     /**
      * The same as {@link WebElement#clear()}.
      */
+    @Override
     void clear();
 
     /**
      * The same as {@link WebElement#getTagName()}.
      */
+    @Override
     String getTagName();
 
     /**
      * The same as {@link WebElement#getAttribute(String)}.
      */
+    @Override
     String getAttribute(String name);
 
     /**
      * The same as {@link WebElement#isSelected()}.
      */
+    @Override
     boolean isSelected();
 
     /**
      * The same as {@link WebElement#isEnabled()}.
      */
+    @Override
     boolean isEnabled();
 
     /**
      * The same as {@link WebElement#getText()}.
      */
+    @Override
     String getText();
 
     /**
      * The same as {@link WebElement#findElements(By)}.
      */
+    @Override
     List<WebElement> findElements(By by);
 
     /**
      * The same as {@link WebElement#findElement(By)}.
      */
+    @Override
     WebElement findElement(By by);
 
     /**
      * The same as {@link WebElement#isDisplayed()}.
      */
+    @Override
     boolean isDisplayed();
 
     /**
      * The same as {@link WebElement#getLocation()}.
      */
+    @Override
     Point getLocation();
 
     /**
      * The same as {@link WebElement#getSize()}.
      */
+    @Override
     Dimension getSize();
 
     /**
      * The same as {@link WebElement#getRect()}.
      */
+    @Override
     Rectangle getRect();
 
     /**
      * The same as {@link WebElement#getCssValue(String)}.
      */
+    @Override
     String getCssValue(String propertyName);
 
     /**
      * The same as {@link Locatable#getCoordinates()}.
      */
+    @Override
     Coordinates getCoordinates();
 
     /**
@@ -135,6 +152,7 @@ public interface AtlasWebElement<T extends WebElement> extends WrapsElement, Web
     /**
      * The same as {@link WrapsElement#getWrappedElement()}.
      */
+    @Override
     WebElement getWrappedElement();
 
     /**

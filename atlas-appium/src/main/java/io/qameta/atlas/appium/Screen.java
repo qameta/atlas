@@ -10,6 +10,7 @@ import org.openqa.selenium.WrapsDriver;
  */
 public interface Screen extends WrapsDriver, SearchContext {
 
+    @Override
     @AppiumDriverProvider
     AppiumDriver getWrappedDriver();
 
