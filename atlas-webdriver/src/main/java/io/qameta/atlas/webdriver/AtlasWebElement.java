@@ -127,7 +127,17 @@ public interface AtlasWebElement<T extends WebElement> extends WrapsElement, Web
     /**
      * This method handled by the {@link ShouldMethodExtension}.
      */
+    T should(Matcher matcher, @Timeout Integer timeoutInSeconds);
+
+    /**
+     * This method handled by the {@link ShouldMethodExtension}.
+     */
     T should(String message, Matcher matcher);
+
+    /**
+     * This method handled by the {@link ShouldMethodExtension}.
+     */
+    T should(String message, Matcher matcher, @Timeout Integer timeoutInSeconds);
 
     /**
      * This method handled by the {@link WaitUntilMethodExtension}.
