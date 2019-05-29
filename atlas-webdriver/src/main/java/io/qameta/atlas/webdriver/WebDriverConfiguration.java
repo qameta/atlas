@@ -1,5 +1,7 @@
 package io.qameta.atlas.webdriver;
 
+import io.qameta.atlas.core.context.RetryerContext;
+import io.qameta.atlas.core.internal.EmptyRetryer;
 import io.qameta.atlas.webdriver.context.WebDriverContext;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
@@ -23,6 +25,7 @@ public class WebDriverConfiguration extends Configuration {
 
     public WebDriverConfiguration(final WebDriver webDriver) {
         registerContext(new WebDriverContext(webDriver));
+        registerContext(new RetryerContext(new EmptyRetryer()));
         registerExtension(new DriverProviderExtension());
         registerExtension(new DefaultMethodExtension());
         registerExtension(new FindByExtension());

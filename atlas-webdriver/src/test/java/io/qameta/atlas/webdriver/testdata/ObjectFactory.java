@@ -25,4 +25,5 @@ public class ObjectFactory {
     public static AtlasWebElement mockAtlasWebElement() {
         return mock(AtlasWebElement.class, withSettings());
     }
+
 }

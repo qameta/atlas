@@ -7,8 +7,10 @@ import io.qameta.atlas.appium.extension.AppiumFindByExtension;
 import io.qameta.atlas.appium.extension.LongPressExtension;
 import io.qameta.atlas.appium.extension.SwipeDownOnExtension;
 import io.qameta.atlas.appium.extension.SwipeUpOnExtension;
+import io.qameta.atlas.core.context.RetryerContext;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
+import io.qameta.atlas.core.internal.EmptyRetryer;
 import io.qameta.atlas.webdriver.extension.FilterCollectionExtension;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import io.qameta.atlas.webdriver.extension.ShouldMethodExtension;
@@ -25,6 +27,7 @@ public class AppiumDriverConfiguration extends Configuration {
 
     public AppiumDriverConfiguration(final AppiumDriver appiumDriver) {
         registerContext(new AppiumDriverContext(appiumDriver));
+        registerContext(new RetryerContext(new EmptyRetryer()));
         registerExtension(new AppiumDriverProviderExtension());
         registerExtension(new DefaultMethodExtension());
         registerExtension(new AppiumFindByExtension());

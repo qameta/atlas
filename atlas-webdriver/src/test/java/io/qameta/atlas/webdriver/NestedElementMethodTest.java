@@ -45,17 +45,13 @@ public class NestedElementMethodTest {
     }
 
     interface ParentElement extends AtlasWebElement {
-
         @FindBy(CHILD_SELECTOR)
         ChildElement child();
-
     }
 
     interface ChildElement extends AtlasWebElement {
-
         @FindBy(LEAF_SELECTOR)
         LeafElement leaf();
-
     }
 
     interface LeafElement extends AtlasWebElement {

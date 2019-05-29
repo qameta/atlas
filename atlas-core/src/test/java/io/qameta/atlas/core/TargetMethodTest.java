@@ -1,33 +1,32 @@
 package io.qameta.atlas.core;
 
 import io.qameta.atlas.core.testdata.CustomException;
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class TargetMethodTest {
 
+    private Origin origin;
+    private SayHello sayHello;
+
+    @Before
+    public void setUp() {
+        sayHello = mock(SayHello.class);
+        origin = new Atlas()
+                .create(sayHello, Origin.class);
+    }
+
     @Test
     public void shouldExecuteTargetMethod() {
-        SayHello sayHello = mock(SayHello.class);
-
-        Origin origin = new Atlas()
-                .create(sayHello, Origin.class);
         origin.hello();
-
         verify(sayHello, times(1)).hello();
     }
 
     @Test(expected = CustomException.class)
     public void shouldPropagateExceptionInTargetMethod() {
-        SayHello sayHello = mock(SayHello.class);
         doThrow(CustomException.class).when(sayHello).hello();
-
-        Origin origin = new Atlas()
-                .create(sayHello, Origin.class);
         origin.hello();
     }
 
@@ -37,9 +36,6 @@ public class TargetMethodTest {
     }
 
     interface SayHello {
-
         void hello();
-
     }
-
 }
