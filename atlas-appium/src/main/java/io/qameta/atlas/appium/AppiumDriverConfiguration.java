@@ -11,7 +11,6 @@ import io.qameta.atlas.core.context.RetryerContext;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
 import io.qameta.atlas.core.internal.EmptyRetryer;
-import io.qameta.atlas.webdriver.extension.ConvertMethodExtension;
 import io.qameta.atlas.webdriver.extension.ExtractMethodExtension;
 import io.qameta.atlas.webdriver.extension.FilterCollectionExtension;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
