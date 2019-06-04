@@ -15,13 +15,12 @@ public class LazyTarget implements Target {
 
     private final String name;
 
-    private Supplier<Object> supplier;
+    private final Supplier<Object> supplier;
 
-    private List<Function> extractor;
+    private final List<Function> extractor;
 
     public LazyTarget(final String name, final Supplier<Object> supplier) {
-        this.supplier = supplier;
-        this.name = name;
+        this(name, supplier, (r) -> r);
     }
 
     public LazyTarget(final String name, final Supplier<Object> supplier, final Function extractor) {
