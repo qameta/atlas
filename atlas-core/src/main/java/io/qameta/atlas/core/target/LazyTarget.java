@@ -20,7 +20,7 @@ public class LazyTarget implements Target {
     private final List<Function> extractor;
 
     public LazyTarget(final String name, final Supplier<Object> supplier) {
-        this(name, supplier, (r) -> r);
+        this(name, supplier, r -> r);
     }
 
     public LazyTarget(final String name, final Supplier<Object> supplier, final Function extractor) {
