@@ -51,7 +51,7 @@ public class ExtractMethodExtension implements MethodExtension {
                 .orElse(method.getName());
 
         final LazyTarget elementsTarget = new LazyTarget(name, () -> {
-            final List<WebElement> originalElements = (ElementsCollection)((List) proxy)
+            final List<WebElement> originalElements = (ElementsCollection) ((List) proxy)
                     .stream()
                     .map(converter)
                     .collect(toList());
