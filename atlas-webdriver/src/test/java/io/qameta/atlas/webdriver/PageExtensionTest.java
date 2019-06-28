@@ -2,16 +2,22 @@ package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.core.AtlasException;
+import io.qameta.atlas.webdriver.context.URLBuilderContext;
 import io.qameta.atlas.webdriver.extension.Page;
 import io.qameta.atlas.webdriver.extension.Path;
 import io.qameta.atlas.webdriver.extension.Query;
 import io.qameta.atlas.webdriver.extension.QueryMap;
+import io.qameta.atlas.webdriver.internal.URLBuilder;
+import org.apache.http.client.utils.URIBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.openqa.selenium.WebDriver;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -158,6 +164,32 @@ public class PageExtensionTest {
         verify(driver, times(1)).get("http://example.com:8443/search?a=zero");
     }
 
+    @Test
+    public void shoutHandleQuestionCharacter() {
+
+        class MyURLBuilder implements URLBuilder {
+            @SuppressWarnings("unchecked")
+            @Override
+            public String buildUrl(Object[] args) {
+                try {
+                    final URIBuilder urlBuilder;
+                    urlBuilder = new URIBuilder((String) args[0]);
+                    urlBuilder.setPath((String) args[1]);
+                    ((Map<String, String>) args[2]).forEach(urlBuilder::addParameter);
+                    return URLDecoder.decode(urlBuilder.build().toString(), "UTF-8");
+                } catch (URISyntaxException | UnsupportedEncodingException e) {
+                    throw new AtlasException("Can't parse base URL of your WebSite", e);
+                }
+            }
+        }
+        TestSiteWithQuestionCharacter testSiteWithQuestionCharacter =
+                new Atlas(new WebDriverConfiguration(driver, "http://localhost:3000"))
+                        .context(new URLBuilderContext(new MyURLBuilder()))
+                        .create(driver, TestSiteWithQuestionCharacter.class);
+        testSiteWithQuestionCharacter.onMainPage().atlasWebElement.click();
+        verify(driver, times(1)).get("http://localhost:3000/?isOfflineMode&dontWaitForPdf");
+    }
+
 
     public interface TestSiteWithDefaultPageAndQuery extends WebSite {
         @Page
@@ -183,6 +215,11 @@ public class PageExtensionTest {
         MainPage onMainPage(@Query("a") String value);
     }
 
+    public interface TestSiteWithQuestionCharacter extends WebSite {
+        @Page(url = "?isOfflineMode&dontWaitForPdf")
+        MainPage onMainPage();
+    }
+
 
     public interface TestSiteWithDefaultPage extends WebSite {
         @Page
@@ -192,5 +229,4 @@ public class PageExtensionTest {
     public interface MainPage extends WebPage {
         AtlasWebElement atlasWebElement = mockAtlasWebElement();
     }
-
 }
