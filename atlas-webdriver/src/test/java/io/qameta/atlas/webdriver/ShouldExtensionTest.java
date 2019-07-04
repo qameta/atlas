@@ -109,8 +109,7 @@ public class ShouldExtensionTest {
 
     @SuppressWarnings("unchecked")
     private static ElementsCollection<AtlasWebElement> createElementsCollection(AtlasWebElement... elements) {
-        List target = new ArrayList();
-        target.addAll(asList(elements));
+        List target = new ArrayList(asList(elements));
         return new Atlas()
                 .extension(new ShouldMethodExtension())
                 .create(target, ElementsCollection.class);

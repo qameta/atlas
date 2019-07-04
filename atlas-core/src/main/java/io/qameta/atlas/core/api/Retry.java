@@ -11,9 +11,9 @@ import java.lang.annotation.RetentionPolicy;
 @java.lang.annotation.Target(ElementType.METHOD)
 public @interface Retry {
 
-    long timeout() default 5000L;
+    long timeout() default -1;
 
-    long polling() default 1000L;
+    long polling() default -1;
 
     Class<? extends Throwable>[] ignoring() default {Throwable.class};
 

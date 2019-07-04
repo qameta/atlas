@@ -8,7 +8,7 @@ import io.qameta.atlas.core.util.MethodInfo;
  */
 public interface Listener extends Extension {
 
-    void beforeMethodCall(MethodInfo methodInfo, Configuration configuration);
+    Configuration beforeMethodCall(MethodInfo methodInfo, Configuration configuration);
 
     void afterMethodCall(MethodInfo methodInfo, Configuration configuration);
 

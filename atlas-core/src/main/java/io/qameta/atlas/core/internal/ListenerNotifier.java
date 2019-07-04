@@ -23,14 +23,15 @@ public class ListenerNotifier implements Listener {
     }
 
     @Override
-    public void beforeMethodCall(final MethodInfo methodInfo, final Configuration configuration) {
+    public Configuration beforeMethodCall(final MethodInfo methodInfo, final Configuration configuration) {
         for (Listener listener : listeners) {
             try {
-                listener.beforeMethodCall(methodInfo, configuration);
+                return listener.beforeMethodCall(methodInfo, configuration);
             } catch (Exception e) {
                 LOGGER.error("Error during listener {} beforeMethodCall", listener, e);
             }
         }
+        return configuration;
     }
 
     @Override

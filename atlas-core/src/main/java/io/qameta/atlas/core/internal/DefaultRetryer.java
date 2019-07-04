@@ -1,49 +1,27 @@
 package io.qameta.atlas.core.internal;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Set;
+
 
 /**
- * Retryer.
+ * @deprecated
+ * class constructor will be removed in the next release.
+ * Now the default implementation always used from the Atlas context
+ * see reference
  */
-@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
-public class DefaultRetryer implements Retryer {
-
-    private final List<Class<? extends Throwable>> ignoring;
-
-    private final Long start;
-
-    private Long timeout;
-
-    private Long polling;
+@Deprecated
+public class DefaultRetryer extends TimeBasedRetryer {
 
     public DefaultRetryer(final Long timeout, final Long polling, final List<Class<? extends Throwable>> ignoring) {
-        this.ignoring = new ArrayList<>(ignoring);
-        this.start = System.currentTimeMillis();
-        this.timeout = timeout;
-        this.polling = polling;
+        this(timeout, polling, new HashSet<>(ignoring));
     }
 
-    public void ignore(final Class<? extends Throwable> throwable) {
-        this.ignoring.add(throwable);
+    private DefaultRetryer(final Long timeout, final Long polling, final Set<Class<? extends Throwable>> ignoring) {
+        setTimeOut(timeout);
+        setPolling(polling);
+        addAllToIgnore(ignoring);
     }
 
-    public void timeoutInMillis(final Long millis) {
-        this.timeout = millis;
-    }
-
-    @Override
-    public void timeoutInSeconds(final int seconds) {
-        this.timeout = TimeUnit.SECONDS.toMillis(seconds);
-    }
-
-    public void polling(final Long polling) {
-        this.polling = polling;
-    }
-
-    @Override
-    public boolean shouldRetry(final Throwable e) {
-        return shouldRetry(start, timeout, polling, ignoring, e);
-    }
 }

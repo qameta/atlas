@@ -1,6 +1,8 @@
 package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.Atlas;
+import io.qameta.atlas.core.context.RetryerContext;
+import io.qameta.atlas.core.internal.EmptyRetryer;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import org.junit.Before;
@@ -42,6 +44,7 @@ public class ElementsCollectionTest {
         when(collection.size()).thenReturn(DEFAULT_SIZE);
 
         ParentElement parentElement = new Atlas()
+                .context(new RetryerContext(new EmptyRetryer()))
                 .extension(new FindByCollectionExtension())
                 .create(parent, ParentElement.class);
 
@@ -54,6 +57,7 @@ public class ElementsCollectionTest {
         when(collection.size()).thenReturn(DEFAULT_SIZE);
 
         ParentElement parentElement = new Atlas()
+                .context(new RetryerContext(new EmptyRetryer()))
                 .extension(new FindByCollectionExtension())
                 .create(parent, ParentElement.class);
 
@@ -73,6 +77,7 @@ public class ElementsCollectionTest {
         when(block.isDisplayed()).thenReturn(true);
 
         ParentElement parentElement = new Atlas(new WebDriverConfiguration(mock(WebDriver.class)))
+                .context(new RetryerContext(new EmptyRetryer()))
                 .create(parent, ParentElement.class);
 
         ListElement element = parentElement.collection().get(0);
@@ -90,6 +95,7 @@ public class ElementsCollectionTest {
             return new ArrayList<>();
         });
         ParentElement parentElement = new Atlas(new WebDriverConfiguration(mock(WebDriver.class)))
+                .context(new RetryerContext(new EmptyRetryer()))
                 .create(parent, ParentElement.class);
         parentElement.collection()
                 .should(hasSize(1));

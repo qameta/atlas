@@ -1,10 +1,7 @@
 package io.qameta.atlas.core;
 
-import io.qameta.atlas.core.api.Context;
-import io.qameta.atlas.core.api.Listener;
-import io.qameta.atlas.core.api.MethodExtension;
-import io.qameta.atlas.core.api.MethodInvoker;
-import io.qameta.atlas.core.api.Target;
+import io.qameta.atlas.core.api.*;
+import io.qameta.atlas.core.context.RetryerContext;
 import io.qameta.atlas.core.context.TargetContext;
 import io.qameta.atlas.core.internal.*;
 import io.qameta.atlas.core.target.HardcodedTarget;
@@ -14,6 +11,7 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static io.qameta.atlas.core.util.ReflectionUtils.getMethods;
 
@@ -30,6 +28,10 @@ public class Atlas {
 
     public Atlas(final Configuration configuration) {
         this.configuration = configuration;
+        final Optional<RetryerContext> context = this.configuration.getContext(RetryerContext.class);
+        if (!context.isPresent()) {
+            configuration.registerContext(new RetryerContext(new EmptyRetryer()));
+        }
     }
 
     public Atlas listener(final Listener listener) {

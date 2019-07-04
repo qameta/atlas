@@ -96,8 +96,7 @@ public class WaitUntilExtensionTest {
 
     @SuppressWarnings("unchecked")
     private static ElementsCollection<AtlasWebElement> createElementsCollection(AtlasWebElement... elements) {
-        List target = new ArrayList();
-        target.addAll(asList(elements));
+        List target = new ArrayList(asList(elements));
         return new Atlas()
                 .extension(new WaitUntilMethodExtension())
                 .create(target, ElementsCollection.class);
