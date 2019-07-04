@@ -18,6 +18,7 @@ import static io.qameta.atlas.core.util.ReflectionUtils.getMethods;
 /**
  * @author Artem Eroshenko.
  */
+@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 public class Atlas {
 
     private final Configuration configuration;
