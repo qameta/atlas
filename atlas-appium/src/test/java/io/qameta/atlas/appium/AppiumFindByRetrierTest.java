@@ -35,7 +35,7 @@ public class AppiumFindByRetrierTest {
      * Parent mobile element.
      */
     private interface ParentElement extends AtlasMobileElement {
-        @Retry(timeout = 1000L)
+        @Retry(timeout = 1000L, polling = 100)
         @AndroidFindBy(xpath = "//div")
         NestedElement child();
     }
