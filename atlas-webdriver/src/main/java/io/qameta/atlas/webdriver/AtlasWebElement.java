@@ -170,4 +170,20 @@ public interface AtlasWebElement<T extends WebElement> extends WrapsElement, Web
      */
     Object executeScript(String script);
 
+
+    /**
+     * This method handled by the {@link io.qameta.atlas.webdriver.extension.IsExtension}.
+     */
+    boolean exists();
+
+    /**
+     * This method handled by the {@link io.qameta.atlas.webdriver.extension.IsExtension}.
+     */
+    boolean is(Matcher matcher);
+
+    /**
+     * This method handled by the {@link io.qameta.atlas.webdriver.extension.IsExtension}.
+     */
+    boolean isNot(Matcher matcher);
+
 }
