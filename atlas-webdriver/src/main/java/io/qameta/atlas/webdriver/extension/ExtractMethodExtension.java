@@ -11,6 +11,7 @@ import io.qameta.atlas.webdriver.ElementsCollection;
 import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,30 +46,25 @@ public class ExtractMethodExtension implements MethodExtension {
 
         final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
 
-        final String name = Optional.ofNullable(method.getAnnotation(Name.class))
-                .map(Name::value)
-                .map(template -> processParamTemplate(template, parameters))
-                .orElse(method.getName());
+//        final String name = Optional.ofNullable(method.getAnnotation(Name.class))
+//                .map(Name::value)
+//                .map(template -> processParamTemplate(template, parameters))
+//                .orElse(method.getName());
 
-        final LazyTarget elementsTarget = new LazyTarget(name, () -> {
-            final List<WebElement> originalElements = (ElementsCollection) ((List) proxy)
-                    .stream()
-                    .map(converter)
-                    .collect(toList());
+//        final LazyTarget elementsTarget = new LazyTarget(name, () -> {
+//            final List<String> originalElements = (List<String>) ((List) proxy)
+//                    .stream()
+//                    .map(converter)
+//                    .collect(toList());
+//
+//            return originalElements,
+//        }, converter);
 
-            return IntStream.range(0, originalElements.size())
-                    .mapToObj(i -> {
-                        final WebElement originalElement = originalElements.get(i);
-                        final Configuration childConfiguration = config.child();
-                        final Target target = new HardcodedTarget(listElementName(name, i), originalElement);
-                        return new Atlas(childConfiguration)
-                                .create(target, method.getReturnType());
-                    })
-                    .collect(toList());
-        }, converter);
 
-        return new Atlas(config.child()).create(elementsTarget, method.getReturnType());
+        //return new Atlas(config.child()).create(elementsTarget, method.getReturnType());
 
+        return new Atlas(config.child())
+                .create(((List) proxy).stream().map(converter).collect(toList()), ElementsCollection.class);
     }
 
     private String listElementName(final String name, final int position) {
