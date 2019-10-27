@@ -41,7 +41,7 @@ public class WebSiteTest {
         atlas = new Atlas(new WebDriverConfiguration(driver, "https://github.com"));
     }
 
-    //@Ignore
+    @Ignore
     @Test
     public void simpleWebSiteTest() {
         onSite().onMainPage().open();
@@ -54,8 +54,7 @@ public class WebSiteTest {
     @Test
     public void baseUriWebSiteTest() {
         onSite().onSearchPage("Junit 5").repositories().waitUntil(hasSize(10))
-                .should(everyItem(text(containsString("junit"))
-                ));
+                .should(everyItem(text(containsString("junit"))));
     }
 
     @Ignore
@@ -65,12 +64,14 @@ public class WebSiteTest {
         onSite().onContributorsPage().hovercards().waitUntil(hasSize(4));
     }
 
+    @Ignore
     @Test
     public void shouldExtractContributorsInfo() {
         ElementsCollection<String> nameOfRepositories = onSite().onSearchPage("Junit 5").repositories()
                 .extract(RepositoryCard::title)
                 .extract(AtlasWebElement::getText);
-        nameOfRepositories.should(everyItem(containsString("junit5")));
+        nameOfRepositories.should(everyItem(anyOf(containsString("junit5"),
+                containsString("jupiter"))));
     }
 
 
