@@ -66,7 +66,7 @@ public class WebSiteTest {
 
     @Ignore
     @Test
-    public void shouldExtractContributorsInfo() {
+    public void shouldExtractRepositoriesInfo() {
         ElementsCollection<String> nameOfRepositories = onSite().onSearchPage("Junit 5").repositories()
                 .extract(RepositoryCard::title)
                 .extract(AtlasWebElement::getText);
