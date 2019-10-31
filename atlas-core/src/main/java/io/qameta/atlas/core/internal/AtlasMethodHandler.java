@@ -59,7 +59,7 @@ public class AtlasMethodHandler implements InvocationHandler {
                         .orElseGet(() -> new RetryerContext(new EmptyRetryer())).getValue());
         methodInfo.getParameter(Integer.class, Timeout.class).ifPresent(retryer::timeoutInSeconds);
         Throwable lastException;
-        Long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         do {
             try {
                 return invoker.invoke(proxy, methodInfo, configuration);

@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface Retryer {
 
-    boolean shouldRetry(final Long start, Throwable e) throws Throwable;
+    boolean shouldRetry(final long start, final Throwable e) throws Throwable;
 
     default boolean shouldRetry(final Long start, final Long timeout, final Long polling,
                                 final List<Class<? extends Throwable>> ignoring, final Throwable e) {
