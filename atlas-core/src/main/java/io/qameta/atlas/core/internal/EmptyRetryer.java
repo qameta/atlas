@@ -9,13 +9,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class EmptyRetryer implements Retryer {
 
-    private final Long start;
     private final Long polling;
     private final List<Class<? extends Throwable>> ignoring;
     private Long timeout;
 
     public EmptyRetryer() {
-        this.start = System.currentTimeMillis();
         this.timeout = 5000L;
         this.polling = 1000L;
         this.ignoring = Collections.singletonList(Throwable.class);
@@ -23,7 +21,7 @@ public class EmptyRetryer implements Retryer {
 
     @Override
     public boolean shouldRetry(final Throwable e) {
-        return shouldRetry(start, timeout, polling, ignoring, e);
+        return shouldRetry(System.currentTimeMillis(), timeout, polling, ignoring, e);
 
     }
 

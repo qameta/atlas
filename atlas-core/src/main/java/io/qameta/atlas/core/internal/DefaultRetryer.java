@@ -12,15 +12,12 @@ public class DefaultRetryer implements Retryer {
 
     private final List<Class<? extends Throwable>> ignoring;
 
-    private final Long start;
-
     private Long timeout;
 
     private Long polling;
 
     public DefaultRetryer(final Long timeout, final Long polling, final List<Class<? extends Throwable>> ignoring) {
         this.ignoring = new ArrayList<>(ignoring);
-        this.start = System.currentTimeMillis();
         this.timeout = timeout;
         this.polling = polling;
     }
@@ -44,6 +41,6 @@ public class DefaultRetryer implements Retryer {
 
     @Override
     public boolean shouldRetry(final Throwable e) {
-        return shouldRetry(start, timeout, polling, ignoring, e);
+        return shouldRetry(System.currentTimeMillis(), timeout, polling, ignoring, e);
     }
 }
