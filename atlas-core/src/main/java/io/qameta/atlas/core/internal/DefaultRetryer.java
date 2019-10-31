@@ -40,7 +40,7 @@ public class DefaultRetryer implements Retryer {
     }
 
     @Override
-    public boolean shouldRetry(long start, Throwable e) {
+    public boolean shouldRetry(final long start, final Throwable e) {
         return shouldRetry(start, timeout, polling, ignoring, e);
     }
 }
