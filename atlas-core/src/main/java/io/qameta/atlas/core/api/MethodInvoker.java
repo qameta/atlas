@@ -6,6 +6,7 @@ import io.qameta.atlas.core.util.MethodInfo;
 /**
  * Method invoker.
  */
+@FunctionalInterface
 public interface MethodInvoker {
 
     Object invoke(Object proxy, MethodInfo methodInfo, Configuration config) throws Throwable;

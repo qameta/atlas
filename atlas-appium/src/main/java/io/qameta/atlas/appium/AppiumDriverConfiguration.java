@@ -11,6 +11,7 @@ import io.qameta.atlas.core.context.RetryerContext;
 import io.qameta.atlas.core.internal.Configuration;
 import io.qameta.atlas.core.internal.DefaultMethodExtension;
 import io.qameta.atlas.core.internal.EmptyRetryer;
+import io.qameta.atlas.webdriver.extension.ExtractMethodExtension;
 import io.qameta.atlas.webdriver.extension.FilterCollectionExtension;
 import io.qameta.atlas.webdriver.extension.FindByCollectionExtension;
 import io.qameta.atlas.webdriver.extension.ShouldMethodExtension;
@@ -40,5 +41,6 @@ public class AppiumDriverConfiguration extends Configuration {
         registerExtension(new WrappedElementMethodExtension());
         registerExtension(new FilterCollectionExtension());
         registerExtension(new FindByCollectionExtension());
+        registerExtension(new ExtractMethodExtension());
     }
 }

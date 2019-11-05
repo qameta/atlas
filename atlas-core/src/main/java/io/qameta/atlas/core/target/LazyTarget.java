@@ -1,7 +1,6 @@
 package io.qameta.atlas.core.target;
 
 import io.qameta.atlas.core.api.Target;
-
 import java.util.function.Supplier;
 
 /**
@@ -28,4 +27,5 @@ public class LazyTarget implements Target {
     public Object instance() {
         return supplier.get();
     }
+
 }

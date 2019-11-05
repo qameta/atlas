@@ -1,11 +1,13 @@
 package io.qameta.atlas.webdriver;
 
 import io.qameta.atlas.core.api.Timeout;
+import io.qameta.atlas.webdriver.extension.ExtractMethodExtension;
 import io.qameta.atlas.webdriver.extension.ShouldMethodExtension;
 import io.qameta.atlas.webdriver.extension.WaitUntilMethodExtension;
 import org.hamcrest.Matcher;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -18,6 +20,11 @@ public interface ElementsCollection<E> extends List<E> {
      * This method handled by the {@link io.qameta.atlas.webdriver.extension.FilterCollectionExtension}.
      */
     ElementsCollection<E> filter(Predicate<E> predicate);
+
+    /**
+     * This method handled by the {@link ExtractMethodExtension}.
+     */
+    <R> ElementsCollection<R> extract(Function<E, R> function);
 
     /**
      * This method handled by the {@link ShouldMethodExtension}.
