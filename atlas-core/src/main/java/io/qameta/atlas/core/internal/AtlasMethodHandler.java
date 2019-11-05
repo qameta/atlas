@@ -56,16 +56,17 @@ public class AtlasMethodHandler implements InvocationHandler {
                 .map(retry -> (Retryer) new DefaultRetryer(retry.timeout(), retry.polling(),
                         Arrays.asList(retry.ignoring())))
                 .orElseGet(() -> configuration.getContext(RetryerContext.class)
-                                .orElseGet(() -> new RetryerContext(new EmptyRetryer())).getValue());
+                        .orElseGet(() -> new RetryerContext(new EmptyRetryer())).getValue());
         methodInfo.getParameter(Integer.class, Timeout.class).ifPresent(retryer::timeoutInSeconds);
         Throwable lastException;
+        final long start = System.currentTimeMillis();
         do {
             try {
                 return invoker.invoke(proxy, methodInfo, configuration);
             } catch (Throwable e) {
                 lastException = e;
             }
-        } while (retryer.shouldRetry(lastException));
+        } while (retryer.shouldRetry(start, lastException));
         throw lastException;
     }
 }
