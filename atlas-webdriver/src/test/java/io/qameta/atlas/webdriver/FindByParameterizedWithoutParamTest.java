@@ -13,12 +13,14 @@ import org.openqa.selenium.WebElement;
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
- * @author kurau (Yuri Kalinin)
+ * @author SvichkarevAnatoly (Anatoly Svichkarev)
  */
-public class FindByParameterizedTest {
+public class FindByParameterizedWithoutParamTest {
 
     private WebElement parent = mockWebElement();
 
@@ -50,12 +52,45 @@ public class FindByParameterizedTest {
         verify(parent, times(1)).findElements(By.xpath(String.format("//td[%s]", param)));
     }
 
+    @Test
+    public void shouldOverrideParameterizedFindBy() {
+        when(parent.findElement(any())).thenReturn(mockWebElement());
+        atlas = new Atlas().extension(new FindByExtension());
+
+        String param = RandomStringUtils.randomAlphanumeric(10);
+        String overrideParam = RandomStringUtils.randomAlphanumeric(10);
+
+        ParentElement atlasWebElement = atlas.create(parent, ParentElement.class);
+        atlasWebElement.childWithOverrideParameterization(param, overrideParam).isDisplayed();
+
+        verify(parent, times(1)).findElement(By.xpath(String.format("//div[%s]", overrideParam)));
+    }
+
+    @Test
+    public void shouldParameterizedWithRealNameFindBy() {
+        when(parent.findElement(any())).thenReturn(mockWebElement());
+        atlas = new Atlas().extension(new FindByExtension());
+
+        String param = RandomStringUtils.randomAlphanumeric(10);
+
+        ParentElement atlasWebElement = atlas.create(parent, ParentElement.class);
+        atlasWebElement.childWithRealName(param).isDisplayed();
+
+        verify(parent, times(1)).findElement(By.xpath(String.format("//div[%s]", param)));
+    }
+
     interface ParentElement extends AtlasWebElement {
 
-        @FindBy("//div[{{ value }}]")
-        AtlasWebElement childWithName(@Param String value);
+        @FindBy("//div[{{ name }}]")
+        AtlasWebElement childWithName(String name);
 
         @FindBy("//td[{{ value }}]")
-        ElementsCollection<AtlasWebElement> elements(@Param String value);
+        ElementsCollection<AtlasWebElement> elements(String value);
+
+        @FindBy("//div[{{ name }}]")
+        AtlasWebElement childWithOverrideParameterization(String name, @Param(value = "name") String notName);
+
+        @FindBy("//div[{{ name }}]")
+        AtlasWebElement childWithRealName(@Param String name);
     }
 }

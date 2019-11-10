@@ -73,6 +73,11 @@ configure(subprojects) {
         (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
     }
 
+    // Optional: to get the method parameter names for @FindBy parameterization without @Param
+    tasks.withType(JavaCompile::class) {
+        options.compilerArgs.add("-parameters")
+    }
+
     artifacts.add("archives", sourceJar)
     artifacts.add("archives", javadocJar)
 

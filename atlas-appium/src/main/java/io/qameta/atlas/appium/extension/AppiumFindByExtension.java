@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 
 import static io.qameta.atlas.appium.extension.AppiumFindByExtension.TypeLocator.ID;
 import static io.qameta.atlas.appium.extension.AppiumFindByExtension.TypeLocator.XPATH;
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamValues;
+import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getMethodParameters;
 import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processParamTemplate;
 
 /**
@@ -45,7 +45,7 @@ public class AppiumFindByExtension implements MethodExtension {
         assert proxy instanceof SearchContext;
 
         final Method method = methodInfo.getMethod();
-        final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
+        final Map<String, String> parameters = getMethodParameters(method, methodInfo.getArgs());
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
                 .orElseThrow(() -> new AtlasException("AppiumDriver is missing")).getValue();
 
