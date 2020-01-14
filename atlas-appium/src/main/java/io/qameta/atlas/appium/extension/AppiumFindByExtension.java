@@ -86,7 +86,7 @@ public class AppiumFindByExtension implements MethodExtension {
      * Type of locator.
      */
     enum TypeLocator {
-        ID, XPATH;
+        ID, XPATH
     }
 
     /**
