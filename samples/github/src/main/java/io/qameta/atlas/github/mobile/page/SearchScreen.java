@@ -19,7 +19,7 @@ public interface SearchScreen extends Screen {
     AtlasMobileElement item(@Param("value") String value);
 
     @IOSFindBy(xpath = "//XCUIElementTypeApplication[@name='Wikipedia']//XCUIElementTypeSearchField")
-    @AndroidFindBy(xpath = "//*[contains(@text, 'Search…')]")
+    @AndroidFindBy(xpath = "//*[contains(@text, 'Search...')]")
     AtlasMobileElement search();
 
     @AndroidFindBy(id = "search_close_btn")

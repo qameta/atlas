@@ -1,8 +1,8 @@
 package io.qameta.atlas.appium;
 
-import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.appium.annotations.AndroidFindBy;
 import io.qameta.atlas.appium.extension.AppiumFindByExtension;
+import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.extension.Name;
 import io.qameta.atlas.webdriver.extension.Param;
@@ -15,8 +15,10 @@ import static io.qameta.atlas.appium.testdata.ObjectFactory.mockAndroidDriver;
 import static io.qameta.atlas.appium.testdata.ObjectFactory.mockWebElement;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class AppiumFindByTest {
 
@@ -32,7 +34,7 @@ public class AppiumFindByTest {
 
     @Test
     public void shouldParameterizedFindBy() {
-        when(parent.findElement(By.xpath(anyString()))).thenReturn(mockWebElement());
+        when(parent.findElement(any(By.class))).thenReturn(mockWebElement());
 
         String param = randomAlphanumeric(10);
 
@@ -44,7 +46,7 @@ public class AppiumFindByTest {
 
     @Test
     public void shouldParameterizedName() {
-        when(parent.findElement(By.xpath(anyString()))).thenReturn(mockWebElement());
+        when(parent.findElement(any(By.class))).thenReturn(mockWebElement());
 
         String param = randomAlphanumeric(10);
 

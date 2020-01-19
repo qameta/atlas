@@ -9,7 +9,7 @@ dependencies {
     implementation("ru.yandex.qatools.matchers:webdriver-matchers")
     implementation("org.awaitility:awaitility")
     
-    testImplementation("org.mockito:mockito-all")
+    testImplementation("org.mockito:mockito-core")
     testImplementation("org.assertj:assertj-core")
     testImplementation("junit:junit")
 }

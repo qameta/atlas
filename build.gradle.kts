@@ -96,7 +96,7 @@ configure(subprojects) {
 
             dependency("org.hamcrest:hamcrest-all:1.3")
             dependency("org.assertj:assertj-core:3.6.2")
-            dependency("org.mockito:mockito-all:1.10.19")
+            dependency("org.mockito:mockito-core:3.2.4")
             dependency("junit:junit:4.12")
         }
     }
