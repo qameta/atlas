@@ -9,7 +9,7 @@ dependencies {
 
     testImplementation("ru.yandex.qatools.matchers:webdriver-matchers")
     testImplementation("org.apache.commons:commons-lang3")
-    testImplementation("org.mockito:mockito-all")
+    testImplementation("org.mockito:mockito-core")
     testImplementation("org.assertj:assertj-core")
     testImplementation("junit:junit")
 }

@@ -12,8 +12,10 @@ import org.openqa.selenium.WebElement;
 
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
 import static java.util.Arrays.asList;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author kurau (Yuri Kalinin)
@@ -26,7 +28,7 @@ public class FindByParameterizedTest {
 
     @Test
     public void shouldParameterizedFindBy() {
-        when(parent.findElement(any())).thenReturn(mockWebElement());
+        when(parent.findElement(any(By.class))).thenReturn(mockWebElement());
         atlas = new Atlas().extension(new FindByExtension());
 
         String param = RandomStringUtils.randomAlphanumeric(10);
@@ -39,7 +41,7 @@ public class FindByParameterizedTest {
 
     @Test
     public void shouldParameterizedFindByCollection() {
-        when(parent.findElements(any())).thenReturn(asList(mockWebElement()));
+        when(parent.findElements(any(By.class))).thenReturn(asList(mockWebElement()));
         atlas = new Atlas().extension(new FindByCollectionExtension());
 
         String param = RandomStringUtils.randomAlphanumeric(10);
