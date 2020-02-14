@@ -1,6 +1,9 @@
 package io.qameta.atlas.core.internal;
 
+import io.qameta.atlas.core.api.Retry;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +18,10 @@ public class DefaultRetryer implements Retryer {
     private Long timeout;
 
     private Long polling;
+
+    public DefaultRetryer(final Retry annotation) {
+        this(annotation.timeout(), annotation.polling(), Arrays.asList(annotation.ignoring()));
+    }
 
     public DefaultRetryer(final Long timeout, final Long polling, final List<Class<? extends Throwable>> ignoring) {
         this.ignoring = new ArrayList<>(ignoring);

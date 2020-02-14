@@ -2,8 +2,12 @@ package io.qameta.atlas.webdriver.extension;
 
 import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.core.api.MethodExtension;
+import io.qameta.atlas.core.api.Retry;
 import io.qameta.atlas.core.api.Target;
+import io.qameta.atlas.core.context.RetryerContext;
 import io.qameta.atlas.core.internal.Configuration;
+import io.qameta.atlas.core.internal.DefaultRetryer;
+import io.qameta.atlas.core.internal.Retryer;
 import io.qameta.atlas.core.target.LazyTarget;
 import io.qameta.atlas.core.util.MethodInfo;
 import org.openqa.selenium.By;
@@ -48,6 +52,11 @@ public class FindByExtension implements MethodExtension {
                 .orElse(method.getName());
 
         final Configuration childConfiguration = configuration.child();
+        Optional.ofNullable(methodInfo.getMethod().getAnnotation(Retry.class)).ifPresent(retry -> {
+            final Retryer retryer = new DefaultRetryer(retry);
+            childConfiguration.registerContext(new RetryerContext(retryer));
+        });
+
         final Target elementTarget = new LazyTarget(name, () -> searchContext.findElement(by));
         return new Atlas(childConfiguration)
                 .create(elementTarget, method.getReturnType());
