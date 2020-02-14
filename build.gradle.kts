@@ -6,24 +6,20 @@ buildscript {
         mavenLocal()
     }
 
-    dependencies {
-        classpath("ru.vyarus:gradle-quality-plugin:3.4.0")
-//        classpath("com.puppycrawl.tools:checkstyle:8.17")
-        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0")
-        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
-        classpath("net.researchgate:gradle-release:2.7.0")
-    }
 }
 
 val gradleScriptDir by extra("${rootProject.projectDir}/gradle")
 
 tasks.withType(Wrapper::class) {
-    gradleVersion = "5.2.1"
+    gradleVersion = "6.0.1"
 }
 
 plugins {
     java
-    id("net.researchgate.release") version "2.7.0"
+    id("ru.vyarus.quality") version "4.0.0"
+    id("com.jfrog.bintray") version "1.8.0"
+    id("io.spring.dependency-management") version "1.0.8.RELEASE"
+    id("net.researchgate.release") version "2.8.1"
 }
 
 release {
