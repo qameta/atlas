@@ -8,7 +8,6 @@ import io.qameta.atlas.core.util.MethodInfo;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
