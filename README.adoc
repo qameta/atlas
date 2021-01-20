@@ -16,13 +16,15 @@ for your project, allowing you to fine-tune the specifics.
 
 Atlas has several basic entities that you will be working with:
 
-*WebPage* - instances of this class will serve as top classes of your page objects hierarchy.
+*WebSite* - instances of this class will serve as top classes of your page objects hierarchy.
 
-*Atlas* - returns WebPage instances that are wrapped around the given driver.
+*WebPage* - instances of this class will contain a block of  web elements.
+
+*Atlas* - returns WebSite instances that are wrapped around the given driver.
 [source, java]
 ----
 Atlas atlas = new Atlas();
-SearchPage page = atlas.create(driver, SearchPage.class);
+BaseSite site = atlas.create(driver, BaseSite.class);
 ----
 
 *AtlasWebElement* - is a parent interface for every web element you will be using in your tests.
@@ -35,20 +37,37 @@ SearchPage page = atlas.create(driver, SearchPage.class);
 |=========================================================
 
 a|
-1) Defining a page: pages are top-classes and they may contain elements or whole element blocks.
+1) Defining a site: site is top-interface and it contains pages your web application
+
 [source, java]
 ----
-@BaseUrl("http://www.base.url/search")
+public interface BaseSite extends WebSite {
+
+    @Page
+    MainPage mainPage();
+
+    @Page("/search")
+    SearchPage searchPage();
+
+    @Page("/account")
+    AccountPage accountPage();
+}
+----
+
+a|
+2) Defining a page: pages may contain elements or whole element blocks.
+[source, java]
+----
 public interface SearchPage extends WebPage {
 
-  @FindBy("//form[contains(@class, 'search2 suggest2-form')]")
-  SearchArrow searchArrow();
+    @FindBy("//form[contains(@class, 'search2 suggest2-form')]")
+    SearchArrow searchArrow();
 
-  @FindBy("//div[@class='toolbar']")
-  Toolbar toolbar();
+    @FindBy("//div[@class='toolbar']")
+    Toolbar toolbar();
 
-  @FindBy("//div[@class='user-tooltip']")
-  UserTooltip userTooltip();
+    @FindBy("//div[@class='user-tooltip']")
+    UserTooltip userTooltip();
 }
 ----
 a|
@@ -62,7 +81,7 @@ Web pages usually contain some high-level blocks, that we will neatly organize v
 </body>
 ----
 a|
-2) Organizing a block of web elements on the page: you need to extend an interface from AtlasWebElement
+3) Organizing a block of web elements on the page: you need to extend an interface from AtlasWebElement
 and you are good to go
 [source, java]
 ----
@@ -87,7 +106,7 @@ Your classes for such blocks of elements can contain sub-blocks, or once you've 
 </body>
 ----
 a|
-3) You can define a collection of elements for a page or for a block
+4) You can define a collection of elements for a page or for a block
 [source, java]
 ----
 public interface Toolbar extends AtlasWebElement {
@@ -122,13 +141,13 @@ Button elements have a specific ToolbarButton class to represent them.
 </body>
 ----
 a|
-4) You can use parameterized selectors to simplify your work with homogeneous elements
+5) You can use parameterized selectors to simplify your work with homogeneous elements
 [source, java]
 ----
 public interface SearchResultsPanel extends AtlasWebElement {
 
-    @Description("Search result for user {{userName}}")
-    @FindBy(".//div[contains(@class, 'search-result-item') and contains(., {{userName}}]")
+    @Description("Search result for user {{ userName }}")
+    @FindBy(".//div[contains(@class, 'search-result-item') and contains(., {{ userName }}]")
     UserResult user(@Param("userName") String userName);
 }
 ----
@@ -160,18 +179,16 @@ collections of elements as well.
 </body>
 ----
 a|
-5) Very often you will have some identical html blocks across different pages, e.g. toolbars, footers, dropdowns,
+6) Very often you will have some identical html blocks across different pages, e.g. toolbars, footers, dropdowns,
  pickers e.t.c. Once you wrote a class describing such a block, it can be easily reused across all of the pages:
 [source, java]
 ----
 
-@BaseUrl("http://www.base.url/search")
 public interface SearchPage extends WebPage, WithToolbar {
 
      //other elements for search page here
 }
 
-@BaseUrl("http://www.base.url/account")
 public interface AccountPage extends WebPage, WithToolbar {
 
      //other elements for account page here
@@ -225,7 +242,7 @@ in a passed matcher, throwing `java.lang.RuntimeException` if condition has not 
     @Step("Make search with input string «{input}»")
     public SearchPageSteps makeSearch(String input){
         final SearchForm form = onSearchPage().searchPanel().form();
-        form.waitUntil(WebElement::isDisplayed) //waits for element to satisfy a condition
+        form.waitUntil(Matchers.is(WebElement::isDisplayed)) //waits for element to satisfy a condition
                 .sendKeys(input); //invokes standard WebElement's method
         form.submit();
         return this;
@@ -239,7 +256,7 @@ Second - `should(Matcher matcher)` which waits the same way on a passed matcher,
     @Step("Check user «{userName}» is found")
     public SearchPageSteps checkUserIsFound(String userName){
         onSearchPage().resultsPanel().user(userName)
-        .should("User is not found", WebElement::isDisplayed);
+            .should("User is not found", Matchers.is(WebElement::isDisplayed));
         //makes a waiting assertion here
         return this;
     }
@@ -291,17 +308,37 @@ Don't do this! Use a parameterized selector instead.
 ----
 
 === Working with pages
-`WebPage` interface has several methods to help working with pages
+There are different ways to set `BASE_URL` for page
 
-*Define a base url for page.* If you annotate a `WebPage` with `@BaseUrl` you can specify an url to be opened
+1) Forward parameter `url` in `open` Webpage method
+[source, java]
+----
+@Test
+public void searchTest() {
+    onSearchPage().open("http://baseurl.com/search");
+}
+----
+
+2) Define a base url for site in configuration
+[source, java]
+----
+ @BeforeTest
+    public void init() {
+        Atlas atlas = new Atlas(WebDriverConfiguration(driver, "base.url"));
+    }
+----
+
+Then if you annotate a `WebPage` with `@Page` you can specify an url to be opened
 when `WebPage` 's `open()` method is called.
 
 [source, java]
 ----
 
-@BaseUrl("http://www.base.url/search")
-public interface SearchPage extends WebPage {
 
+public interface BaseSite extends WebSite {
+
+    @Page("/search")
+    SearchPage searchPage();
      //elements for search page here
 }
 ----
@@ -310,40 +347,7 @@ Then after instantiation you can call `open()` method like this:
 
 [source, java]
 ----
-Atlas atlas = new Atlas();
-SearchPage page = atlas.create(driver, SearchPage.class);
-page.open()
-----
-
-*Waiting for page loading.* There is a special `shouldUrl(Matcher<String> url)` that waits on the condition for page's
-current url and `document.readyState` flag.
-
-[source, java]
-----
-
-@BaseUrl("http://www.base.url/search")
-public interface SearchPage extends WebPage {
-
-     @Description("Account button")
-     @FindBy("//div[@class = 'account-button']")
-     AtlasWebElement accountButton();
-}
-
-@BaseUrl("http://www.base.url/account")
-public interface AccountPage extends WebPage {
-
-     //elements for account page here
-}
-----
-
-To navigate between this two pages you have to wait for the account page to load after click on 'Account' button.
-
-[source, java]
-----
-@Step("Go to the current account settings")
-public void openAccountSettings() {
-    onSearchPage().accountButton().click();
-    onAccountPage().shouldUrl(equalTo("http://www.base.url/account"));
-    //continue working with account page
-}
+Atlas atlas = new Atlas(WebDriverConfiguration(driver, "http://base.url"));
+BaseSite site = atlas.create(driver, BaseSite.class);
+site.searchPage().open(); //go to http://base.url/search
 ----
