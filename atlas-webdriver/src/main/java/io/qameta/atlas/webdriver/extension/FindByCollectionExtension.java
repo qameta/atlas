@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getParamValues;
+import static io.qameta.atlas.webdriver.util.MethodInfoUtils.getMethodParameters;
 import static io.qameta.atlas.webdriver.util.MethodInfoUtils.processParamTemplate;
 import static java.util.stream.Collectors.toList;
 
@@ -48,7 +48,7 @@ public class FindByCollectionExtension implements MethodExtension {
         assert proxy instanceof SearchContext;
         assert method.isAnnotationPresent(FindBy.class);
 
-        final Map<String, String> parameters = getParamValues(method, methodInfo.getArgs());
+        final Map<String, String> parameters = getMethodParameters(method, methodInfo.getArgs());
         final FindBy findBy = method.getAnnotation(FindBy.class);
         final By by = findBy.selector().buildBy(processParamTemplate(findBy.value(), parameters));
 

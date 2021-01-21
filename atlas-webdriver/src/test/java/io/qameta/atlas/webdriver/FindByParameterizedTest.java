@@ -55,9 +55,9 @@ public class FindByParameterizedTest {
     interface ParentElement extends AtlasWebElement {
 
         @FindBy("//div[{{ value }}]")
-        AtlasWebElement childWithName(@Param("value") String value);
+        AtlasWebElement childWithName(@Param String value);
 
         @FindBy("//td[{{ value }}]")
-        ElementsCollection<AtlasWebElement> elements(@Param("value") String value);
+        ElementsCollection<AtlasWebElement> elements(@Param String value);
     }
 }

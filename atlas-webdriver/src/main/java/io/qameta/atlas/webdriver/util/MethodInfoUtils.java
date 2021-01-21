@@ -26,7 +26,7 @@ public final class MethodInfoUtils {
     }
 
     /**
-     * Replace string template with value from {@link Param}.
+     * Replace string template with value from method's parameters.
      *
      * @param template   {@link String} - the string template.
      * @param parameters {@link Map} - the method's parameters.
@@ -104,6 +104,25 @@ public final class MethodInfoUtils {
     }
 
     /**
+     * Get parameters name and all argument values.
+     *
+     * @param method {@link Method} - the method on action.
+     * @param args   - method arguments.
+     * @return {@link Map} return parameter name as Map Key, argument value as Map Value.
+     */
+    @SuppressWarnings("PMD.UseVarargs")
+    public static Map<String, String> getMethodParameters(final Method method, final Object[] args) {
+        final Map<String, String> originalParameters = IntStream.range(0, method.getParameterCount())
+                .boxed()
+                .collect(toMap(
+                        index -> method.getParameters()[index].getName(),
+                        index -> Objects.toString(args[index])));
+
+        originalParameters.putAll(getParamValues(method, args));
+        return originalParameters;
+    }
+
+    /**
      * Get parameters name with annotation {@link Param} and all argument values.
      *
      * @param method {@link Method} - the method on action.
@@ -111,7 +130,7 @@ public final class MethodInfoUtils {
      * @return {@link Map} return ParamName as Map Key, argument value as Map Value.
      */
     @SuppressWarnings("PMD.UseVarargs")
-    public static Map<String, String> getParamValues(final Method method, final Object[] args) {
+    private static Map<String, String> getParamValues(final Method method, final Object[] args) {
         final IntPredicate paramPredicate = index -> isAnnotated(method.getParameters()[index], Param.class);
         return getParameters(paramPredicate, method,
                 toMap(index -> getParamValue(method.getParameters()[index]), index -> Objects.toString(args[index])));
