@@ -1,13 +1,5 @@
 rootProject.name = 'atlas'
+
 include 'atlas-core'
 include 'atlas-webdriver'
 include 'atlas-appium'
-
-def plugins = [
-        'github'
-]
-
-plugins.forEach({
-    include "samples/$it"
-    project(":samples/$it").name = it
-})
