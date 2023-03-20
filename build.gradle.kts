@@ -5,7 +5,6 @@ buildscript {
         jcenter()
         mavenLocal()
     }
-
 }
 
 val gradleScriptDir by extra("${rootProject.projectDir}/gradle")
@@ -79,10 +78,10 @@ configure(subprojects) {
 
     configure<DependencyManagementExtension> {
         dependencies {
-            dependency("org.apache.commons:commons-lang3:3.7")
+            dependency("org.apache.commons:commons-lang3:3.12.0")
 
-            dependency("org.seleniumhq.selenium:selenium-java:3.141.59")
-            dependency("io.appium:java-client:6.1.0")
+            dependency("org.seleniumhq.selenium:selenium-java:4.8.1")
+            dependency("io.appium:java-client:8.3.0")
             dependency("io.github.bonigarcia:webdrivermanager:2.1.0")
             dependency("ru.yandex.qatools.matchers:webdriver-matchers:1.4.1")
             dependency("org.awaitility:awaitility:3.1.2")

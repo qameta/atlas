@@ -3,7 +3,6 @@ package io.qameta.atlas.webdriver.testdata;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.interactions.Locatable;
 
 import static org.mockito.Mockito.mock;
@@ -15,7 +14,7 @@ public final class ObjectFactory {
     }
 
     public static WebDriver mockWebDriver() {
-        return mock(WebDriver.class, withSettings().extraInterfaces(HasInputDevices.class));
+        return mock(WebDriver.class);
     }
 
     public static WebElement mockWebElement() {

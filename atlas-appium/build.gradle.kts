@@ -11,5 +11,6 @@ dependencies {
     
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.assertj:assertj-core")
+    testImplementation("org.apache.commons:commons-lang3")
     testImplementation("junit:junit")
 }

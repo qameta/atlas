@@ -7,7 +7,6 @@ import org.hamcrest.Matcher;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
-import org.openqa.selenium.internal.WrapsElement;
 
 import java.util.List;
 
