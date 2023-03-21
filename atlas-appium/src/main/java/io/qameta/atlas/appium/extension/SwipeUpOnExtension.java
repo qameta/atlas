@@ -44,8 +44,11 @@ public class SwipeUpOnExtension implements MethodExtension {
                 final int endY = (int) (size.height * BOTTOM.getValue());
 
                 final TouchAction touchAction = new TouchAction((PerformsTouchActions) driver);
-                touchAction.longPress(new PointOption().withCoordinates(startX, startY))
-                        .moveTo(new PointOption().withCoordinates(endX, endY)).release().perform();
+                touchAction
+                        .longPress(new PointOption().withCoordinates(startX, startY))
+                        .moveTo(new PointOption().withCoordinates(endX, endY))
+                        .release()
+                        .perform();
             }
             return displayed().matches(proxy);
         });

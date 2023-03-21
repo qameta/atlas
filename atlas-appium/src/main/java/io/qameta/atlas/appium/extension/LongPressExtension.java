@@ -36,13 +36,16 @@ public class LongPressExtension implements MethodExtension {
         final AppiumDriver driver = configuration.getContext(AppiumDriverContext.class)
                 .orElseThrow(() -> new AtlasException("AppiumDriver is missing")).getValue();
 
-        final TouchAction action = new TouchAction((PerformsTouchActions) driver);
         final Point location = ((WebElement) proxy).getLocation();
         final Dimension size = ((WebElement) proxy).getSize();
         final int x = location.getX() + size.width / 2;
         final int y = location.getY() + size.height / 2;
-        action.longPress(longPressOptions().withDuration(LONG_TAP_DURATION)
-                .withPosition(new PointOption().withCoordinates(x, y))).perform();
+        final TouchAction action = new TouchAction((PerformsTouchActions) driver);
+        action
+                .longPress(longPressOptions()
+                .withDuration(LONG_TAP_DURATION)
+                .withPosition(new PointOption().withCoordinates(x, y)))
+                .perform();
         return proxy;
     }
 }
