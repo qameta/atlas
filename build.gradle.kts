@@ -47,8 +47,8 @@ configure(subprojects) {
     apply(from = "$gradleScriptDir/bintray.gradle")
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     tasks.compileJava {
@@ -79,21 +79,21 @@ configure(subprojects) {
 
     configure<DependencyManagementExtension> {
         dependencies {
-            dependency("org.apache.commons:commons-lang3:3.7")
+            dependency("org.apache.commons:commons-lang3:3.12.0")
 
-            dependency("org.seleniumhq.selenium:selenium-java:3.141.59")
-            dependency("io.appium:java-client:6.1.0")
-            dependency("io.github.bonigarcia:webdrivermanager:2.1.0")
+            dependency("org.seleniumhq.selenium:selenium-java:4.8.3")
+            dependency("io.appium:java-client:8.3.0")
+            dependency("io.github.bonigarcia:webdrivermanager:5.3.2")
             dependency("ru.yandex.qatools.matchers:webdriver-matchers:1.4.1")
             dependency("org.awaitility:awaitility:3.1.2")
 
-            dependency("org.slf4j:slf4j-api:1.7.25")
-            dependency("org.slf4j:slf4j-simple:1.7.25")
+            dependency("org.slf4j:slf4j-api:2.0.7")
+            dependency("org.slf4j:slf4j-simple:2.0.7")
 
             dependency("org.hamcrest:hamcrest-all:1.3")
-            dependency("org.assertj:assertj-core:3.6.2")
-            dependency("org.mockito:mockito-core:3.2.4")
-            dependency("junit:junit:4.12")
+            dependency("org.assertj:assertj-core:3.24.2")
+            dependency("org.mockito:mockito-core:5.3.0")
+            dependency("junit:junit:4.13.2")
         }
     }
 
