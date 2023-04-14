@@ -3,7 +3,7 @@ package io.qameta.atlas.appium;
 
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.WrapsElement;
+import org.openqa.selenium.WrapsElement;
 
 
 /**

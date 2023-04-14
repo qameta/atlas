@@ -13,15 +13,14 @@ dependencies {
     implementation project(':atlas-webdriver')
     implementation project(':atlas-appium')
 
-    implementation 'org.aeonbits.owner:owner-java8:1.0.6'
-    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'org.aeonbits.owner:owner-java8:1.0.12'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.8.3'
 
     testImplementation 'ru.yandex.qatools.matchers:webdriver-matchers:1.4.1'
     testImplementation 'ru.yandex.qatools.matchers:matcher-decorators:1.4.1'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:2.2.4'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.3.2'
     testImplementation 'com.github.detro:ghostdriver:2.1.0'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'io.appium:java-client:6.1.0'
-    testImplementation 'org.zeroturnaround:zt-zip:1.13'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'io.appium:java-client:8.3.0'
+    testImplementation 'org.zeroturnaround:zt-zip:1.15'
 }
-
