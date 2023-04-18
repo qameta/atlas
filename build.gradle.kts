@@ -132,6 +132,12 @@ configure(subprojects) {
         onlyIf { !project.version.toString().endsWith("-SNAPSHOT") }
     }
 
+    publishing.publications.named<MavenPublication>("maven") {
+        pom {
+            from(components["java"])
+        }
+    }
+
     repositories {
         mavenLocal()
         mavenCentral()
