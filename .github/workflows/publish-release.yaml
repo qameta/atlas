@@ -3,7 +3,7 @@ name: Publish Release
 on:
   pull_request:
     branches:
-      - 'add-release'
+      - '*'
   release:
     types: [ published ]
 
