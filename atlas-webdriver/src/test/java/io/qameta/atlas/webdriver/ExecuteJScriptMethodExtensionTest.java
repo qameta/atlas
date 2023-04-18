@@ -18,7 +18,7 @@ public class ExecuteJScriptMethodExtensionTest {
 
     @Before
     public void initElements() {
-        driver = mock(RemoteWebDriver.class, withSettings().extraInterfaces(WebDriver.class);
+        driver = mock(RemoteWebDriver.class, withSettings().extraInterfaces(WebDriver.class));
         WebElement originWebElement = mockWebElement();
         atlasWebElement = new Atlas(new WebDriverConfiguration(driver))
                 .create(originWebElement, AtlasWebElement.class);
