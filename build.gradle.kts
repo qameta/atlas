@@ -29,6 +29,12 @@ configure(listOf(rootProject)) {
     group = "io.qameta.atlas"
 }
 
+nexusPublishing {
+    repositories {
+        sonatype()
+    }
+}
+
 configure(subprojects) {
     group = "io.qameta.atlas"
     version = version
