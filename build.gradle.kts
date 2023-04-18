@@ -21,11 +21,18 @@ plugins {
     `maven-publish`
     id("ru.vyarus.quality") version "4.9.0"
     id("io.spring.dependency-management") version "1.1.0"
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 configure(listOf(rootProject)) {
     description = "Atlas"
     group = "io.qameta.atlas"
+}
+
+nexusPublishing {
+    repositories {
+        sonatype()
+    }
 }
 
 configure(subprojects) {
@@ -42,28 +49,20 @@ configure(subprojects) {
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
+        withJavadocJar()
+        withSourcesJar()
     }
 
     tasks.compileJava {
         options.encoding = "UTF-8"
     }
 
-    val sourceJar by tasks.creating(Jar::class) {
-        from(sourceSets.getByName("main").allSource)
-        archiveClassifier.set("sources")
-    }
-
-    val javadocJar by tasks.creating(Jar::class) {
-        from(tasks.getByName("javadoc"))
-        archiveClassifier.set("javadoc")
-    }
-
     tasks.withType(Javadoc::class) {
-        (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+        (options as StandardJavadocDocletOptions).apply {
+            addStringOption("Xdoclint:none", "-quiet")
+        }
     }
-
-    artifacts.add("archives", sourceJar)
-    artifacts.add("archives", javadocJar)
 
     configure<DependencyManagementExtension> {
         dependencies {
@@ -85,8 +84,56 @@ configure(subprojects) {
         }
     }
 
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                suppressAllPomMetadataWarnings()
+                versionMapping {
+                    allVariants {
+                        fromResolutionResult()
+                    }
+                }
+                pom {
+                    name.set(project.name)
+                    description.set("Module ${project.name} of Atlas.")
+                    url.set("https://github.com/qameta/atlas")
+                    licenses {
+                        license {
+                            name.set("The Apache License, Version 2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set("eroshenkoam")
+                            name.set("Artem Eroshenko")
+                            email.set("artem.eroshenko@qameta.io")
+                        }
+                    }
+                    scm {
+                        developerConnection.set("scm:git:git://github.com/qameta/atlas")
+                        connection.set("scm:git:git://github.com/qameta/atlas")
+                        url.set("https://github.com/qameta/atlas")
+                    }
+                    issueManagement {
+                        system.set("GitHub Issues")
+                        url.set("https://github.com/qameta/atlas/issues")
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        sign(publishing.publications["maven"])
+    }
+
+    tasks.withType<Sign>().configureEach {
+        onlyIf { !project.version.toString().endsWith("-SNAPSHOT") }
+    }
+
     repositories {
-        jcenter()
         mavenLocal()
+        mavenCentral()
     }
 }
