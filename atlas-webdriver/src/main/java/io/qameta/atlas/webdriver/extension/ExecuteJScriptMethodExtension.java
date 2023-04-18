@@ -19,7 +19,7 @@ public class ExecuteJScriptMethodExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(EXECUTE_SCRIPT);
+        return EXECUTE_SCRIPT.equals(method.getName());
     }
 
     @Override

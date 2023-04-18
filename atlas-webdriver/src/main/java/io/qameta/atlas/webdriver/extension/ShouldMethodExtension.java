@@ -17,7 +17,7 @@ public class ShouldMethodExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(SHOULD);
+        return SHOULD.equals(method.getName());
     }
 
     @Override

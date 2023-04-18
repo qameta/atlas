@@ -11,19 +11,16 @@ buildscript {
 val gradleScriptDir by extra("${rootProject.projectDir}/gradle")
 
 tasks.withType(Wrapper::class) {
-    gradleVersion = "6.0.1"
+    gradleVersion = "7.5.1"
 }
 
 plugins {
     java
-    id("ru.vyarus.quality") version "4.0.0"
-    id("com.jfrog.bintray") version "1.8.0"
-    id("io.spring.dependency-management") version "1.0.8.RELEASE"
-    id("net.researchgate.release") version "2.8.1"
-}
-
-release {
-    tagTemplate = "\${version}"
+    signing
+    `java-library`
+    `maven-publish`
+    id("ru.vyarus.quality") version "4.9.0"
+    id("io.spring.dependency-management") version "1.1.0"
 }
 
 configure(listOf(rootProject)) {
@@ -31,20 +28,16 @@ configure(listOf(rootProject)) {
     group = "io.qameta.atlas"
 }
 
-val afterReleaseBuild by tasks.existing
-
 configure(subprojects) {
     group = "io.qameta.atlas"
     version = version
 
     apply(plugin = "java")
-    apply(plugin = "maven")
+    apply(plugin = "signing")
+    apply(plugin = "maven-publish")
     apply(plugin = "java-library")
     apply(plugin = "ru.vyarus.quality")
     apply(plugin = "io.spring.dependency-management")
-
-    apply(from = "$gradleScriptDir/maven.gradle")
-    apply(from = "$gradleScriptDir/bintray.gradle")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -72,11 +65,6 @@ configure(subprojects) {
     artifacts.add("archives", sourceJar)
     artifacts.add("archives", javadocJar)
 
-    val bintrayUpload by tasks.existing
-    afterReleaseBuild {
-        dependsOn(bintrayUpload)
-    }
-
     configure<DependencyManagementExtension> {
         dependencies {
             dependency("org.apache.commons:commons-lang3:3.12.0")
@@ -92,7 +80,7 @@ configure(subprojects) {
 
             dependency("org.hamcrest:hamcrest-all:1.3")
             dependency("org.assertj:assertj-core:3.24.2")
-            dependency("org.mockito:mockito-core:5.3.0")
+            dependency("org.mockito:mockito-core:4.8.0")
             dependency("junit:junit:4.13.2")
         }
     }

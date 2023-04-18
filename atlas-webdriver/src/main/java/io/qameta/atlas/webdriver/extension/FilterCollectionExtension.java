@@ -21,7 +21,7 @@ public class FilterCollectionExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(FILTER) && List.class.isAssignableFrom(method.getDeclaringClass());
+        return FILTER.equals(method.getName()) && List.class.isAssignableFrom(method.getDeclaringClass());
     }
 
     @Override

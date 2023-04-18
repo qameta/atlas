@@ -16,7 +16,7 @@ public class ToStringMethodExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(TO_STRING);
+        return TO_STRING.equals(method.getName());
     }
 
     @Override

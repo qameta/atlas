@@ -16,7 +16,7 @@ public class WrappedElementMethodExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(GET_WRAPPED_ELEMENT);
+        return GET_WRAPPED_ELEMENT.equals(method.getName());
     }
 
     @Override

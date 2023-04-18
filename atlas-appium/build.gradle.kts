@@ -8,7 +8,8 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java")
     implementation("ru.yandex.qatools.matchers:webdriver-matchers")
     implementation("org.awaitility:awaitility")
-    
+
+    testImplementation("org.apache.commons:commons-lang3")
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.assertj:assertj-core")
     testImplementation("junit:junit")

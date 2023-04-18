@@ -21,8 +21,7 @@ public class ExtractMethodExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(EXTRACT)
-                && List.class.isAssignableFrom(method.getReturnType());
+        return EXTRACT.equals(method.getName()) && List.class.isAssignableFrom(method.getReturnType());
     }
 
     @Override

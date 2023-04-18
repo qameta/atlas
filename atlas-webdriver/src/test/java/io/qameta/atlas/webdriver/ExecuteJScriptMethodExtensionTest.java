@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import static io.qameta.atlas.webdriver.testdata.ObjectFactory.mockWebElement;
@@ -19,7 +18,7 @@ public class ExecuteJScriptMethodExtensionTest {
 
     @Before
     public void initElements() {
-        driver = mock(RemoteWebDriver.class, withSettings().extraInterfaces(WebDriver.class, HasInputDevices.class));
+        driver = mock(RemoteWebDriver.class, withSettings().extraInterfaces(WebDriver.class));
         WebElement originWebElement = mockWebElement();
         atlasWebElement = new Atlas(new WebDriverConfiguration(driver))
                 .create(originWebElement, AtlasWebElement.class);
