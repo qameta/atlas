@@ -21,6 +21,7 @@ plugins {
     `maven-publish`
     id("ru.vyarus.quality") version "4.9.0"
     id("io.spring.dependency-management") version "1.1.0"
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 configure(listOf(rootProject)) {
@@ -42,28 +43,26 @@ configure(subprojects) {
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
+        withJavadocJar()
+        withSourcesJar()
     }
 
     tasks.compileJava {
         options.encoding = "UTF-8"
     }
 
-    val sourceJar by tasks.creating(Jar::class) {
-        from(sourceSets.getByName("main").allSource)
-        archiveClassifier.set("sources")
-    }
-
-    val javadocJar by tasks.creating(Jar::class) {
-        from(tasks.getByName("javadoc"))
-        archiveClassifier.set("javadoc")
-    }
-
     tasks.withType(Javadoc::class) {
-        (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+        (options as StandardJavadocDocletOptions).apply {
+            addStringOption("Xdoclint:none", "-quiet")
+        }
     }
 
-    artifacts.add("archives", sourceJar)
-    artifacts.add("archives", javadocJar)
+    publishing.publications.named<MavenPublication>("maven") {
+        pom {
+            from(components["java"])
+        }
+    }
 
     configure<DependencyManagementExtension> {
         dependencies {
