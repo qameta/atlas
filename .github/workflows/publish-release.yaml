@@ -22,11 +22,9 @@ jobs:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       - name: "Gradle Build"
-#        run: ./gradlew build -Pversion=${GITHUB_REF:10}
         run: ./gradlew build -Pversion=1.9.0
       - name: "Gradle Publish"
         run: |
-#          ./gradlew publishToSonatype -Pversion=${GITHUB_REF:10} \
           ./gradlew publishToSonatype -Pversion=1.9.0 \
                     -Psigning.keyId=${GPG_KEY_ID} \
                     -Psigning.password=${GPG_PASSPHRASE} \
