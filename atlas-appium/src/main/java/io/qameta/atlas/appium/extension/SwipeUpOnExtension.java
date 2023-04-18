@@ -1,6 +1,7 @@
 package io.qameta.atlas.appium.extension;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
 import io.qameta.atlas.appium.context.AppiumDriverContext;
@@ -26,7 +27,7 @@ public class SwipeUpOnExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals("swipeUpOn");
+        return "swipeUpOn".equals(method.getName());
     }
 
     @Override
@@ -42,7 +43,7 @@ public class SwipeUpOnExtension implements MethodExtension {
                 final int endX = size.width / 2;
                 final int endY = (int) (size.height * BOTTOM.getValue());
 
-                final TouchAction touchAction = new TouchAction(driver);
+                final TouchAction touchAction = new TouchAction((PerformsTouchActions) driver);
                 touchAction.longPress(new PointOption().withCoordinates(startX, startY))
                         .moveTo(new PointOption().withCoordinates(endX, endY)).release().perform();
             }

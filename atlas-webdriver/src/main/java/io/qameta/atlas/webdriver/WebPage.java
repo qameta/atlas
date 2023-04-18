@@ -14,7 +14,7 @@ public interface WebPage extends WrapsDriver, SearchContext {
     @Override
     WebDriver getWrappedDriver();
 
-    default void open(String url) {
+    default void open(final String url) {
         getWrappedDriver().get(url);
     }
 

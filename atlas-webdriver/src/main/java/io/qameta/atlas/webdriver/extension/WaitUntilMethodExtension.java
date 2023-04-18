@@ -18,7 +18,7 @@ public class WaitUntilMethodExtension implements MethodExtension {
 
     @Override
     public boolean test(final Method method) {
-        return method.getName().equals(WAIT_UNTIL);
+        return WAIT_UNTIL.equals(method.getName());
     }
 
     @Override

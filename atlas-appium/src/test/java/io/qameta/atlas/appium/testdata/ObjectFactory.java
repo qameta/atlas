@@ -6,7 +6,6 @@ import io.appium.java_client.ios.IOSDriver;
 import io.qameta.atlas.appium.AtlasMobileElement;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.WrapsDriver;
 
 import static org.mockito.Mockito.mock;
@@ -21,16 +20,16 @@ public final class ObjectFactory {
     }
 
     public static AppiumDriver mockAppiumDriver() {
-        return mock(AppiumDriver.class, withSettings().extraInterfaces(WrapsDriver.class, HasInputDevices.class));
+        return mock(AppiumDriver.class, withSettings().extraInterfaces(WrapsDriver.class));
     }
 
     public static AppiumDriver mockAndroidDriver() {
-        return mock(AndroidDriver.class, withSettings().extraInterfaces(WrapsDriver.class, HasInputDevices.class));
+        return mock(AndroidDriver.class, withSettings().extraInterfaces(WrapsDriver.class));
     }
 
 
     public static IOSDriver mockIOSDriver() {
-        return mock(IOSDriver.class, withSettings().extraInterfaces(WrapsDriver.class, HasInputDevices.class));
+        return mock(IOSDriver.class, withSettings().extraInterfaces(WrapsDriver.class));
     }
 
     public static WebElement mockWebElement() {
