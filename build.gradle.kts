@@ -58,12 +58,6 @@ configure(subprojects) {
         }
     }
 
-    publishing.publications.named<MavenPublication>("maven") {
-        pom {
-            from(components["java"])
-        }
-    }
-
     configure<DependencyManagementExtension> {
         dependencies {
             dependency("org.apache.commons:commons-lang3:3.12.0")
