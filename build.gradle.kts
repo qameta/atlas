@@ -85,8 +85,56 @@ configure(subprojects) {
         }
     }
 
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                suppressAllPomMetadataWarnings()
+                versionMapping {
+                    allVariants {
+                        fromResolutionResult()
+                    }
+                }
+                pom {
+                    name.set(project.name)
+                    description.set("Module ${project.name} of Atlas.")
+                    url.set("https://github.com/qameta/atlas")
+                    licenses {
+                        license {
+                            name.set("The Apache License, Version 2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set("eroshenkoam")
+                            name.set("Artem Eroshenko")
+                            email.set("artem.eroshenko@qameta.io")
+                        }
+                    }
+                    scm {
+                        developerConnection.set("scm:git:git://github.com/qameta/atlas")
+                        connection.set("scm:git:git://github.com/qameta/atlas")
+                        url.set("https://github.com/qameta/atlas")
+                    }
+                    issueManagement {
+                        system.set("GitHub Issues")
+                        url.set("https://github.com/qameta/atlas/issues")
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        sign(publishing.publications["maven"])
+    }
+
+    tasks.withType<Sign>().configureEach {
+        onlyIf { !project.version.toString().endsWith("-SNAPSHOT") }
+    }
+
     repositories {
-        jcenter()
         mavenLocal()
+        mavenCentral()
     }
 }
